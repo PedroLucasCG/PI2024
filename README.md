@@ -6,7 +6,7 @@
 - HTML / CSS / JavaScript -> frontend
 
 ## Como usar
-- Coloque o repositoria dentro da pasta do htdocs do xampp
+- Coloque o repositório dentro da pasta do htdocs do xampp
 - Inicie o servidor apache do xampp navega até o endereço http://localhost/PI/index.php para entrar na página inicial do projeto
 
 ## Links importantes
