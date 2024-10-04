@@ -6,8 +6,10 @@
     <title>Document</title>
 </head>
 <body>
+    <pre>
     <?php
-        include './controller/pessoa/endereco.php';
+        include './controller/pessoa/pessoa.php';
     ?>
+    </pre>
 </body>
 </html>

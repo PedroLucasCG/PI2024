@@ -1,5 +1,6 @@
 <?php
 include __DIR__ . '/../../config/databaseConfig.php';
+include __DIR__ . '/endereco.php';
 
 class Pessoa {
     private $pdo;
@@ -9,6 +10,12 @@ class Pessoa {
     }
 
     public function upsert($nome, $data_nasc, $cpf, $rg, $senha, $usuario, $email, $data_registro, $endereco_id, $id = null) {
+
+        $endereco = new Endereco($this->pdo);
+        if(!isset($endereco->get($endereco_id)["data"])) {
+            return ["msg" => "Endereço não consta no sistema."];
+        }
+
         if ($id) {
             $query = "UPDATE pessoa SET 
                 nome = :nome, 
@@ -44,12 +51,52 @@ class Pessoa {
 
         if ($stmt->execute()) {
             if ($id) {
-                echo "Pessoa atualizada com sucesso.";
+                return ["msg" => "Pessoa atualizada com sucesso."];
             } else {
-                echo "Pessoa criada com sucesso";
+                return ["msg" => "Pessoa criada com sucesso"];
             }
         } else {
-            echo "Erro na execução da query.";
+            return ["msg" => "Erro na execução da query."];
+        }
+    }
+
+    public function get($id) {
+        if (!isset($id)) {
+            return ["msg" => "O id é necessário para recuperar pessoa."];
+        }
+
+        $query = "SELECT * FROM Pessoa WHERE idPessoa = :id";
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindParam(':id', $id);
+
+        $stmt->execute();
+        $data = $stmt->fetch();
+
+        if ($data) {
+            return [
+                "msg" => "Pessoa recuperada com sucesso",
+                "data" => $data,
+            ];
+        } else {
+            return ["msg" => "A pessoa não foi encontrada."];
+        }
+    }
+
+    public function delete($id) {
+        if (!isset($id)) {
+            return ["msg" => "O id é necessário para deletar pessoa."];
+        }
+
+        $query = "DELETE FROM Endereco WHERE idPessoa = :id";
+
+        $stmt->bindParam(':id', $id);
+
+        if ($stmt->execute()) {
+            return ["msg" => "Pessoa deletada com sucesso"];
+        } else {
+            return ["msg" => "Ocorreu um erro ao deletar o pessoa"];
         }
     }
 }
