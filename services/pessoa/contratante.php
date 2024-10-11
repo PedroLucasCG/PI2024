@@ -1,15 +1,15 @@
 <?php
 include __DIR__ . '/../../config/databaseConfig.php';
-include __DIR__ . '/endereco.php';
+include __DIR__ . '/pessoa.php';
 
-class Telefone {
+class Contratante {
     private $pdo;
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
 
-    public function upsert($id = null, $telefone, $Pessoa) {
+    public function upsert($id = null, $Pessoa) {
 
         $pessoa = new Pessoa($this->pdo);
         if(!isset($pessoa->get($Pessoa)["data"])) {
@@ -17,18 +17,16 @@ class Telefone {
         }
 
         if ($id) {
-            $query = "UPDATE Telefone SET 
-                telefone = :telefone, 
+            $query = "UPDATE Contratante SET 
                 Pessoa = :Pessoa, 
-            WHERE idTelefone = :id";
+            WHERE idContratante = :id";
         } else {
-            $query = "INSERT INTO Telefone (telefone, Pessoa)
-                VALUES (:telefone, :Pessoa)";
+            $query = "INSERT INTO Contratante (Pessoa)
+                VALUES (:Pessoa)";
         }
 
         $stmt = $this->pdo->prepare($query);
 
-        $stmt->bindParam(':telefone', $telefone);
         $stmt->bindParam(':Pessoa', $Pessoa);
 
         if ($id) {
@@ -37,9 +35,9 @@ class Telefone {
 
         if ($stmt->execute()) {
             if ($id) {
-                return ["msg" => "Telefone atualizado com sucesso."];
+                return ["msg" => "Contratante atualizado com sucesso."];
             } else {
-                return ["msg" => "Telefone criado com sucesso"];
+                return ["msg" => "Contratante criado com sucesso"];
             }
         } else {
             return ["msg" => "Erro na execução da query."];
@@ -48,10 +46,10 @@ class Telefone {
 
     public function get($id) {
         if (!isset($id)) {
-            return ["msg" => "O id é necessário para recuperar telefone."];
+            return ["msg" => "O id é necessário para recuperar contratante."];
         }
 
-        $query = "SELECT * FROM Telefone WHERE idTelefone = :id";
+        $query = "SELECT * FROM Contratante WHERE idContratante = :id";
 
         $stmt = $this->pdo->prepare($query);
 
@@ -62,37 +60,37 @@ class Telefone {
 
         if ($data) {
             return [
-                "msg" => "Telefone recuperado com sucesso",
+                "msg" => "Contratante recuperado com sucesso",
                 "data" => $data,
             ];
         } else {
-            return ["msg" => "O telefone não foi encontrado."];
+            return ["msg" => "O contratante não foi encontrado."];
         }
     }
 
     public function delete($id) {
         if (!isset($id)) {
-            return ["msg" => "O id é necessário para deletar telefone."];
+            return ["msg" => "O id é necessário para deletar contratante."];
         }
 
-        $query = "DELETE FROM Telefone WHERE idTelefone = :id";
+        $query = "DELETE FROM Contratante WHERE idContratante = :id";
 
         $stmt->bindParam(':id', $id);
 
         if ($stmt->execute()) {
-            return ["msg" => "Telefone deletado com sucesso"];
+            return ["msg" => "Contratante deletado com sucesso."];
         } else {
-            return ["msg" => "Ocorreu um erro ao deletar o telefone"];
+            return ["msg" => "Ocorreu um erro ao deletar o contratante."];
         }
     }
 }
 
-$telefone = new Telefone($pdo);
+$contratante = new Contratante($pdo);
 
-$telefone->upsert("99999999999", 1);
+$contratante->upsert(1);
 
-$telefone->upsert(1, "99999999999", 1);
+$contratante->upsert(1, 1);
 
-$telefone->get(1);
+$contratante->get(1);
 
 
