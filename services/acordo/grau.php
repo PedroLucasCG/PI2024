@@ -1,7 +1,7 @@
 <?php
 include __DIR__ . '/../../config/databaseConfig.php';
 
-class Area {
+class Grau {
     private $pdo;
 
     public function __construct($pdo) {
@@ -11,11 +11,11 @@ class Area {
     public function upsert($id = null, $nome) {
 
         if ($id) {
-            $query = "UPDATE Area SET 
+            $query = "UPDATE Grau SET 
                 nome = :nome, 
-            WHERE idArea = :id";
+            WHERE idGrau = :id";
         } else {
-            $query = "INSERT INTO Area (nome)
+            $query = "INSERT INTO Grau (nome)
                 VALUES (:nome,)";
         }
 
@@ -29,9 +29,9 @@ class Area {
 
         if ($stmt->execute()) {
             if ($id) {
-                return ["msg" => "Área atualizada com sucesso."];
+                return ["msg" => "Grau atualizado com sucesso."];
             } else {
-                return ["msg" => "Área criada com sucesso"];
+                return ["msg" => "Grau criado com sucesso"];
             }
         } else {
             return ["msg" => "Erro na execução da query."];
@@ -40,10 +40,10 @@ class Area {
 
     public function get($id) {
         if (!isset($id)) {
-            return ["msg" => "O id é necessário para recuperar área."];
+            return ["msg" => "O id é necessário para recuperar Grau."];
         }
 
-        $query = "SELECT * FROM Area WHERE idArea = :id";
+        $query = "SELECT * FROM Grau WHERE idGrau = :id";
 
         $stmt = $this->pdo->prepare($query);
 
@@ -54,37 +54,37 @@ class Area {
 
         if ($data) {
             return [
-                "msg" => "Área recuperada com sucesso",
+                "msg" => "Grau recuperado com sucesso",
                 "data" => $data,
             ];
         } else {
-            return ["msg" => "A área não foi encontrada."];
+            return ["msg" => "O Grau não foi encontrado."];
         }
     }
 
     public function delete($id) {
         if (!isset($id)) {
-            return ["msg" => "O id é necessário para deletar área."];
+            return ["msg" => "O id é necessário para deletar Grau."];
         }
 
-        $query = "DELETE FROM Area WHERE idArea = :id";
+        $query = "DELETE FROM Grau WHERE idGrau = :id";
 
         $stmt->bindParam(':id', $id);
 
         if ($stmt->execute()) {
-            return ["msg" => "Área deletada com sucesso"];
+            return ["msg" => "Grau deletado com sucesso"];
         } else {
-            return ["msg" => "Ocorreu um erro ao deletar a área"];
+            return ["msg" => "Ocorreu um erro ao deletar o Grau"];
         }
     }
 }
 
-$area = new Area($pdo);
+$Grau = new Grau($pdo);
 
-$area->upsert('Centro');
+$Grau->upsert('Bom');
 
-$area->upsert(1, '87654321', 'RJ', 'Rio de Janeiro', 'Zona Sul');
+$Grau->upsert(1, 'Ruim');
 
-$area->get(1);
+$Grau->get(1);
 
 
