@@ -1,6 +1,6 @@
 <?php
-include __DIR__ . '/../../config/databaseConfig.php';
-include __DIR__ . '/oferta.php';
+include __DIR__ . '/config/databaseConfig.php';
+include __DIR__ . '/services/oferta/oferta.php';
 
 class Amostra {
     private $pdo;

@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/../../config/databaseConfig.php';
+include __DIR__ . '/config/databaseConfig.php';
 
 class Area {
     private $pdo;

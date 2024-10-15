@@ -1,6 +1,6 @@
 <?php
-include __DIR__ . '/../../config/databaseConfig.php';
-include __DIR__ . '/area.php';
+include __DIR__ . '/config/databaseConfig.php';
+include __DIR__ . '/services/oferta/area.php';
 
 class Servico {
     private $pdo;
@@ -9,7 +9,7 @@ class Servico {
         $this->pdo = $pdo;
     }
 
-    public function upsert($id = null, $nome, $nome, $Area) {
+    public function upsert($id = null, $nome, $Area) {
 
         if ($id) {
             $query = "UPDATE Servico SET 

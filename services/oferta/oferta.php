@@ -1,7 +1,7 @@
 <?php
-include __DIR__ . '/../../config/databaseConfig.php';
-include __DIR__ . '../pessoa/freelancer.php';
-include __DIR__ . '/servico.php';
+include __DIR__ . '/config/databaseConfig.php';
+include __DIR__ . '/services/pessoa/freelancer.php';
+include __DIR__ . '/services/oferta/servico.php';
 
 class Oferta {
     private $pdo;
@@ -101,7 +101,7 @@ $oferta = new Oferta($pdo);
 
 $oferta->upsert(1, 1, "Ofera Braba", 10.98);
 
-$oferta->upsert(1, 1, 1, "Ofera Braba", 10.98));
+$oferta->upsert(1, 1, 1, "Ofera Braba", 10.98);
 
 $oferta->get(1);
 

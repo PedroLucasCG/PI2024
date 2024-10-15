@@ -1,6 +1,6 @@
 <?php
-include __DIR__ . '/../../config/databaseConfig.php';
-include __DIR__ . '/endereco.php';
+include __DIR__ . '/config/databaseConfig.php';
+include __DIR__ . '/services/pessoa/endereco.php';
 
 class Telefone {
     private $pdo;
