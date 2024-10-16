@@ -8,7 +8,7 @@
 <body>
     <pre>
     <?php
-        include './controller/pessoa/pessoa.php';
+        include __DIR__ . '/services/pessoa/pessoa.php';
     ?>
     </pre>
 </body>

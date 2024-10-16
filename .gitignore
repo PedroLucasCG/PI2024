@@ -1,2 +1,3 @@
 notas.txt
 vendor
+.phpunit.result.cache
