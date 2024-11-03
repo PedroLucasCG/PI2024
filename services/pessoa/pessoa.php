@@ -2,25 +2,28 @@
 include __DIR__ . '/../../config/databaseConfig.php';
 include __DIR__ . '/endereco.php';
 
-class Pessoa {
+class Pessoa
+{
     private $pdo;
 
-    public function __construct($pdo) {
+    public function __construct($pdo)
+    {
         $this->pdo = $pdo;
     }
 
-    public function upsert($nome, $data_nasc, $cpf, $rg, $senha, $usuario, $email, $data_registro, $endereco_id, $id = null) {
+    public function upsert($nome, $data_nasc, $cpf, $rg, $senha, $usuario, $email, $data_registro, $endereco_id, $id = null)
+    {
 
         $endereco = new Endereco($this->pdo);
-        if(!isset($endereco->get($endereco_id)["data"])) {
+        if (!isset($endereco->get($endereco_id)["data"])) {
             return ["msg" => "Endereço não consta no sistema."];
         }
 
         if ($id) {
-            $query = "UPDATE pessoa SET 
-                nome = :nome, 
-                email = :email, 
-                data_nasc = :data_nasc, 
+            $query = "UPDATE pessoa SET
+                nome = :nome,
+                email = :email,
+                data_nasc = :data_nasc,
                 cpf = :cpf,
                 rg = :rg,
                 senha = :senha,
@@ -60,7 +63,8 @@ class Pessoa {
         }
     }
 
-    public function get($id) {
+    public function get($id)
+    {
         if (!isset($id)) {
             return ["msg" => "O id é necessário para recuperar pessoa."];
         }
@@ -84,7 +88,8 @@ class Pessoa {
         }
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         if (!isset($id)) {
             return ["msg" => "O id é necessário para deletar pessoa."];
         }

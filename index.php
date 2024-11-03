@@ -8,7 +8,9 @@
 <body>
     <pre>
     <?php
-        include __DIR__ . '/services/pessoa/pessoa.php';
+        include __DIR__ . '/configs/databaseConfig.php';
+        include __DIR__ . '/models/endereco.php';
+        new Endereco($pdo, 'Bahia', 'Itamaraju', 'Primavera');
     ?>
     </pre>
 </body>
