@@ -1,14 +1,18 @@
 <?php
 
 class Telefone {
+    private $pdo;
     private $id;
     private $telefone;
 
-    public function  __construct($pdo, $telefone) {
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
+    }
+    public function setTelefone($telefone): void {
         $query = 'SELECT idTelefone AS id
         FROM Endereco
         WHERE telefone = :telefone';
-        $stmt = $pdo->prepare($query);
+        $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':telefone', $telefone);
         try {
             $stmt->execute();
@@ -22,7 +26,7 @@ class Telefone {
         $this->telefone = $telefone;
     }
 
-    public function getAttribute() {
+    public function getAttribute(): array {
         return [
             'id' => $this->id,
             'telefone' => $this->telefone,

@@ -1,19 +1,23 @@
 <?php
 
 class Endereco {
+    private $pdo;
     private $id;
     private $cep;
     private $estado;
     private $cidade;
     private $bairro;
 
-    public function  __construct($pdo, $estado, $cidade, $bairro, $cep = null) {
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
+    }
+    public function setEndereco($estado, $cidade, $bairro, $cep = null): void {
         $query = 'SELECT idEndereco AS id
         FROM Endereco
         WHERE estado = :estado
           AND cidade = :cidade
           AND bairro = :bairro';
-        $stmt = $pdo->prepare($query);
+        $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':estado', $estado);
         $stmt->bindParam(':cidade', $cidade);
         $stmt->bindParam(':bairro', $bairro);
