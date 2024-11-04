@@ -5,6 +5,7 @@ require __DIR__ . './endereco.php';
 
 class Pessoa
 {
+    private $pdo;
     private $id;
     private $nome;
     private $data_nasc;
@@ -14,7 +15,10 @@ class Pessoa
     private $endereco;
     private $telefones = array();
 
-    public function __construct($nome, $data_nasc, $cpf, $senha, $email, $telefones, $estado, $cidade, $bairro, $cep = null, $id = null)
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
+    }
+    public function setPessoa($nome, $data_nasc, $cpf, $senha, $email, $telefones, $estado, $cidade, $bairro, $cep = null, $id = null)
     {
         $this->id = $id;
         $this->nome = $nome;
@@ -22,9 +26,12 @@ class Pessoa
         $this->cpf = $cpf;
         $this->senha = $senha;
         $this->email = $email;
-        $this->endereco = new Endereco($estado, $cidade, $bairro, $cep);
+        $this->endereco = new Endereco($this->pdo);
+        $this->endereco->setEndereco($estado, $cidade, $bairro, $cep);
         foreach ($telefones as $key => $value) {
-            array_push($telefones, new Telefone($value));
+            $telefone = new Telefone($this->pdo);
+            $telefone->setTelefone($value);
+            array_push($telefones, $telefone);
         }
     }
 
