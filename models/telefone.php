@@ -8,12 +8,13 @@ class Telefone {
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
-    public function setTelefone($telefone): void {
+    public function setTelefone($telefone, $pessoa_id): void {
         $query = 'SELECT idTelefone AS id
-        FROM Endereco
-        WHERE telefone = :telefone';
+        FROM Telefone
+        WHERE telefone = :telefone AND Pessoa = :pessoa_id';
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':telefone', $telefone);
+        $stmt->bindParam('pessoa_id', $pessoa_id);
         try {
             $stmt->execute();
             $data = $stmt->fetch();

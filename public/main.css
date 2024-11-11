@@ -1,0 +1,40 @@
+@font-face {
+    font-family: Poppins-Regular;
+    src: url('../assets/fonts/poppins/Poppins-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'LeagueGothic-Regular';
+    src: url('../assets/fonts/LeagueGothic/LeagueGothic-Regular.ttf');
+}
+
+
+*::before,
+*::after,
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --input-color: #f2f2f2;
+    --accent-color: #007AFF;
+    --logo-primary-color: #f7a21b;
+    --logo-secondary-color: #4b538b;
+    font-family: Poppins-Regular;
+}
+
+input {
+    font-family: Poppins-Regular;
+}
+
+body,
+html{
+    height: 100%;
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
