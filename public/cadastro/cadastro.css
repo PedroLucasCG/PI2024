@@ -1,0 +1,144 @@
+body{
+    background-color: brown;
+    display: grid;
+    background-image: url('../../assets/imgs/backgorund-login.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+main {
+    background-color: white;
+    width: 50%;
+    height: 100%;
+    justify-self: right;
+    padding: 2rem;
+}
+
+main h1 {
+    text-align: right;
+    font-size: 5rem;
+    font-family: 'LeagueGothic-Regular';
+    color: var(--logo-secondary-color);
+}
+
+
+main h1 span,
+label span{
+    color: var(--logo-primary-color);
+}
+
+form{
+    display: grid;
+    padding: 0;
+    margin: 0;
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem;
+}
+
+form input,
+form select  {
+    position: relative;
+    font-size: 1rem;
+    border: #79747E solid .1rem;
+    background-color: white;
+}
+.input-wrapper {
+    margin: 0;
+
+    & input {
+        width: 100%;
+    }
+}
+form select {
+    width: 20ch;
+    margin: 0;
+    height: 100%;
+}
+
+form :nth-child(even){
+    grid-column-start: 1;
+}
+
+form :nth-child(odd):not( > :first-child){
+    grid-column-start: 2;
+}
+
+form h2,
+form > div.terms,
+form > div.endereco,
+form input[type="submit"],
+form .input-wrapper[type="password"] {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+div.terms {
+    display: flex;
+    align-items: baseline;
+    gap: .5rem;
+
+    & input {
+        transform: scale(1.3);
+    }
+}
+
+div.endereco {
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+    margin: 0;
+}
+
+div.endereco .input-wrapper {
+    width: 45%;
+}
+
+div.selects {
+    margin: 0;
+    display: flex;
+    gap: .5rem;
+    padding-bottom: 1rem;
+}
+
+input[type="submit"] {
+    border: none;
+    margin: 0 auto 1rem;
+    width: 60%;
+}
+
+p{
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.input-wrapper {
+    position: relative;
+}
+.input-wrapper::before {
+    position: absolute;
+    top: -.5rem;
+    left: 1rem;
+    content: "label";
+    display: block;
+    padding: 0 .5rem;
+    font-size: .8rem;
+    background-color: white;
+    z-index: 5;
+}
+
+.input-wrapper:has(input[type="checkbox"]):before{
+    content: "";
+}
+
+@media screen and (max-width: 1000px) {
+    main {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    main {
+        font-size: .8rem;
+        padding: .5rem;
+    }
+}

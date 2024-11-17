@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../main.css">
+    <link rel="stylesheet" href="../form.css">
+    <link rel="stylesheet" href="cadastro.css">
+    <title>1CORRE</title>
+</head>
+<body>
+    <main>
+        <section>
+            <h1><span>1</span>CORRE</h1>
+            <form action="">
+                <h2>Cadastro:</h2>
+                <div class="input-wrapper"><input type="text" name="nome" placeholder="Nome"></div>
+                <div class="input-wrapper"><input type="text" name="data_nasc" placeholder="__/__/____"></div>
+                <div class="input-wrapper"><input type="text" name="cpf" placeholder="000.000.000-00"></div>
+                <div class="input-wrapper"><input type="text" name="usuario" placeholder="Exemplo"></div>
+                <div class="input-wrapper"><input type="text" name="email" placeholder="email@umcorre.com"></div>
+                <div class="input-wrapper"><input type="text" name="telefone" placeholder="(00)0 0000-0000"></div>
+
+                <div class="endereco">
+                    <div class="input-wrapper"> <input type="text" name="endereco" placeholder="Rua/Avenida/Apto"></div>
+                    <div class="selects">
+                        <div class="input-wrapper"><select name="estado">
+                            <option selected disabled>Estado</option>
+                        </select></div>
+
+                        <div class="input-wrapper"><select name="cidade">
+                            <option selected disabled>Cidade</option>
+                        </select></div>
+
+                        <div class="input-wrapper"><select name="bairro">
+                            <option selected disabled>Bairro</option>
+                        </select></div>
+                    </div>
+                </div>
+
+                <div class="input-wrapper" type="password"><input type="password" name="senha" id="senha"></div>
+                <div class="input-wrapper" type="password"><input type="password" id="check_senha"></div>
+
+                <div class="terms">
+                    <input type="checkbox" name="terms" id="terms">
+                    <label for="terms">Eu aceito os <span>Termos</span> e <span>Políticas de Privacidade</span></label>
+                </div>
+                <input type="submit" value="Criar Conta">
+            </form>
+            <p>Você já tem uma conta? <a href="">Entrar</a></p>
+        </section>
+    </main>
+</body>
+</html>

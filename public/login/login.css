@@ -2,7 +2,8 @@ body{
     background-color: brown;
     display: grid;
     background-image: url('../../assets/imgs/backgorund-login.jpg');
-    background-size: contain;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 main {
@@ -27,48 +28,20 @@ main h1 span{
     color: var(--logo-primary-color);
 }
 
-main h2 {
-    margin-bottom: 2rem;
-}
-
-form {
-    margin-top: 30%;
-    padding-bottom: 10%;
-    border-bottom: .2rem var(--input-color) solid;
-}
-
-form > input {
-    display: block;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    width: 40ch;
-    border: none;
-    font-size: 1.2rem;
-    background-color: var(--input-color);
-    border-radius: .3rem;
-    outline-color: var(--logo-primary-color);
-}
-
-form > div {
-    display: flex;
-    margin: 1.2rem 0 2rem 0;
-}
-form > div a {
-    display: block;
-    text-align: right;
-    flex-grow: 1;
-}
-
-form > div span {
-    display: block;
-    flex-grow: 1;
-}
-
-form > input[type="submit"] {
-    background-color: var(--accent-color);
-    color: white;
-}
-
 p{
     margin-top: 1rem;
+}
+
+
+@media screen and (max-width: 1000px) {
+    main {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    main {
+        font-size: .8rem;
+        padding: .5rem;
+    }
 }

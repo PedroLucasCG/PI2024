@@ -1,0 +1,96 @@
+form h2 {
+    margin-bottom: 2rem;
+}
+
+form {
+    margin-top: 30%;
+    padding-bottom: 10%;
+    border-bottom: .2rem var(--input-color) solid;
+}
+
+form input,
+select {
+    display: block;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    width: 40ch;
+    border: none;
+    font-size: 1.2rem;
+    background-color: var(--input-color);
+    border-radius: .3rem;
+    outline-color: var(--logo-primary-color);
+}
+
+form > div {
+    display: flex;
+    margin: 1.2rem 0 2rem 0;
+}
+form > div a {
+    display: block;
+    text-align: right;
+    flex-grow: 1;
+}
+
+form > div span.toggle {
+    display: grid;
+    flex-grow: 1;
+
+    & div {
+        position: relative;
+        background-image: linear-gradient(to right, var(--logo-primary-color) 10%, red);
+        justify-self: left;
+        align-self: center;
+        border-radius: 2rem;
+        width: 30%;
+        height: 30%;
+        cursor: pointer;
+        filter: saturate(30%);
+        transition: all .2s ease-in-out;
+
+        &::before {
+            display: block;
+            content: "";
+            background-color: var(--logo-secondary-color);
+            width: 50%;
+            aspect-ratio: 1;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 5rem;
+            right: 50%;
+            transition: right .2s ease-in-out;
+        }
+
+        &::after {
+            content: "Lembrar de mim?";
+            display: block;
+            position: absolute;
+            width: 10rem;
+            left: 110%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+    & div.remind {
+        filter: saturate(100%);
+    }
+    & div.remind::before {
+        right: 0;
+    }
+    & div.remind::after {
+        content: "Lembre de mim!";
+    }
+}
+
+form > input[type="submit"] {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+@media screen and (max-width: 560px) {
+    form > input {
+        font-size: .8rem;
+        padding: .5rem;
+    }
+}
