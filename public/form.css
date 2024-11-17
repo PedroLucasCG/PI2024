@@ -12,10 +12,10 @@ form input,
 select {
     display: block;
     margin-bottom: 1rem;
-    padding: 1rem;
+    padding: 1.2rem;
     width: 40ch;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1rem;
     background-color: var(--input-color);
     border-radius: .3rem;
     outline-color: var(--logo-primary-color);

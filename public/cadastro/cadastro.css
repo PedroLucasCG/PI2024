@@ -39,7 +39,7 @@ form input,
 form select  {
     position: relative;
     font-size: 1rem;
-    border: #79747E solid .1rem;
+    border: var(--type-color) solid .1rem;
     background-color: white;
 }
 .input-wrapper {
@@ -76,6 +76,8 @@ div.terms {
     display: flex;
     align-items: baseline;
     gap: .5rem;
+    margin: 0;
+    margin-left: 1rem;
 
     & input {
         transform: scale(1.3);
@@ -126,13 +128,93 @@ p{
     z-index: 5;
 }
 
-.input-wrapper:has(input[type="checkbox"]):before{
+input[type="checkbox"]{
+    border: solid red 1px;
+    background-color: red;
+    display: inline;
+}
+
+.input-wrapper:has(input[type="checkbox"])::before {
     content: "";
 }
 
-@media screen and (max-width: 1000px) {
+.input-wrapper:has(input[name="senha"])::before {
+    content: "Senha";
+}
+
+.input-wrapper:has(input[id="check_senha"])::before {
+    content: "Confirme a sua Senha";
+}
+
+.input-wrapper:has(select[name="bairro"])::before {
+    content: "Bairro";
+}
+
+.input-wrapper:has(select[name="cidade"])::before {
+    content: "Cidade";
+}
+
+.input-wrapper:has(select[name="estado"])::before {
+    content: "Estado";
+}
+
+.input-wrapper:has(input[name="email"])::before {
+    content: "E-mail";
+}
+
+.input-wrapper:has(input[name="telefone"])::before {
+    content: "Telefone";
+}
+
+.input-wrapper:has(input[name="endereco"])::before {
+    content: "Endereço";
+}
+
+.input-wrapper:has(input[name="cpf"])::before {
+    content: "CPF";
+}
+
+.input-wrapper:has(input[name="usuario"])::before {
+    content: "Usuário";
+}
+
+.input-wrapper:has(input[name="nome"])::before {
+    content: "Nome";
+}
+
+.input-wrapper:has(input[name="data_nasc"])::before {
+    content: "Data de Nascimento";
+}
+
+@media screen and (max-width: 1148px) {
     main {
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 1360px) {
+    body {
+        background-image: url("/assets/imgs/background-signin-vertical.jpg");
+        background-position: right 35rem center;
+        background-attachment: fixed;
+    }
+    .input-wrapper:not(:has(input[type="checkbox"])), div.endereco .input-wrapper {
+        width: 100%;
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
+    .endereco, .selects {
+        flex-wrap: wrap;
+        width: 100%;
+        & select{
+            width: 100%;
+        }
+    }
+    .selects {
+        & .input-wrapper:not( :first-child) {
+            margin-top: 1rem;
+        }
     }
 }
 

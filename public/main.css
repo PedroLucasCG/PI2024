@@ -22,11 +22,13 @@
     --accent-color: #007AFF;
     --logo-primary-color: #f7a21b;
     --logo-secondary-color: #4b538b;
+    --type-color: #79747E;
     font-family: Poppins-Regular;
 }
 
 input {
     font-family: Poppins-Regular;
+    color: var(--type-color);
 }
 
 body,
