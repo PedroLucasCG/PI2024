@@ -15,35 +15,33 @@
             <h1><span>1</span>CORRE</h1>
             <form action="">
                 <h2>Cadastro:</h2>
-                <div class="input-wrapper"><input type="text" name="nome" placeholder="Nome"></div>
-                <div class="input-wrapper"><input type="text" name="data_nasc" id="data_nasc" placeholder="__/__/____"></div>
-                <div class="input-wrapper"><input type="text" name="cpf" id="cpf" placeholder="000.000.000-00"></div>
-                <div class="input-wrapper"><input type="text" name="usuario" placeholder="Exemplo"></div>
-                <div class="input-wrapper"><input type="email" name="email" placeholder="email@umcorre.com"></div>
-                <div class="input-wrapper"><input type="text" name="telefone" id="telefone" placeholder="(00)0 0000-0000"></div>
+                <div class="input-wrapper"><input type="text" name="nome" placeholder="Ex.: Joaquim Mercedes" required></div>
+                <div class="input-wrapper"><input type="text" name="data_nasc" id="data_nasc" placeholder="00/00/0000" required></div>
+                <div class="input-wrapper"><input type="text" name="cpf" id="cpf" placeholder="000.000.000-00" required></div>
+                <div class="input-wrapper"><input type="text" name="usuario" placeholder="Ex.: Joaquim Pinturas" required></div>
+                <div class="input-wrapper"><input type="email" name="email" placeholder="email@umcorre.com" required></div>
+                <div class="input-wrapper"><input type="text" name="telefone" id="telefone" placeholder="(00)0 0000-0000" required></div>
 
                 <div class="endereco">
                     <div class="input-wrapper"> <input type="text" name="endereco" placeholder="Rua/Avenida/Apto"></div>
                     <div class="selects">
-                        <div class="input-wrapper"><select name="estado">
-                            <option selected disabled>Estado</option>
+                        <div class="input-wrapper"><select name="estado" id="estado" required>
+                            <option selected disabled>Ex.: Bahia</option>
                         </select></div>
 
-                        <div class="input-wrapper"><select name="cidade">
-                            <option selected disabled>Cidade</option>
+                        <div class="input-wrapper"><select name="cidade" id="cidade" required disabled>
+                            <option selected disabled>Ex.: Eunápolis</option>
                         </select></div>
 
-                        <div class="input-wrapper"><select name="bairro">
-                            <option selected disabled>Bairro</option>
-                        </select></div>
+                        <div class="input-wrapper"><input type="text" name="bairro" id="bairro" placeholder="Ex.: Juca Rosa" required disabled></div>
                     </div>
                 </div>
 
-                <div class="input-wrapper" type="password"><input type="password" name="senha" id="senha"></div>
-                <div class="input-wrapper" type="password"><input type="password" id="check_senha"></div>
+                <div class="input-wrapper" type="password"><input type="password" name="senha" id="senha" required></div>
+                <div class="input-wrapper" type="password"><input type="password" id="check_senha" required></div>
 
                 <div class="terms">
-                    <div class="input-wrapper"><input type="checkbox" name="terms" id="terms"></div>
+                    <div class="input-wrapper"><input type="checkbox" name="terms" id="terms" required></div>
                     <label for="terms">Eu aceito os <span>Termos</span> e <span>Políticas de Privacidade</span></label>
                 </div>
                 <input type="submit" value="Criar Conta">

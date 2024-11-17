@@ -49,10 +49,14 @@ form select  {
         width: 100%;
     }
 }
-form select {
+form select, .selects input {
     width: 20ch;
     margin: 0;
     height: 100%;
+}
+
+input[disabled] {
+    opacity: .6;
 }
 
 form :nth-child(even){
@@ -139,31 +143,31 @@ input[type="checkbox"]{
 }
 
 .input-wrapper:has(input[name="senha"])::before {
-    content: "Senha";
+    content: "Senha*";
 }
 
 .input-wrapper:has(input[id="check_senha"])::before {
     content: "Confirme a sua Senha";
 }
 
-.input-wrapper:has(select[name="bairro"])::before {
-    content: "Bairro";
+.input-wrapper:has(input[name="bairro"])::before {
+    content: "Bairro*";
 }
 
 .input-wrapper:has(select[name="cidade"])::before {
-    content: "Cidade";
+    content: "Cidade*";
 }
 
 .input-wrapper:has(select[name="estado"])::before {
-    content: "Estado";
+    content: "Estado*";
 }
 
 .input-wrapper:has(input[name="email"])::before {
-    content: "E-mail";
+    content: "E-mail*";
 }
 
 .input-wrapper:has(input[name="telefone"])::before {
-    content: "Telefone";
+    content: "Telefone*";
 }
 
 .input-wrapper:has(input[name="endereco"])::before {
@@ -171,19 +175,19 @@ input[type="checkbox"]{
 }
 
 .input-wrapper:has(input[name="cpf"])::before {
-    content: "CPF";
+    content: "CPF*";
 }
 
 .input-wrapper:has(input[name="usuario"])::before {
-    content: "Usuário";
+    content: "Usuário*";
 }
 
 .input-wrapper:has(input[name="nome"])::before {
-    content: "Nome";
+    content: "Nome*";
 }
 
 .input-wrapper:has(input[name="data_nasc"])::before {
-    content: "Data de Nascimento";
+    content: "Data de Nascimento*";
 }
 
 @media screen and (max-width: 1148px) {
@@ -207,7 +211,7 @@ input[type="checkbox"]{
     .endereco, .selects {
         flex-wrap: wrap;
         width: 100%;
-        & select{
+        & select, input{
             width: 100%;
         }
     }
