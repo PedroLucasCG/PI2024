@@ -33,6 +33,7 @@ estado.addEventListener('change', async function(event) {
     cidade.removeAttribute('disabled');
     cidade.innerHTML = cidade_dafault;
     bairro.setAttribute('disabled', true);
+    bairro.value = "";
     const cidades = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selected_id}/municipios`)
     .then(response => {
         if (!response.ok) {
