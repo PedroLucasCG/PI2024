@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../main.css">
     <link rel="stylesheet" href="../form.css">
     <link rel="stylesheet" href="cadastro.css">
+    <script type="module" src="./cadastro.js" defer></script>
     <title>1CORRE</title>
 </head>
 <body>
@@ -15,11 +16,11 @@
             <form action="">
                 <h2>Cadastro:</h2>
                 <div class="input-wrapper"><input type="text" name="nome" placeholder="Nome"></div>
-                <div class="input-wrapper"><input type="text" name="data_nasc" placeholder="__/__/____"></div>
-                <div class="input-wrapper"><input type="text" name="cpf" placeholder="000.000.000-00"></div>
+                <div class="input-wrapper"><input type="text" name="data_nasc" id="data_nasc" placeholder="__/__/____"></div>
+                <div class="input-wrapper"><input type="text" name="cpf" id="cpf" placeholder="000.000.000-00"></div>
                 <div class="input-wrapper"><input type="text" name="usuario" placeholder="Exemplo"></div>
-                <div class="input-wrapper"><input type="text" name="email" placeholder="email@umcorre.com"></div>
-                <div class="input-wrapper"><input type="text" name="telefone" placeholder="(00)0 0000-0000"></div>
+                <div class="input-wrapper"><input type="email" name="email" placeholder="email@umcorre.com"></div>
+                <div class="input-wrapper"><input type="text" name="telefone" id="telefone" placeholder="(00)0 0000-0000"></div>
 
                 <div class="endereco">
                     <div class="input-wrapper"> <input type="text" name="endereco" placeholder="Rua/Avenida/Apto"></div>
@@ -47,7 +48,7 @@
                 </div>
                 <input type="submit" value="Criar Conta">
             </form>
-            <p>Você já tem uma conta? <a href="">Entrar</a></p>
+            <p>Você já tem uma conta? <a href="../login/login.html">Entrar</a></p>
         </section>
     </main>
 </body>
