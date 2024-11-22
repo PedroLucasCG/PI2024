@@ -3,12 +3,13 @@
 class Telefone {
     private $pdo;
     private $id;
+    private $pessoa_id;
     private $telefone;
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
-    public function setTelefone($telefone, $pessoa_id): void {
+    public function setTelefone(string $telefone, int $pessoa_id): ?array {
         $query = 'SELECT idTelefone AS id
         FROM Telefone
         WHERE telefone = :telefone AND Pessoa = :pessoa_id';
@@ -22,15 +23,22 @@ class Telefone {
             echo 'Erro ao executar a verificação da existência do telefone. Erro: ' . $ex->getMessage();
         }
         if (isset($data['id'])) {
-            $this->id = $data['id'];
+            return [ 'msg' => "Esse telefone já está cadastrado." ];
         }
         $this->telefone = $telefone;
     }
 
-    public function getAttribute(): array {
+    public function getAllAttributes(): array {
         return [
             'id' => $this->id,
             'telefone' => $this->telefone,
+            'pessoa_id' => $this->pessoa_id,
         ];
+    }
+
+    public function from(string $telefone, int $id, int $pessoa_id): void {
+        $this->id = $id;
+        $this->telefone = $telefone;
+        $this->pessoa_id = $pessoa_id;
     }
 }

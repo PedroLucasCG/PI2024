@@ -11,7 +11,7 @@ class Endereco {
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
-    public function setEndereco($estado, $cidade, $bairro, $cep = null): void {
+    public function setEndereco(string $estado, string $cidade, string $bairro, string $cep = null): void {
         $query = 'SELECT idEndereco AS id
         FROM Endereco
         WHERE estado = :estado
@@ -36,7 +36,7 @@ class Endereco {
         $this->bairro = $bairro;
     }
 
-    public function getAllAttributes() {
+    public function getAllAttributes(): array {
         return [
             'id' => $this->id,
             'cep' => $this->cep,
@@ -44,5 +44,13 @@ class Endereco {
             'cidade' => $this->cidade,
             'bairro' => $this->bairro,
         ];
+    }
+
+    public function from(string $estado, string $cidade, string $bairro, int $id, string $cep = null) :void {
+        $this->id = $id;
+        $this->cep = $cep;
+        $this->estado = $estado;
+        $this->cidade = $cidade;
+        $this->bairro = $bairro;
     }
 }

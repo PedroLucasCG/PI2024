@@ -65,7 +65,7 @@ form > div span.toggle {
             content: "Lembrar de mim?";
             display: block;
             position: absolute;
-            width: 10rem;
+            width: 15ch;
             left: 110%;
             top: 50%;
             transform: translateY(-50%);
