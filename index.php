@@ -2,7 +2,9 @@
 require __DIR__ . '/services/pessoa/autenticacao.php';
 require __DIR__ . '/configs/databaseConfig.php';
 
-if (empty($_POST)) {
+session_start();
+
+if (isset($_POST['form'])) {
     header(header: "Location: /public/login/login.html");
     exit;
 } else {
@@ -11,4 +13,6 @@ if (empty($_POST)) {
         $auth = new Autenticacao(pdo: $pdo);
         print_r($auth->login($usuario, $senha));
     }
+    header(header: "Location: /public/cadastro/cadastro.html");
+    exit;
 }

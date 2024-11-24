@@ -9,15 +9,12 @@ class Autenticacao
         $this->pdo = $pdo;
     }
 
-    function login(string $usuario, string $senha): array
+    function login(string $email, string $senha): array
     {
-        $this->usuario = $usuario;
-        $this->senha = $senha;
-
-        $query = "SELECT idPessoa FROM Pessoa WHERE usuario = :usuario AND senha = :senha";
+        $query = "SELECT * FROM Pessoa WHERE email = :email AND senha = :senha";
 
         $stmt = $this->pdo->prepare(query: $query);
-        $stmt->bindParam(param: ":usuario", var: $usuario, type: PDO::PARAM_STR);
+        $stmt->bindParam(param: ":email", var: $email, type: PDO::PARAM_STR);
         $stmt->bindParam(param: ":senha", var: $senha, type: PDO::PARAM_STR);
 
         try {
@@ -30,8 +27,7 @@ class Autenticacao
             return ['msg' => 'O login do usuário não existe.'];
         } else {
             session_start();
-            $_SESSION['usuario'] = $usuario;
-            $_SESSION['idPessoa'] = $data['idPessoa'];
+            $_SESSION['login'] = $data;
             return ['msg' => 'Login realizado com sucesso.', 'userId' => $data['idPessoa']];
         }
     }
