@@ -1,4 +1,4 @@
-const getLoginData = async () => {
+export default async function get_login_data () {
     try {
         const response = await fetch('../../controllers/session/verify.php', {
             method: 'GET',
@@ -17,11 +17,3 @@ const getLoginData = async () => {
         console.error('Error:', error);
     }
 };
-
-(async () => {
-    const login = await getLoginData();
-    if (login.error) {
-        window.location.replace('../../index.php');
-    }
-    console.log('Login Data:', login);
-})();
