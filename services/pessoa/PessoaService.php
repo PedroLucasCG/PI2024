@@ -1,8 +1,8 @@
 <?php
-include __DIR__ . '/../../config/databaseConfig.php';
-include __DIR__ . '/endereco.php';
+require __DIR__ . '../../models/usuario/endereco.php';
+require __DIR__ . '../../models/usuario/telefone.php';
 
-class Pessoa
+class PessoaService
 {
     private $pdo;
 
@@ -11,13 +11,18 @@ class Pessoa
         $this->pdo = $pdo;
     }
 
-    public function upsert($nome, $data_nasc, $cpf, $rg, $senha, $usuario, $email, $data_registro, $endereco_id, $id = null)
+    public function upsert(array $pessoa)
     {
-
+        extract(array: $pessoa);
+        extract($endereco);
         $endereco = new Endereco($this->pdo);
-        if (!isset($endereco->get($endereco_id)["data"])) {
-            return ["msg" => "Endereço não consta no sistema."];
-        }
+        $endereco->setEndereco(
+            estado: $estado,
+            cidade: $cidade,
+            bairro: $bairro,
+            cep: $cep
+        );
+        $endereco_id = $endereco->create();
 
         if ($id) {
             $query = "UPDATE pessoa SET
@@ -56,15 +61,22 @@ class Pessoa
             if ($id) {
                 return ["msg" => "Pessoa atualizada com sucesso."];
             } else {
-                return ["msg" => "Pessoa criada com sucesso"];
+                foreach ($telefones as $key => $value) {
+                    $telefone = new Telefone($this->pdo);
+                    $telefone->setTelefone( telefone: $value, pessoa_id: $this->pdo->lastInsertId());
+                    $telefone->create();
+                }
+
+                return ["msg" => "Pessoa criada com sucesso."];
             }
         } else {
             return ["msg" => "Erro na execução da query."];
         }
     }
 
-    public function get($id)
+    public function get($id): array
     {
+        //trazer os telefones e o endereço junto
         if (!isset($id)) {
             return ["msg" => "O id é necessário para recuperar pessoa."];
         }
@@ -88,13 +100,16 @@ class Pessoa
         }
     }
 
-    public function delete($id)
+    public function delete($id): array
     {
+        //deletar o endereço, pessoa e telefone (nessa ordem)
         if (!isset($id)) {
             return ["msg" => "O id é necessário para deletar pessoa."];
         }
 
         $query = "DELETE FROM Endereco WHERE idPessoa = :id";
+
+        $stmt = $this->pdo->prepare($query);
 
         $stmt->bindParam(':id', $id);
 
@@ -105,8 +120,3 @@ class Pessoa
         }
     }
 }
-
-$pessoa = new Pessoa($pdo);
-
-$pessoa->upsert('John Doe', '1990-01-01', '12345678900', '12345678', 'password123', 'johndoe', 'john@example.com', '2024-09-30', 1);
-?>

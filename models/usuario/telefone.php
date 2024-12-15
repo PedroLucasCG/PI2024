@@ -1,5 +1,5 @@
 <?php
-
+require __DIR__ . '../../services/pessoa/TelefoneService.php';
 class Telefone {
     private $pdo;
     private $id;
@@ -15,7 +15,7 @@ class Telefone {
         WHERE telefone = :telefone AND Pessoa = :pessoa_id';
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':telefone', $telefone);
-        $stmt->bindParam('pessoa_id', $pessoa_id);
+        $stmt->bindParam(':pessoa_id', $pessoa_id);
         try {
             $stmt->execute();
             $data = $stmt->fetch();
@@ -26,6 +26,7 @@ class Telefone {
             return [ 'msg' => "Esse telefone já está cadastrado." ];
         }
         $this->telefone = $telefone;
+        $this->pessoa_id = $pessoa_id;
     }
 
     public function getAllAttributes(): array {
@@ -34,6 +35,11 @@ class Telefone {
             'telefone' => $this->telefone,
             'pessoa_id' => $this->pessoa_id,
         ];
+    }
+
+    public function create(): void {
+        $service = new TelefoneService($this->pdo);
+        $service->upsert($this->getAllAttributes());
     }
 
     public function from(string $telefone, int $id, int $pessoa_id): void {

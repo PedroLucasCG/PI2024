@@ -14,6 +14,6 @@ export default async function get_login_data () {
         const loginData = await response.json();
         return loginData;
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Algo deu errado ', error);
     }
 };

@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '../configs/databaseConfig.php';
+require __DIR__ . '../../services/pessoa/PessoaService.php';
 require __DIR__ . './telefone.php';
 require __DIR__ . './endereco.php';
 
@@ -12,13 +12,14 @@ class Pessoa
     private string $cpf;
     private string $senha;
     private string $email;
+    private string $usuario;
     private array | Endereco $endereco;
     private array $telefones;
 
     public function __construct(PDO $pdo) {
         $this->pdo = $pdo;
     }
-    public function setPessoa(string $nome, string $data_nasc, string $cpf, string $senha, string $email, array $telefones, string $estado, string $cidade, string $bairro, string $cep = null, int $id = null): ?array
+    public function setPessoa(string $nome, string $data_nasc, string $cpf, string $senha, string $email, array $telefones, string $estado, string $cidade, string $bairro, string $usuario, string $cep = null, int $id = null): ?array
     {
         if (isset($id)) {
             $query = "SELECT COUNT(*) AS count FROM Pessoa WHERE id = :id";
@@ -41,6 +42,7 @@ class Pessoa
         $this->cpf = $cpf;
         $this->senha = $senha;
         $this->email = $email;
+        $this->usuario = $usuario;
         $this->endereco = ['estado' => $estado, 'cidade' => $cidade, 'bairro' => $bairro, 'cep' => $cep];
         $this->telefones = $telefones;
     }
@@ -54,11 +56,16 @@ class Pessoa
             'cpf' => $this->cpf,
             'senha' => $this->senha,
             'email' => $this->email,
+            'usuario' => $this->usuario,
             'endereco' => $this->endereco,
             'telefones' => $this->telefones
         ];
     }
 
+    public function create(): void {
+        $service = new PessoaService(pdo: $this->pdo);
+        $service->upsert(pessoa: $this->getAllAttributes());
+    }
     public function from(string $nome, string $data_nasc, string $cpf, string $senha, string $email, array $telefones, string $estado, string $cidade, string $bairro, string $cep = null, int $id = null): void {
         $this->id = $id;
         $this->nome = $nome;

@@ -1,5 +1,5 @@
 <?php
-
+require __DIR__ . '../../services/pessoa/EnderecoService.php';
 class Endereco {
     private $pdo;
     private $id;
@@ -44,6 +44,15 @@ class Endereco {
             'cidade' => $this->cidade,
             'bairro' => $this->bairro,
         ];
+    }
+
+    public function create(): ?int {
+        if(isset($this->id)) {
+            return $this->id;
+        };
+        $service = new EnderecoService(pdo: $this->getAllAttributes());
+        $service_data = $service->upsert(endereco: $this->getAllAttributes());
+        return $service_data["id"];
     }
 
     public function from(string $estado, string $cidade, string $bairro, int $id, string $cep = null) :void {

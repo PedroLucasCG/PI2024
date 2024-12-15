@@ -2,24 +2,19 @@
 include __DIR__ . '/config/databaseConfig.php';
 include __DIR__ . '/services/pessoa/endereco.php';
 
-class Telefone {
+class TelefoneService {
     private $pdo;
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
 
-    public function upsert($id = null, $telefone, $Pessoa) {
-
-        $pessoa = new Pessoa($this->pdo);
-        if(!isset($pessoa->get($Pessoa)["data"])) {
-            return ["msg" => "Pessoa não consta no sistema."];
-        }
-
+    public function upsert($telefone): array {
+        extract($telefone);
         if ($id) {
-            $query = "UPDATE Telefone SET 
-                telefone = :telefone, 
-                Pessoa = :Pessoa, 
+            $query = "UPDATE Telefone SET
+                telefone = :telefone,
+                Pessoa = :Pessoa,
             WHERE idTelefone = :id";
         } else {
             $query = "INSERT INTO Telefone (telefone, Pessoa)
@@ -94,5 +89,3 @@ $telefone->upsert("99999999999", 1);
 $telefone->upsert(1, "99999999999", 1);
 
 $telefone->get(1);
-
-

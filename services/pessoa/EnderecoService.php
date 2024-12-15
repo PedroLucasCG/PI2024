@@ -1,28 +1,28 @@
 <?php
 include __DIR__ . '/../../config/databaseConfig.php';
 
-class Endereco {
+class EnderecoService {
     private $pdo;
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
 
-    public function upsert($id = null, $cep = null, $estado, $cidade, $bairro) {
+    public function upsert(array $endereco): array {
+        extract($endereco);
         if ($id) {
-            $query = "UPDATE Endereco SET 
-                cep = :cep, 
-                estado = :estado, 
-                cidade = :cidade, 
+            $query = "UPDATE Endereco SET
+                cep = :cep,
+                estado = :estado,
+                cidade = :cidade,
                 bairro = :bairro
             WHERE idEndereco = :id";
         } else {
             $query = "INSERT INTO Endereco (cep, estado, cidade, bairro)
                 VALUES (:cep, :estado, :cidade, :bairro)
-                ON DUPLICATE KEY UPDATE 
-                    cep = VALUES(cep), 
-                    estado = VALUES(estado), 
-                    cidade = VALUES(cidade), 
+                    cep = VALUES(cep),
+                    estado = VALUES(estado),
+                    cidade = VALUES(cidade),
                     bairro = VALUES(bairro)";
         }
 
@@ -41,14 +41,14 @@ class Endereco {
             if ($id) {
                 return ["msg" => "Endereço atualizado com sucesso."];
             } else {
-                return ["msg" => "Endereço criado com sucesso"];
+                return ["msg" => "Endereço criado com sucesso", "id" => $this->pdo->lastInsertId()];
             }
         } else {
             return ["msg" => "Erro na execução da query."];
         }
     }
 
-    public function get($id) {
+    public function get($id): array {
         if (!isset($id)) {
             return ["msg" => "O id é necessário para recuperar endereço."];
         }
@@ -96,5 +96,3 @@ $endereco->upsert(null, null, 'SP', 'São Paulo', 'Centro');
 $endereco->upsert(1, '87654321', 'RJ', 'Rio de Janeiro', 'Zona Sul');
 
 $endereco->get(1);
-
-

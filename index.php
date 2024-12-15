@@ -1,16 +1,37 @@
 <?php
 require __DIR__ . '/services/pessoa/autenticacao.php';
+require __DIR__ . '/models/usuario/pessoa.php';
 require __DIR__ . '/configs/databaseConfig.php';
 
 if (isset($_POST['form'])) {
-    header(header: "Location: /public/login/login.html");
+    extract(array: $_POST);
+    switch ($form) {
+        case "login":
+            $auth = new Autenticacao(pdo: $pdo);
+            print_r(value: $auth->login(email: $usuario, senha: $senha));
+            header(header: "Location: /public/landing_page/landing_page.html");
+            break;
+        case "cadastro":
+            $pessoa = new Pessoa(pdo: $pdo);
+            $pessoa->setPessoa(
+                nome: $nome,
+                data_nasc: $data_nasc,
+                cpf: $cpf,
+                senha: $password,
+                email: $email,
+                telefones: [$telefone],
+                estado: $estado,
+                cidade: $cidade,
+                bairro: $bairro,
+                usuario: $usuario,
+                cep: $cep
+            );
+            $pessoa->create();
+            header(header: "Location: /public/login/login.html");
+            break;
+    }
     exit;
 } else {
-    extract(array: $_POST);
-    if ($form === 'login') {
-        $auth = new Autenticacao(pdo: $pdo);
-        print_r($auth->login($usuario, $senha));
-    }
-    header(header: "Location: /public/cadastro/cadastro.html");
+    header(header: "Location: /public/landing_page/landing_page.html");
     exit;
 }
