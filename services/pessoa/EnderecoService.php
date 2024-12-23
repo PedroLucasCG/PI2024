@@ -1,6 +1,4 @@
 <?php
-include __DIR__ . '/../../config/databaseConfig.php';
-
 class EnderecoService {
     private $pdo;
 
@@ -88,11 +86,3 @@ class EnderecoService {
         }
     }
 }
-
-$endereco = new Endereco($pdo);
-
-$endereco->upsert(null, null, 'SP', 'São Paulo', 'Centro');
-
-$endereco->upsert(1, '87654321', 'RJ', 'Rio de Janeiro', 'Zona Sul');
-
-$endereco->get(1);

@@ -1,5 +1,4 @@
 <?php
-require __DIR__ . '../../services/pessoa/TelefoneService.php';
 class Telefone {
     private $pdo;
     private $id;

@@ -1,7 +1,4 @@
 <?php
-include __DIR__ . '/config/databaseConfig.php';
-include __DIR__ . '/services/pessoa/endereco.php';
-
 class TelefoneService {
     private $pdo;
 
@@ -81,11 +78,3 @@ class TelefoneService {
         }
     }
 }
-
-$telefone = new Telefone($pdo);
-
-$telefone->upsert("99999999999", 1);
-
-$telefone->upsert(1, "99999999999", 1);
-
-$telefone->get(1);

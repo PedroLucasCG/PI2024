@@ -1,5 +1,4 @@
 <?php
-require __DIR__ . '../../services/pessoa/EnderecoService.php';
 class Endereco {
     private $pdo;
     private $id;

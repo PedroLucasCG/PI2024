@@ -1,7 +1,4 @@
 <?php
-include __DIR__ . '/config/databaseConfig.php';
-include __DIR__ . '/services/pessoa/pessoa.php';
-
 class Contratante {
     private $pdo;
 
@@ -17,8 +14,8 @@ class Contratante {
         }
 
         if ($id) {
-            $query = "UPDATE Contratante SET 
-                Pessoa = :Pessoa, 
+            $query = "UPDATE Contratante SET
+                Pessoa = :Pessoa,
             WHERE idContratante = :id";
         } else {
             $query = "INSERT INTO Contratante (Pessoa)
@@ -92,5 +89,3 @@ $contratante->upsert(1);
 $contratante->upsert(1, 1);
 
 $contratante->get(1);
-
-

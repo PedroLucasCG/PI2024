@@ -1,5 +1,4 @@
 <?php
-
 class Autenticacao
 {
     private PDO $pdo;

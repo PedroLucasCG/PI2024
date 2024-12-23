@@ -1,8 +1,4 @@
 <?php
-require __DIR__ . '../../services/pessoa/PessoaService.php';
-require __DIR__ . './telefone.php';
-require __DIR__ . './endereco.php';
-
 class Pessoa
 {
     private PDO $pdo;

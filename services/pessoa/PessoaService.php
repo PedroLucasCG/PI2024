@@ -1,7 +1,4 @@
 <?php
-require __DIR__ . '../../models/usuario/endereco.php';
-require __DIR__ . '../../models/usuario/telefone.php';
-
 class PessoaService
 {
     private $pdo;
