@@ -1,0 +1,67 @@
+/* Corpo do HTML */
+
+body {
+    background-color: hwb(180 92% 7%);
+}
+
+#container {
+    background-color: rgb(255, 0, 0);
+}
+
+#box-superior {
+    width: 300px;
+    height: 300px;
+
+    background-image: linear-gradient(130, --logo-primary-color, --logo-secondary-color);
+}
+
+/* Fim Corpo do HTML */
+
+
+
+
+
+
+
+
+
+
+
+
+/* NavBar */
+
+#nav-bar li {
+    list-style-type: none;
+}
+
+#nav-bar li a,
+li a:visited,
+li a:link {
+    text-decoration: none;
+    color: black;
+}
+
+#nav-bar li a:hover {
+    color: var(--logo-primary-color);
+}
+
+
+
+#nav-bar #logo-1corre span {
+    /* Logo 1corre */
+    color: var(--logo-primary-color)
+}
+
+#nav-bar #logo-1corre h6 {
+    /* Logo 1corre */
+    color: var(--logo-secondary-color)
+}
+
+#nav-bar #euna {
+    text-decoration: underline;
+}
+
+
+
+
+/* Fim NavBar */
