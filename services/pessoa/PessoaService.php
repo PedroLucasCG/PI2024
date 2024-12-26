@@ -27,27 +27,26 @@ class PessoaService
                 email = :email,
                 data_nasc = :data_nasc,
                 cpf = :cpf,
-                rg = :rg,
                 senha = :senha,
                 usuario = :usuario,
                 data_registro = :data_registro,
                 endereco_id = :endereco_id
                 WHERE idPessoa = :id";
         } else {
-            $query = "INSERT INTO pessoa (nome, email, data_nasc, cpf, rg, senha, usuario, data_registro, Endereco)
-                VALUES (:nome, :email, :data_nasc, :cpf, :rg, :senha, :usuario, :data_registro, :endereco_id)";
+            $query = "INSERT INTO pessoa (nome, email, data_nasc, cpf, senha, usuario, data_registro, Endereco)
+                VALUES (:nome, :email, :data_nasc, :cpf, :senha, :usuario, :data_registro, :endereco_id)";
         }
 
         $stmt = $this->pdo->prepare($query);
+        $current_date = date('Y-m-d');
 
         $stmt->bindParam(':nome', $nome);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':data_nasc', $data_nasc);
         $stmt->bindParam(':cpf', $cpf);
-        $stmt->bindParam(':rg', $rg);
         $stmt->bindParam(':senha', $senha);
         $stmt->bindParam(':usuario', $usuario);
-        $stmt->bindParam(':data_registro', $data_registro);
+        $stmt->bindParam(':data_registro', $current_date);
         $stmt->bindParam(':endereco_id', $endereco_id);
 
         if ($id) {

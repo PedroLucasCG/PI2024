@@ -14,6 +14,7 @@ require __DIR__ . '/services/pessoa/EnderecoService.php';
 
 if (isset($_POST['form'])) {
     extract(array: $_POST);
+    print_r($_POST);
     switch ($form) {
         case "login":
             $auth = new Autenticacao(pdo: $pdo);
@@ -33,7 +34,7 @@ if (isset($_POST['form'])) {
                 cidade: $cidade,
                 bairro: $bairro,
                 usuario: $usuario,
-                cep: $cep
+                cep: isset($cep) ?? $cep
             );
             $pessoa->create();
             header(header: "Location: /public/login/login.html");
@@ -41,6 +42,6 @@ if (isset($_POST['form'])) {
     }
     exit;
 } else {
-    header(header: "Location: /public/landing_page/landing_page.html");
+    //header(header: "Location: /public/landing_page/landing_page.html");
     exit;
 }

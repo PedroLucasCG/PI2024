@@ -49,7 +49,7 @@ class Endereco {
         if(isset($this->id)) {
             return $this->id;
         };
-        $service = new EnderecoService(pdo: $this->getAllAttributes());
+        $service = new EnderecoService(pdo: $this->pdo);
         $service_data = $service->upsert(endereco: $this->getAllAttributes());
         return $service_data["id"];
     }

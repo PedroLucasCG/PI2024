@@ -21,7 +21,7 @@ class TelefoneService {
         $stmt = $this->pdo->prepare($query);
 
         $stmt->bindParam(':telefone', $telefone);
-        $stmt->bindParam(':Pessoa', $Pessoa);
+        $stmt->bindParam(':Pessoa', $pessoa_id);
 
         if ($id) {
             $stmt->bindParam(':id', $id);

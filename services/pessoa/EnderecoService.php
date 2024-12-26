@@ -17,11 +17,7 @@ class EnderecoService {
             WHERE idEndereco = :id";
         } else {
             $query = "INSERT INTO Endereco (cep, estado, cidade, bairro)
-                VALUES (:cep, :estado, :cidade, :bairro)
-                    cep = VALUES(cep),
-                    estado = VALUES(estado),
-                    cidade = VALUES(cidade),
-                    bairro = VALUES(bairro)";
+                VALUES (:cep, :estado, :cidade, :bairro)";
         }
 
         $stmt = $this->pdo->prepare($query);

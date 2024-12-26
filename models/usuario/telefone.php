@@ -26,6 +26,8 @@ class Telefone {
         }
         $this->telefone = $telefone;
         $this->pessoa_id = $pessoa_id;
+
+        return null;
     }
 
     public function getAllAttributes(): array {
