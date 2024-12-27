@@ -34,6 +34,21 @@ class Pessoa
             }
             $this->id = $id;
         }
+
+        $query = "SELECT COUNT(*) AS count FROM Pessoa WHERE email = :email";
+        $stmt = $this->pdo->prepare(query: $query);
+        $stmt->bindParam(param: ':email', var: $email);
+        try {
+            $stmt->execute();
+            $data = $stmt->fetch();
+        }catch (PDOException $ex) {
+            echo 'Erro ao executar a verificação da existência do registro de pessoa. Erro: ' . $ex->getMessage();
+        }
+
+        if($data['count'] != 0) {
+            return [ 'msg' => 'O email cadastrada já existe.'];
+        }
+
         $this->nome = $nome;
         $this->data_nasc = $data_nasc;
         $this->cpf = $cpf;
