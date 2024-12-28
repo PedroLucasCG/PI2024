@@ -17,6 +17,11 @@ if (isset($_POST['form'])) {
     switch ($form) {
         case "login":
             $auth = new Autenticacao(pdo: $pdo);
+            $err = $auth->login($email, $senha);
+            if (isset($err['erro'])) {
+                echo $err['erro'];
+                break;
+            }
             header(header: "Location: /public/landing_page/landing_page.html");
             break;
         case "cadastro":
@@ -32,13 +37,19 @@ if (isset($_POST['form'])) {
                 cidade: $cidade,
                 bairro: $bairro,
                 usuario: $usuario,
-                cep: isset($cep) ?? $cep
+                cep: isset($cep) ?? $cep,
+                terms: $terms
             );
-            if ($err['msg']) {
+            if (isset($err['msg'])) {
                 echo $err['msg'];
                 break;
             }
-            $pessoa->create();
+
+            $err = $pessoa->create();
+            if (isset($err['msg'])) {
+                echo $err['msg'];
+                break;
+            }
             header(header: "Location: /public/login/login.html");
             break;
     }

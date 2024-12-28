@@ -38,13 +38,15 @@
                 </div>
 
                 <div class="input-wrapper" type="password"><input type="password" name="senha" id="senha" required></div>
-                <div class="input-wrapper" type="password"><input type="password" id="check_senha" required></div>
-
+                <div class="input-wrapper" type="password">
+                    <input type="password" id="check_senha" required>
+                    <span>Os campos não conferem!</span>
+                </div>
                 <div class="terms">
                     <div class="input-wrapper"><input type="checkbox" name="terms" id="terms" required></div>
                     <label for="terms">Eu aceito os <span>Termos</span> e <span>Políticas de Privacidade</span></label>
                 </div>
-                <input type="submit" value="Criar Conta">
+                <input type="submit" value="Criar Conta" id="submit_form">
                 <input type="hidden" name="form" value="cadastro">
             </form>
             <p>Você já tem uma conta? <a href="../login/login.html">Entrar</a></p>

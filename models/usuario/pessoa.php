@@ -16,8 +16,10 @@ class Pessoa
         $this->pdo = $pdo;
         $this->id = null;
     }
-    public function setPessoa(string $nome, string $data_nasc, string $cpf, string $senha, string $email, array $telefones, string $estado, string $cidade, string $bairro, string $usuario, string $cep = null, int $id = null): ?array
+    public function setPessoa(string $nome, string $data_nasc, string $cpf, string $senha, string $email, array $telefones, string $estado, string $cidade, string $bairro, string $usuario, bool $terms, string $cep = null, int $id = null): ?array
     {
+        if (!$terms)
+            return [ 'msg' => 'É necessário aceitar os termos de uso e privacidade!'];
         if (isset($id)) {
             if($this->count('idPessoa', $id) == 0) {
                 return [ 'msg' => 'O id passado não corresponde a nenhum registro de pessoa no sistema.'];
@@ -56,9 +58,11 @@ class Pessoa
         ];
     }
 
-    public function create(): void {
+    public function create(): ?array {
         $service = new PessoaService(pdo: $this->pdo);
-        $service->upsert(pessoa: $this->getAllAttributes());
+        $err = $service->upsert(pessoa: $this->getAllAttributes());
+        if (isset($err['msg'])) return $err;
+        return null;
     }
     public function from(string $nome, string $data_nasc, string $cpf, string $senha, string $email, array $telefones, string $estado, string $cidade, string $bairro, string $cep = null, int $id = null): void {
         $this->id = $id;

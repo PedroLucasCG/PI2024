@@ -138,6 +138,11 @@ input[type="checkbox"]{
     display: inline;
 }
 
+.input-wrapper > span {
+    padding: 0 1rem;
+    color: #FF3800;
+}
+
 .input-wrapper:has(input[type="checkbox"])::before {
     content: "";
 }
@@ -147,7 +152,7 @@ input[type="checkbox"]{
 }
 
 .input-wrapper:has(input[id="check_senha"])::before {
-    content: "Confirme a sua Senha";
+    content: "Confirme a sua Senha*";
 }
 
 .input-wrapper:has(input[name="bairro"])::before {
