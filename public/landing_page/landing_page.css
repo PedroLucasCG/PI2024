@@ -1,103 +1,101 @@
-/* Corpo do HTML */
-
-html {
-    scroll-behavior: smooth;
-}
+/* CORPO */
 
 body {
-    background-color: azure;
+    background-color: beige;
 }
 
 .container {
     background: linear-gradient(136deg, #F8A728 29.4%, rgba(247, 94, 27, 0.93) 64.4%);
 }
 
-li {
-    list-style-type: none;
+
+/* FIM CORPO */
+
+
+
+
+
+
+/* NAVBAR */
+
+header {
+    padding: 30px;
 }
 
-li a,
-li a:visited,
-li a:link {
-    text-decoration: none;
-    color: black;
+
+.navbar {
+    /* Main da navbar */
+    background-color: #FFF;
+
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    height: 70px;
+    padding: 10px 30px;
+    border-radius: 56px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+
 }
 
-li a:hover {
+
+.text-logo {
+    /* logo 1corre */
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    font-size: 35px;
+}
+
+.text-logo span {
+    /* logo 1corre */
     color: var(--logo-primary-color);
 }
 
-p {
-    /* Teste */
-    padding: 25px;
-    margin: 40px;
-    color: white
-}
-
-/* Fim Corpo do HTML */
-
-
-
-
-
-
-
-
-
-
-
-
-/* NavBar */
-#nav-bar {
-    width: 100%;
-    height: auto;
-    padding: 50px 80px;
-}
-
-nav {
-    width: 100%;
-    height: 70px;
-
-    display: flex;
-    align-items: center;
-    padding: 20px 0;
-    background-color: white;
-    border-radius: 46px;
-
-}
-
-nav #logo-1corre span {
-    /* Logo 1corre */
-    color: var(--logo-primary-color)
-}
-
-nav #logo-1corre h6 {
-    /* Logo 1corre */
+.text-logo h6 {
+    /* logo 1corre */
+    font-weight: bold;
     color: var(--logo-secondary-color)
 }
 
-nav #euna {
-    /* Logo 1corre */
+.text-logo #euna {
+    /* logo 1corre */
     text-decoration: underline;
+    font-size: 16px;
 }
 
-#nav-bar-post {
-    /* Botão Postar trabalho */
+.nav-links {
     display: flex;
-    background: var(--logo-secondary-color);
-    justify-content: center;
-    padding: 11px 43px;
-    border-radius: 50px;
+    gap: 20px;
+    list-style: none;
+    align-items: center;
 }
 
-#nav-bar-post a {
-    /* Botão Postar trabalho */
-    color: white;
+.nav-links a {
+    text-decoration: none;
+    color: #252525;
 }
 
-#nav-bar-post a:hover {
-    /* Botão Postar trabalho */
+.nav-links a:hover {
     color: var(--logo-primary-color);
 }
 
-/* Fim NavBar */
+#navbar-button {
+    background-color: var(--logo-secondary-color);
+    color: white;
+    text-decoration: none;
+
+    padding: 10px 30px;
+    border-radius: 50px;
+    gap: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#navbar-button:hover {
+    background-color: #373767;
+}
+
+/* FIM NAVBAR
