@@ -1,0 +1,84 @@
+body {
+    color: var(--type-color);
+    display: grid;
+    grid-template-columns: .2fr 1fr;
+    background-color: #ddd;
+}
+aside {
+    padding: 1rem;
+    margin: 1rem;
+    background-color: white;
+    border-radius: 1rem;
+}
+aside h1 {
+    text-align: center;
+    font-size: 4rem;
+    font-family: 'LeagueGothic-Regular';
+    color: var(--logo-secondary-color);
+}
+
+aside section > *:not(h1) {
+    border-top: 1px solid var(--type-color);
+    padding: 1em 0;
+}
+
+aside h1 span{
+    color: var(--logo-primary-color);
+}
+
+ul li {
+    list-style: none;
+    margin-left: 1rem;
+    cursor: pointer;
+    padding: .5rem;
+}
+
+
+li img {
+    display: block;
+    object-fit: scale-down;
+}
+
+li[panel] {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+li[selected] {
+    color: var(--logo-primary-color);
+    background-color: var(--input-color);
+    border-radius: 2rem;
+}
+
+li[selected] img {
+    filter: brightness(0) saturate(100%) invert(76%) sepia(84%) saturate(2383%) hue-rotate(345deg) brightness(98%) contrast(98%);
+}
+
+section {
+    height: 100%;
+    position: relative;
+    display: flex;
+    padding: 1rem;
+    flex-direction: column;
+}
+.profile {
+    margin-top: auto;
+    position: inherit;
+    bottom: 0;
+    display: flex;
+    gap: .5rem;
+}
+
+.profile img {
+    display: block;
+    object-fit: cover;
+    height: 3rem;
+}
+
+main {
+    background-color: white;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+}
