@@ -51,91 +51,67 @@
         </section>
     </aside>
     <main>
-       <h1>Projetos</h1>
+        <h1>Ofertas</h1>
+        <section class="form">
+            <h1>Criar nova oferta</h1>
 
-       <section class="propostas">
-        <h1>Propostas</h1>
-        <section class="cliente">
-            <h2>Como cliente</h2>
-            <div class="slider">
-                <div>
-                    <img src="../../assets/imgs/job-sample.jpg" alt="imagem da oferta">
-                    <strong>Nome</strong>
-                    <p>Construção de casa</p>
-                    <div>
-                        <strong>R$ 100,00</strong>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="freelancer">
-            <h2> Como freelancer</h2>
-            <div class="slider">
-                <div>
-                    <img src="../../assets/imgs/job-sample.jpg" alt="imagem da oferta">
-                    <strong>Nome</strong>
-                    <p>Construção de casa</p>
-                    <div>
-                        <strong>R$ 100,00</strong>
-                        <div>
-                            <img src="../../assets/icons/accept.svg" alt="aceitar">
-                            <img src="../../assets/icons/refuse.svg" alt="recusar">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-       </section>
+            <form action="" method="post">
+                <label for="titulo">Titulo da oferta</label>
+                <input type="text" name="titulo" id="titulo">
 
-       <section class="contratos">
-        <h1>Em andamento</h1>
-        <section>
-            <h2>Como contratante</h2>
+                <label for="description">Descrição</label>
+                <input type="text" name="description" id="description">
+
+                <label for="amostra">Amostra</label>
+                <input type="text" name="amostra" id="amostra">
+
+                <h2>Disponibilidade</h2>
+
+                <section>
+                    <div>
+                        <label for="dia">Dia da semana</label>
+                        <select name="dia" id="dia">
+                            <option value="selecione" disabled selected>Segunda</option>
+                            <option value="domingo">Domingo</option>
+                            <option value="segunda">Segunda</option>
+                            <option value="terça">Terça</option>
+                            <option value="quarta">Quarta</option>
+                            <option value="quinta">Quinta</option>
+                            <option value="sexta">Sexta</option>
+                            <option value="sabado">Sábado</option>
+                        </select>
+
+                        <label for="horario">Horário</label>
+                        <input type="text" name="horario" id="horario">
+
+                        <button>Adicionar</button>
+                    </div>
+                    <h3>Períodos cadastrados</h3>
+                    <div>
+                        <span>Segunda 13:00 até 16:00 <img src="../../assets/icons/delete.svg" alt="deletar horário"></span>
+                    </div>
+                </section>
+                <label for="amostraFoto">Enviar imagem</label>
+                <input type="file" name="amostraFoto" id="amostraFoto">
+
+                <input type="submit" value="Salvar">
+            </form>
+        </section>
+        <section class="ofertas">
+            <h1>Suas ofertas</h1>
             <div class="slider">
                 <div>
-                    <div class="header">
-                        <img src="../../assets/icons/profile.svg" alt="imagem de perfil">
-                        <div>
-                            <strong>Nome</strong>
-                            <p>Rosa Neto</p>
-                        </div>
-                    </div>
-                    <span>Área</span>
-                    <div class="description">
-                        <p>Descrição da oferta</p>
-                        <strong>R$ 100,00</strong>
-                    </div>
-                    <div class="actions">
-                        <button>Finalizar Serviço</button>
-                        <button><img src="../../assets/icons/delete.svg" alt="deletar projeto"></button>
-                    </div>
+                    <h2>Pintura de carros clássicos</h2>
+                    <img src="../../assets/imgs/job-sample.jpg" alt="amostra de trabalho">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda optio obcaecati animi nulla possimus, cumque aperiam minima fugit. Enim, accusamus ab fuga nesciunt inventore deleniti molestias officiis doloremque odio doloribus vitae sint dolores nemo dolorum iste fugiat cum ipsum molestiae sit cumque tempore reprehenderit et pariatur. Doloribus impedit cum voluptate?</p>
+
+                    <span>Amostra: google.com</span>
+
+                    <img src="../../assets/icons/delete.svg" alt="deletar oferta">
+                    <button>editar</button>
                 </div>
             </div>
         </section>
-        <section>
-            <h2>Como freelancer</h2>
-            <div class="slider">
-                <div>
-                    <div class="header">
-                        <img src="../../assets/icons/profile.svg" alt="imagem de perfil">
-                        <div>
-                            <strong>Nome</strong>
-                            <p>Rosa Neto</p>
-                        </div>
-                    </div>
-                    <span>Área</span>
-                    <div class="description">
-                        <p>Descrição da oferta</p>
-                        <strong>R$ 100,00</strong>
-                    </div>
-                    <div class="actions">
-                        <button>Finalizar Serviço</button>
-                        <button><img src="../../assets/icons/delete.svg" alt="deletar projeto"></button>
-                    </div>
-                </div>
-            </div>
-        </section>
-       </section>
     </main>
 </body>
 </html>
