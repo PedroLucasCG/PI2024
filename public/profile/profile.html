@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../main.css">
     <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="../form.css">
     <title>1CORE</title>
 </head>
 <body>
@@ -52,66 +53,90 @@
     </aside>
     <main>
         <h1>Ofertas</h1>
-        <section class="form">
-            <h1>Criar nova oferta</h1>
+        <div>
+            <section class="form">
+                <h1>Criar nova oferta</h1>
 
-            <form action="" method="post">
-                <label for="titulo">Titulo da oferta</label>
-                <input type="text" name="titulo" id="titulo">
+                <form action="" method="post">
+                    <label for="titulo">Titulo da oferta</label>
+                    <input type="text" name="titulo" id="titulo">
 
-                <label for="description">Descrição</label>
-                <input type="text" name="description" id="description">
+                    <label for="description">Descrição</label>
+                    <input type="text" name="description" id="description">
 
-                <label for="amostra">Amostra</label>
-                <input type="text" name="amostra" id="amostra">
+                    <label for="amostra">Amostra</label>
+                    <input type="text" name="amostra" id="amostra">
 
-                <h2>Disponibilidade</h2>
+                    <h2>Disponibilidade</h2>
 
-                <section>
+                    <section>
+                        <div>
+
+                            <div>
+                                <label for="dia">Dia da semana</label>
+                                <select name="dia" id="dia">
+                                    <option value="selecione" disabled selected>Segunda</option>
+                                    <option value="domingo">Domingo</option>
+                                    <option value="segunda">Segunda</option>
+                                    <option value="terça">Terça</option>
+                                    <option value="quarta">Quarta</option>
+                                    <option value="quinta">Quinta</option>
+                                    <option value="sexta">Sexta</option>
+                                    <option value="sabado">Sábado</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="horario">Horário</label>
+                                <input type="text" name="horario" id="horario">
+                            </div>
+
+                            <button>Adicionar</button>
+                        </div>
+                        <div>
+                            <h3>Períodos cadastrados</h3>
+                            <div>
+                                <span>Segunda 13:00 até 16:00 <img src="../../assets/icons/delete.svg" alt="deletar horário"></span>
+                            </div>
+                        </div>
+                    </section>
+                    <label for="amostraFoto">Enviar imagem</label>
+                    <input type="file" name="amostraFoto" id="amostraFoto">
+
+                    <input type="submit" value="Salvar">
+                </form>
+            </section>
+            <section class="ofertas">
+                <h1>Suas ofertas</h1>
+                <div class="slider">
                     <div>
-                        <label for="dia">Dia da semana</label>
-                        <select name="dia" id="dia">
-                            <option value="selecione" disabled selected>Segunda</option>
-                            <option value="domingo">Domingo</option>
-                            <option value="segunda">Segunda</option>
-                            <option value="terça">Terça</option>
-                            <option value="quarta">Quarta</option>
-                            <option value="quinta">Quinta</option>
-                            <option value="sexta">Sexta</option>
-                            <option value="sabado">Sábado</option>
-                        </select>
+                        <h2>Pintura de carros clássicos</h2>
+                        <img src="../../assets/imgs/job-sample.jpg" alt="amostra de trabalho">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda optio obcaecati animi nulla possimus, cumque aperiam minima fugit. Enim, accusamus ab fuga nesciunt inventore deleniti molestias officiis doloremque odio doloribus vitae sint dolores nemo dolorum iste fugiat cum ipsum molestiae sit cumque tempore reprehenderit et pariatur. Doloribus impedit cum voluptate?</p>
 
-                        <label for="horario">Horário</label>
-                        <input type="text" name="horario" id="horario">
+                        <span>Amostra: google.com</span>
 
-                        <button>Adicionar</button>
+                        <div>
+                            <img src="../../assets/icons/delete.svg" alt="deletar oferta">
+                            <button>editar</button>
+                        </div>
                     </div>
-                    <h3>Períodos cadastrados</h3>
+
                     <div>
-                        <span>Segunda 13:00 até 16:00 <img src="../../assets/icons/delete.svg" alt="deletar horário"></span>
+                        <h2>Pintura de carros clássicos</h2>
+                        <img src="../../assets/imgs/job-sample.jpg" alt="amostra de trabalho">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda optio obcaecati animi nulla possimus, cumque aperiam minima fugit. Enim, accusamus ab fuga nesciunt inventore deleniti molestias officiis doloremque odio doloribus vitae sint dolores nemo dolorum iste fugiat cum ipsum molestiae sit cumque tempore reprehenderit et pariatur. Doloribus impedit cum voluptate?</p>
+
+                        <span>Amostra: google.com</span>
+
+                        <div>
+                            <img src="../../assets/icons/delete.svg" alt="deletar oferta">
+                            <button>editar</button>
+                        </div>
                     </div>
-                </section>
-                <label for="amostraFoto">Enviar imagem</label>
-                <input type="file" name="amostraFoto" id="amostraFoto">
-
-                <input type="submit" value="Salvar">
-            </form>
-        </section>
-        <section class="ofertas">
-            <h1>Suas ofertas</h1>
-            <div class="slider">
-                <div>
-                    <h2>Pintura de carros clássicos</h2>
-                    <img src="../../assets/imgs/job-sample.jpg" alt="amostra de trabalho">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda optio obcaecati animi nulla possimus, cumque aperiam minima fugit. Enim, accusamus ab fuga nesciunt inventore deleniti molestias officiis doloremque odio doloribus vitae sint dolores nemo dolorum iste fugiat cum ipsum molestiae sit cumque tempore reprehenderit et pariatur. Doloribus impedit cum voluptate?</p>
-
-                    <span>Amostra: google.com</span>
-
-                    <img src="../../assets/icons/delete.svg" alt="deletar oferta">
-                    <button>editar</button>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </main>
 </body>
 </html>

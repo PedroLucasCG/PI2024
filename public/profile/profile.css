@@ -345,3 +345,125 @@ main h1 {
         height: 2rem;
     }
 }
+
+/*Ofertas*/
+main > div {
+    display: flex;
+    gap: 2rem;
+    & form {
+        margin-top: 2rem;
+        padding-bottom: 0;
+        & section {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 2rem;
+
+            & > :first-child {
+                display: grid;
+                grid-template-columns:  1fr 1fr;
+                gap: 1rem;
+
+                & input, select {
+                    width: 30ch;
+                };
+
+                & button {
+                    background: none;
+                    border: none;
+                    font-family: Poppins-Regular;
+                    font-size: 1rem;
+                    color: white;
+                    background-color: var(--logo-primary-color);
+                    padding: .5rem;
+                    border-radius: .5rem;
+                }
+            }
+
+            & > :last-child {
+                width: 40%;
+            }
+
+            & > :last-child div {
+                border: var(--type-color) 1px solid;
+                padding: 1rem;
+                border-radius: .5rem;
+                height: 100%;
+
+                & span {
+                    display: flex;
+                    align-items: center;
+                    gap: .5rem;
+                }
+                & img {
+                    display: inline-block;
+                    filter: brightness(0) saturate(100%) invert(7%) sepia(92%) saturate(5451%) hue-rotate(354deg) brightness(150%) contrast(110%);
+                    border-radius: 5rem;
+                    padding: .2rem;
+                }
+            }
+        }
+    }
+}
+
+main div form {
+    border-bottom: none;
+}
+
+section.form input:not(form section div input){
+    width: 100ch;
+}
+
+section.form input[type="submit"] {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.ofertas {
+    height: 100%;
+}
+.ofertas .slider div > img[alt="amostra de trabalho"] {
+    display: block;
+    object-fit: scale-down;
+    width: 100%;
+    margin: 1rem auto;
+    border-radius: 1rem;
+}
+
+.ofertas .slider {
+    overflow: scroll;
+    max-height: 75ch;
+    display: block;
+
+    & > div {
+        background-color: var(--input-color);
+        padding: 1rem;
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+
+        & div {
+            display: flex;
+            margin-top: 1rem;
+            gap: 1rem;
+
+            & img {
+                display: inline-block;
+                filter: brightness(0) saturate(100%) invert(7%) sepia(92%) saturate(5451%) hue-rotate(354deg) brightness(150%) contrast(110%);
+                border-radius: 5rem;
+                padding: .2rem;
+                height: 2.5rem;
+            }
+
+            & button {
+                background: none;
+                border: none;
+                font-family: Poppins-Regular;
+                color: var(--type-color);
+                background-color: white;
+                padding: .5rem;
+                border-radius: .5rem;
+                font-size: 1rem;
+            }
+        }
+    }
+}
