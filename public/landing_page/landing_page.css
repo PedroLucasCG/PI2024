@@ -1,7 +1,7 @@
 /* CORPO */
 
 body {
-    background-color: #f00000;
+    background-color: #7b7b7b;
 }
 
 .container {
@@ -571,7 +571,7 @@ footer {
     display: flex;
     flex-direction: column;
     line-height: 1;
-    font-size: 40px;
+    font-size: 45px;
     padding-bottom: 10px;
 }
 
@@ -586,11 +586,6 @@ footer {
     color: var(--logo-secondary-color)
 }
 
-.footer-logo .footer-euna {
-    /* logo 1corre */
-    text-decoration: underline;
-    font-size: 17.5px;
-}
 
 .footer-section {
     flex: 1;
