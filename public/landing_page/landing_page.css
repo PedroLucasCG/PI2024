@@ -14,7 +14,6 @@ body {
 
 /* ***************************** NAVBAR ***************************** */
 
-
 /* NAVBAR */
 
 header {
@@ -102,6 +101,7 @@ header {
 
 .block1 {
     display: flex;
+    justify-content: center;
     padding: 10px 100px;
     margin: 10px 10px 20px;
 }
@@ -114,6 +114,7 @@ header {
     font-size: 65px;
     color: black;
     font-weight: bold;
+    max-width: 950px;
 }
 
 .block1 h1 span {
@@ -123,6 +124,7 @@ header {
 .block1 p {
     font-size: 24px;
     color: black;
+    max-width: 590px;
 }
 
 .block1 img {
@@ -149,7 +151,7 @@ header {
     background-color: #373767;
 }
 
-#button_aling {
+#button_aling_b1 {
     padding: 20px 0px;
 }
 
@@ -271,10 +273,13 @@ header {
     justify-content: center;
     align-items: center;
     background: #fff;
-    padding:10px 10px 20px;
+    padding: 10px 10px 20px;
+
+    padding-top: 100px;
+    padding-bottom: 100px;
 }
 
-#image_b3 img{
+#image_b3 img {
     padding: 20px;
     width: 600px;
     height: auto;
@@ -299,17 +304,251 @@ header {
 
 #text_b3 p {
     max-width: 400px;
-    font-size: 24px;    
+    font-size: 24px;
 }
 
 /* FIM BLOCO 3 */
 
+/* BLOCO 4 */
+
+.block4 {
+    display: grid;
+    padding: 20px;
+    text-align: center;
+    background-color: #FFF;
+    justify-content: center;
+
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.block4 h1 {
+    font-size: 56px;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.block4 h1 span {
+    color: var(--logo-primary-color);
+}
+
+.grid {
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 200px;
+    /* Altura fixa para os cards */
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0.6;
+    /* Tornar a imagem semi-transparente */
+}
+
+.card p {
+    z-index: 2;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    /* Para evitar interações no texto */
+}
 
 
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card:hover img {
+    opacity: 0.8;
+    /* Tornar a imagem mais visível no hover */
+}
+
+#button_b4 {
+    display: inline-flex;
+    padding: 20px 70px;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--logo-secondary-color);
+    border-radius: 10px;
+}
+
+#button_b4 {
+    text-decoration: none;
+    color: white;
+}
+
+#button_b4:hover {
+    background-color: #373767;
+}
+
+#button_aling_b4 {
+    padding: 40px 0px;
+}
+
+/* FIM BLOCO 4 */
+
+/* BLOCO 5 */
+
+.block5 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 10px 20px;
+    background: #fff;
+}
+
+#text_b5 h3 {
+    display: flex;
+    font-size: 24px;
+    color: #9D9D9D;
+    justify-content: center;
+}
+
+#text_b5 h1 {
+    font-size: 56px;
+    color: black;
+}
+
+#text_b5 h1 span {
+    color: var(--logo-primary-color);
+}
+
+/* CSS do SWIPER */
+
+.card-wrapper {
+    max-width: 1100px;
+    margin: 0 60px 35px;
+    padding: 20px 10px;
+    overflow: hidden;
+}
+
+.card-list .card-item {
+    list-style: none;
+}
+
+.card-list .card-item .card-link {
+    user-select: none;
+    display: block;
+    background: #FFF;
+    padding: 18px;
+    border-radius: 12px;
+    text-decoration: none;
+    border: 2px solid transparent;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+    transition: 0.2s ease;
+}
+
+.card-list .card-item .card-link:active {
+    cursor: grabbing
+}
+
+.card-list .card-item .card-link:hover {
+    border-color: var(--logo-secondary-color);
+}
+
+.card-list .card-link .card-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 10px;
+
+}
+
+.card-list .card-link .badge {
+    color: var(--logo-secondary-color);
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 16px 0 18px;
+    background: #d5daff;
+    width: fit-content;
+    border-radius: 50px;
+}
+
+.card-list .card-link .card-title {
+    font-size: 1.19rem;
+    font-weight: 600;
+    color: #000;
+}
+
+.card-list .card-link .card-button {
+    height: 35px;
+    width: 35px;
+    color: var(--logo-secondary-color);
+    border-radius: 50%;
+    margin: 30px 0 5px;
+    background: none;
+    cursor: pointer;
+    border: 2px solid var(--logo-secondary-color);
+    transform: rotate(-45deg);
+    transition: 04.s ease;
+}
+
+.card-list .card-link:hover .card-button {
+    color: #FFF;
+    background: var(--logo-secondary-color);
+}
+
+.card-wrapper .swiper-pagination-bullet {
+    height: 13px;
+    width: 13px;
+    opacity: 0.5;
+    background: var(--logo-secondary-color);
+}
+
+.card-wrapper .swiper-pagination-bullet-active {
+    opacity: 1;
+}
+
+.card-wrapper .swiper-slide-button {
+    color: var(--logo-secondary-color);
+    margin-top: -35px;
+}
+
+/* Acho que não ta funcional pq o site não ta responsivo direito */
+@media screen and (max-width: 768px) {
+    .card-wrapper {
+        margin: 0 20px 35px;
+    }
+
+    .card-wrapper .swiper-slide-button {
+        display: none;
+    }
+}
+
+/* FIM BLOCO 5 */
 
 /* DIVISOR ONDAS */
 .wave-divisor {
-    
+
     bottom: 0;
     left: 0;
     width: 100%;
