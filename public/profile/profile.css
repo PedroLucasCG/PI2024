@@ -1,0 +1,472 @@
+body {
+    color: var(--type-color);
+    display: grid;
+    grid-template-columns: .2fr 1fr;
+    background-color: #ddd;
+}
+aside {
+    padding: 1rem;
+    margin: 1rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 1rem 1rem 1rem darkgray;
+}
+aside h1 {
+    text-align: center;
+    font-size: 4rem;
+    font-family: 'LeagueGothic-Regular';
+    color: var(--logo-secondary-color);
+}
+
+aside section > *:not(h1) {
+    border-top: 1px solid var(--type-color);
+    padding: 1em 0;
+}
+
+aside h1 span{
+    color: var(--logo-primary-color);
+}
+
+ul li {
+    list-style: none;
+    margin-left: 1rem;
+    cursor: pointer;
+    padding: .5rem;
+}
+
+
+li img {
+    display: block;
+    object-fit: scale-down;
+}
+
+li[panel] {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+li[selected] {
+    color: var(--logo-primary-color);
+    background-color: var(--input-color);
+    border-radius: 2rem;
+}
+
+li[selected] img {
+    filter: brightness(0) saturate(100%) invert(76%) sepia(84%) saturate(2383%) hue-rotate(345deg) brightness(98%) contrast(98%);
+}
+
+aside section {
+    height: 100%;
+    position: relative;
+    display: flex;
+    padding: 1rem;
+    flex-direction: column;
+}
+.profile {
+    margin-top: auto;
+    position: inherit;
+    bottom: 0;
+    display: flex;
+    gap: .5rem;
+}
+
+.profile img {
+    display: block;
+    object-fit: cover;
+    height: 3rem;
+}
+
+main {
+    background-color: white;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    overflow-y: overlay;
+    scrollbar-width: thin;
+}
+
+main h1 {
+    text-decoration: underline;
+}
+
+/*Atividade*/
+.card-container {
+    display: flex;
+    gap: 5rem;
+    margin: 0 auto;
+    width: 70%;
+}
+
+.card {
+    background-color: #FFCD8580;
+    padding: 1rem;
+    border-radius: 1.5rem;
+}
+
+.card > img {
+    display: block;
+    padding: .2rem;
+    height: 2.5rem;
+    border-radius: 5rem;
+}
+
+.card:has(img[alt="icone projetos concluídos"]) > img{
+    background-color: #333;
+}
+
+.card:has(img[alt="icone horas trabalhadas"]) > img{
+    background-color: #1B7BF7;
+}
+
+.card:has(img[alt="icone feedbacks"]) > img{
+    background-color: #F75E1B;
+}
+
+.card > * {
+    margin-bottom: 1rem;
+}
+
+.card p {
+    display: flex;
+    gap: .2rem;
+}
+
+.card p img {
+    display: inline-block;
+}
+
+.progresso {
+    display: block;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 2rem;
+}
+
+.feedback-contratante, .feedback-freelancer {
+    display: grid;
+    margin-top: 1rem;
+    max-width: 240ch;
+    & h1 {
+        margin-bottom: 2rem;
+        width: 100%;
+    }
+    & > .slider {
+        width: 100%;
+        display: flex;
+        gap: 1rem;
+        overflow-x: overlay;
+        padding: 1rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--logo-primary-color);
+    }
+    & > .slider > div {
+        border-radius: 1rem;
+        box-shadow: darkgray .1rem .1rem .5rem;
+        max-width: 80ch;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        & > span {
+            display: flex;
+            justify-content: center;
+
+            & strong {
+                display: block;
+            }
+        }
+
+        & p {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            width: 35ch;
+        }
+
+        & .header {
+            display: flex;
+            gap: 1rem;
+
+            & div span{
+                display: block;
+            }
+
+            & img {
+                display: block;
+                height: 3rem;
+                object-fit: cover;
+                aspect-ratio: 1;
+            }
+        }
+    };
+}
+
+
+/*Projetos*/
+.propostas, .contratos {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.propostas section {
+    margin-top: .5rem;
+    display: grid;
+    width: 100%;
+}
+
+.slider {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    overflow-x: overlay;
+    padding: .5rem 1rem 2rem .5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--logo-primary-color);
+
+}
+
+.propostas section .slider > div {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    box-shadow: .5rem .5rem 1rem darkgray;
+    border-radius: 1rem;
+    width: fit-content;
+    padding: 1rem;
+
+    & > img {
+        height: 10rem;
+        object-fit: cover;
+        display: block;
+        border-radius: .5rem;
+    }
+
+    & p {
+        font-size: .8rem;
+    }
+
+    & > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        & img {
+            display: inline-block;
+            height: 2.3rem;
+            border-radius: 5rem;
+            padding: .2rem;
+        }
+
+        & img[alt="aceitar"] {
+            background-color: var(--logo-primary-color);
+        }
+
+        & img[alt="recusar"] {
+            background-color: var(--logo-secondary-color);
+        }
+    }
+}
+
+.contratos .slider > div {
+    box-shadow: .5rem .5rem 1rem darkgray;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    width: fit-content;
+    padding: 1rem;
+
+}
+
+.contratos h1 {
+    margin-bottom: 1rem;
+}
+.contratos .header {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    & img {
+        object-fit: cover;
+        height: 3rem;
+    }
+}
+
+.contratos span {
+    display: inline-block;
+    width: fit-content;
+    padding: .2rem .5rem;
+    border-radius: 5rem;
+    color: white;
+    background-color: var(--logo-primary-color);
+}
+
+.contratos .description {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+
+    & strong {
+        white-space: nowrap;
+    }
+
+    & p {
+        min-width: 20ch;
+    }
+}
+
+.contratos .actions button{
+    border: none;
+    background: none;
+    font-size: 1rem;
+    font-family: Poppins-Regular;
+    color: white;
+}
+
+.contratos .actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+.contratos .actions button {
+    background-color: var(--accent-color);
+    padding: .5rem 1rem;
+    border-radius: 2rem;
+}
+
+.contratos .actions > :last-child {
+    background-color: red;
+    padding: .5rem;
+
+    & img {
+        display: block;
+        object-fit: cover;
+        height: 2rem;
+    }
+}
+
+/*Ofertas*/
+main > div {
+    display: flex;
+    gap: 2rem;
+    & form {
+        margin-top: 2rem;
+        padding-bottom: 0;
+        & section {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 2rem;
+
+            & > :first-child {
+                display: grid;
+                grid-template-columns:  1fr 1fr;
+                gap: 1rem;
+
+                & input, select {
+                    width: 30ch;
+                };
+
+                & button {
+                    background: none;
+                    border: none;
+                    font-family: Poppins-Regular;
+                    font-size: 1rem;
+                    color: white;
+                    background-color: var(--logo-primary-color);
+                    padding: .5rem;
+                    border-radius: .5rem;
+                }
+            }
+
+            & > :last-child {
+                width: 40%;
+            }
+
+            & > :last-child div {
+                border: var(--type-color) 1px solid;
+                padding: 1rem;
+                border-radius: .5rem;
+                height: 10rem;
+                overflow: auto;
+
+                & span {
+                    display: flex;
+                    align-items: center;
+                    gap: .5rem;
+                }
+                & img {
+                    display: inline-block;
+                    filter: brightness(0) saturate(100%) invert(7%) sepia(92%) saturate(5451%) hue-rotate(354deg) brightness(150%) contrast(110%);
+                    border-radius: 5rem;
+                    padding: .2rem;
+                }
+            }
+        }
+    }
+}
+
+main div form {
+    border-bottom: none;
+}
+
+section.form input:not(form section div input){
+    width: 100ch;
+}
+
+section.form input[type="submit"] {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.ofertas {
+    height: 100%;
+}
+.ofertas .slider div > img[alt="amostra de trabalho"] {
+    display: block;
+    object-fit: scale-down;
+    width: 100%;
+    margin: 1rem auto;
+    border-radius: 1rem;
+}
+
+.ofertas .slider {
+    overflow-y: overlay;
+    overflow-x: hidden;
+    max-height: 75ch;
+    display: block;
+
+    & > div {
+        background-color: var(--input-color);
+        padding: 1rem;
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+
+        & div {
+            display: flex;
+            margin-top: 1rem;
+            gap: 1rem;
+
+            & img {
+                display: inline-block;
+                filter: brightness(0) saturate(100%) invert(7%) sepia(92%) saturate(5451%) hue-rotate(354deg) brightness(150%) contrast(110%);
+                border-radius: 5rem;
+                padding: .2rem;
+                height: 2.5rem;
+            }
+
+            & button {
+                background: none;
+                border: none;
+                font-family: Poppins-Regular;
+                color: var(--type-color);
+                background-color: white;
+                padding: .5rem;
+                border-radius: .5rem;
+                font-size: 1rem;
+            }
+        }
+    }
+}

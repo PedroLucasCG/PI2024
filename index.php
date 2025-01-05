@@ -14,34 +14,47 @@ require __DIR__ . '/services/pessoa/EnderecoService.php';
 
 if (isset($_POST['form'])) {
     extract(array: $_POST);
-    print_r($_POST);
     switch ($form) {
         case "login":
             $auth = new Autenticacao(pdo: $pdo);
-            print_r(value: $auth->login(email: $usuario, senha: $senha));
+            $err = $auth->login($email, $senha);
+            if (isset($err['erro'])) {
+                echo $err['erro'];
+                break;
+            }
             header(header: "Location: /public/landing_page/landing_page.html");
             break;
         case "cadastro":
             $pessoa = new Pessoa(pdo: $pdo);
-            $pessoa->setPessoa(
+            $err = $pessoa->setPessoa(
                 nome: $nome,
                 data_nasc: $data_nasc,
                 cpf: $cpf,
-                senha: $password,
+                senha: $senha,
                 email: $email,
                 telefones: [$telefone],
                 estado: $estado,
                 cidade: $cidade,
                 bairro: $bairro,
                 usuario: $usuario,
-                cep: isset($cep) ?? $cep
+                cep: isset($cep) ?? $cep,
+                terms: $terms
             );
-            $pessoa->create();
+            if (isset($err['msg'])) {
+                echo $err['msg'];
+                break;
+            }
+
+            $err = $pessoa->create();
+            if (isset($err['msg'])) {
+                echo $err['msg'];
+                break;
+            }
             header(header: "Location: /public/login/login.html");
             break;
     }
     exit;
 } else {
-    //header(header: "Location: /public/landing_page/landing_page.html");
+    header(header: "Location: /public/landing_page/landing_page.html");
     exit;
 }

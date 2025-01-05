@@ -16,24 +16,21 @@ class Pessoa
         $this->pdo = $pdo;
         $this->id = null;
     }
-    public function setPessoa(string $nome, string $data_nasc, string $cpf, string $senha, string $email, array $telefones, string $estado, string $cidade, string $bairro, string $usuario, string $cep = null, int $id = null): ?array
+    public function setPessoa(string $nome, string $data_nasc, string $cpf, string $senha, string $email, array $telefones, string $estado, string $cidade, string $bairro, string $usuario, bool $terms, string $cep = null, int $id = null): ?array
     {
+        if (!$terms)
+            return [ 'msg' => 'É necessário aceitar os termos de uso e privacidade!'];
         if (isset($id)) {
-            $query = "SELECT COUNT(*) AS count FROM Pessoa WHERE id = :id";
-            $stmt = $this->pdo->prepare(query: $query);
-            $stmt->bindParam(param: ':id', var: $id);
-            try {
-                $stmt->execute();
-                $data = $stmt->fetch();
-            }catch (PDOException $ex) {
-                echo 'Erro ao executar a verificação da existência do registro de pessoa. Erro: ' . $ex->getMessage();
-            }
-
-            if($data['count'] == 0) {
+            if($this->count('idPessoa', $id) == 0) {
                 return [ 'msg' => 'O id passado não corresponde a nenhum registro de pessoa no sistema.'];
             }
             $this->id = $id;
         }
+
+        if($this->count('email', $email) != 0) {
+            return [ 'msg' => 'O email cadastrado já existe.'];
+        }
+
         $this->nome = $nome;
         $this->data_nasc = $data_nasc;
         $this->cpf = $cpf;
@@ -61,9 +58,11 @@ class Pessoa
         ];
     }
 
-    public function create(): void {
+    public function create(): ?array {
         $service = new PessoaService(pdo: $this->pdo);
-        $service->upsert(pessoa: $this->getAllAttributes());
+        $err = $service->upsert(pessoa: $this->getAllAttributes());
+        if (isset($err['msg'])) return $err;
+        return null;
     }
     public function from(string $nome, string $data_nasc, string $cpf, string $senha, string $email, array $telefones, string $estado, string $cidade, string $bairro, string $cep = null, int $id = null): void {
         $this->id = $id;
@@ -79,5 +78,20 @@ class Pessoa
             array_push(array: $this->telefones, values: $telefone->setTelefone(telefone: $tel, pessoa_id: $id));
         }
         $this->telefones = $telefones;
+    }
+
+    private function count(string $field, int | string $value): ?int {
+        $query = "SELECT COUNT(*) AS count FROM Pessoa WHERE $field = :$field";
+        $stmt = $this->pdo->prepare(query: $query);
+        $stmt->bindParam(param: ":$field", var: $value);
+        try {
+            $stmt->execute();
+            $data = $stmt->fetch();
+        }catch (PDOException $ex) {
+            echo 'Erro ao executar a verificação da existência do registro de pessoa. Erro: ' . $ex->getMessage();
+            return null;
+        }
+
+        return $data['count'];
     }
 }

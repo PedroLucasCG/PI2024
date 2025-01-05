@@ -59,7 +59,9 @@ class PessoaService
             } else {
                 foreach ($telefones as $key => $value) {
                     $telefone = new Telefone($this->pdo);
-                    $telefone->setTelefone( telefone: $value, pessoa_id: $this->pdo->lastInsertId());
+                    $err = $telefone->setTelefone( telefone: $value, pessoa_id: $this->pdo->lastInsertId());
+                    if (isset($err['msg']))
+                        return $err;
                     $telefone->create();
                 }
 

@@ -1,10 +1,17 @@
 import Inputmask from "/node_modules/inputmask/dist/inputmask.es6.js";
 const cidade_dafault = cidade.innerHTML;
+const check_senha_display = document.querySelector(".input-wrapper > span");
+check_senha_display.style.display = 'none';
+submit_form.setAttribute('disabled', true);
 var cidade_id;
+
+//mascaras de input
 Inputmask({"mask": "(99) 9 9999-9999"}).mask(telefone);
 Inputmask({"mask": "999.999.999-99"}).mask(cpf);
 Inputmask({"mask": "99/99/9999"}).mask(data_nasc);
 
+
+//dados da API do IBGE sobre as localidades
 const estados = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados/')
     .then(response => {
         if (!response.ok) {
@@ -60,3 +67,14 @@ estado.addEventListener('change', async function(event) {
 cidade.addEventListener('change', () => {
     bairro.removeAttribute('disabled');
 })
+
+
+//verificação de senha
+check_senha.addEventListener('input', (e) => {
+    if (check_senha.value === senha.value) {
+        check_senha_display.style.display = "none";
+        submit_form.removeAttribute('disabled');
+    } else {
+        check_senha_display.style.display = "block";
+    }
+});
