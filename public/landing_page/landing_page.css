@@ -56,7 +56,7 @@ header {
     color: var(--logo-secondary-color)
 }
 
-.text-logo #euna {
+.text-logo .euna {
     /* logo 1corre */
     text-decoration: underline;
     font-size: 22px;
@@ -101,7 +101,6 @@ header {
 
 .block1 {
     display: flex;
-    justify-content: center;
     padding: 10px 100px;
     margin: 10px 10px 20px;
 }
@@ -166,6 +165,8 @@ header {
     justify-content: center;
     padding: 10px 10px 20px;
     background: #fff;
+
+    padding-bottom: 100px;
 }
 
 .frame {
@@ -275,7 +276,6 @@ header {
     background: #fff;
     padding: 10px 10px 20px;
 
-    padding-top: 100px;
     padding-bottom: 100px;
 }
 
@@ -318,7 +318,6 @@ header {
     background-color: #FFF;
     justify-content: center;
 
-    padding-top: 100px;
     padding-bottom: 100px;
 }
 
@@ -397,6 +396,7 @@ header {
     align-items: center;
     background-color: var(--logo-secondary-color);
     border-radius: 10px;
+    transition: 0.3s ease;
 }
 
 #button_b4 {
@@ -423,6 +423,7 @@ header {
     justify-content: center;
     padding: 10px 10px 20px;
     background: #fff;
+    padding-bottom: 100px;
 }
 
 #text_b5 h3 {
@@ -545,6 +546,121 @@ header {
 }
 
 /* FIM BLOCO 5 */
+
+/* RODAPÉ */
+
+footer {
+    background: #FFF;
+    padding: 10px 10px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 80vw;
+}
+
+.footer-logo {
+    /* logo 1corre */
+    font-family: 'LeagueGothic-Regular';
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    font-size: 40px;
+    padding-bottom: 10px;
+}
+
+.footer-logo span {
+    /* logo 1corre */
+    color: var(--logo-primary-color);
+}
+
+.footer-logo h6 {
+    /* logo 1corre */
+    font-weight: bold;
+    color: var(--logo-secondary-color)
+}
+
+.footer-logo .footer-euna {
+    /* logo 1corre */
+    text-decoration: underline;
+    font-size: 17.5px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    text-align: left;
+    gap: 10px;
+}
+
+.footer-social {
+    padding-top: 10px;
+}
+
+.footer-subtittle {
+    color: var(--logo-secondary-color);
+    font-size: 20px;
+    transition: 0.3s ease;
+}
+
+.footer-subtittle:hover {
+    color: var(--logo-primary-color)
+}
+
+
+.footer-description,
+.footer-contact {
+    color: #9D9D9D;
+    font-size: 14px;
+}
+
+.footer-section ul {
+    list-style: none;
+    font-size: 14px;
+}
+
+.footer-section ul a {
+    color: #9D9D9D;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.footer-section ul a:hover {
+    color: #000
+}
+
+.footer-botton {
+    color: #9D9D9D;
+    font-size: 12px;
+}
+
+/* CSS para alterar os ícones de redes sociais */
+.fa {
+    font-size: 30px;
+    width: 30px;
+    text-decoration: none;
+    border-radius: 50%;
+    transition: 0.3s ease;
+}
+
+.fa:hover {
+    color: var(--logo-primary-color);
+}
+
+.fa-instagram,
+.fa-github,
+.fa-linkedin {
+    color: var(--logo-secondary-color)
+}
+
+/* FIM RODAPÉ */
+
 
 /* DIVISOR ONDAS */
 .wave-divisor {
