@@ -10,7 +10,7 @@
     <script src="./landing_page.js" type="module" defer></script>
     <title>1CORRE</title>
     <link rel="stylesheet" href="../main.css">
-    <link rel="stylesheet" href="./landing_page.css">
+    <link rel="stylesheet" href="./landing_page.css?v=1">
 
     <!-- Google Icon Arrow Forward -->
     <link rel="stylesheet"
@@ -48,9 +48,16 @@
 
                 <ul class="nav-links">
                     <li><a href="#">Buscar Freelancers</a></li>
-                    <li><a href="../login/login.html">Entrar</a></li>
-                    <li><a href="../cadastro/cadastro.html">Cadastrar</a></li>
+                    <li id="entrar"><a href="../login/login.html">Entrar</a></li>
+                    <li id="cadastrar"><a href="../cadastro/cadastro.html" id="cadastrar">Cadastrar</a></li>
                     <a href="#" id="navbar-button">Postar trabalho</a>
+                    <li class="profileContainer">
+                        <img src="../../assets/icons/profile.svg" id="profilePic" onerror="this.src='../../assets/icons/profile.svg'">
+                        <div id="profileDropdown">
+                            <span id="dashboard">Dashboard</span>
+                            <span id="sair">Sair</span>
+                        </div>
+                    </li>
                 </ul>
 
             </nav>

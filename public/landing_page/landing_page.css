@@ -78,6 +78,49 @@ header {
     color: var(--logo-primary-color);
 }
 
+.nav-links img {
+    display: block;
+    height: 3.5rem;
+    object-fit: cover;
+    border-radius: 5rem;
+    background: url('../../assets/icons/profile.svg') no-repeat center center;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.nav-links div {
+    position: absolute;
+    left: -70%;
+    bottom: -230%;
+    background-color: white;
+    border-radius: 1rem;
+    padding: 1rem;
+    display: none;
+}
+
+.nav-links div :first-child {
+    border-bottom: var(--type-color) 1px solid;
+}
+
+.nav-links div > * {
+    display: block;
+    padding: .5rem;
+    cursor: pointer;
+    color: var(--type-color);
+}
+
+.nav-links div > *:hover {
+    transform: scale(1.1);
+}
+
+.nav-links div :last-child {
+    color: red;
+}
+
+.profileContainer {
+    position: relative;
+}
+
 #navbar-button {
     background-color: var(--logo-secondary-color);
     color: white;
@@ -92,6 +135,8 @@ header {
 #navbar-button:hover {
     background-color: #373767;
 }
+
+
 
 /* FIM NAVBAR
 
