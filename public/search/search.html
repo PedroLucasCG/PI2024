@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1CORRE</title>
+    <link rel="stylesheet" href="output.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Gothic&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Link para icones de mídias sociais -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  </head>
+  
+  <body class="font-popins">
+
+    <!-- popup -->
+    <div id="screen-popup" class="fixed hidden w-full inset-0 z-40 container">
+      <div id="modal"
+      class="fixed inset-0 bg-black/40 backdrop-blur-md"
+    ></div>
+      <div class="mx-auto mt-5 bg-white rounded-lg shadow-lg z-50 absolute">
+        <div class="header flex items-center justify-between p-4">
+          <a hrsef="#" class="text-gray-500 cursor-pointer"
+            ><i class="fa fa-arrow-left !pl-2"></i>Voltar</a
+          >
+          <span class="text-sm text-gray-500 cursor-pointer"
+            >Próximo Perfil<i class="fa fa-arrow-right !pl-2"></i
+          ></span>
+        </div>
+        <div class="content flex flex-wrap p-5">
+          <div class="font-medium">
+            <!-- picture and person details -->
+            <div class="mb-5">
+              <h3 class="text-lg text-blue-500 mb-3">Detalhes Pessoais</h3>
+              <div class="flex flex-1 gap-11">
+                <img
+                  src="../../assets/imgs/search/image4.png"
+                  alt="Foto de perfil"
+                  class="w-64 h-80 rounded-md mb-5"
+                />
+  
+                <div class="pt-4">
+                  <div class="text-sm mb-2 pb-4">
+                    <h3 class="text-gray-600 pb-1">Nome:</h3>
+                    <p>Marcelo Andrade</p>
+                  </div>
+                  <div class="text-sm mb-2 pb-4">
+                    <h3 class="text-gray-600 pb-1">Gênero:</h3>
+                    <p>Masculino</p>
+                  </div>
+                  <div class="text-sm mb-2 pb-4">
+                    <h3 class="text-gray-600 pb-1">Data de Nascimento:</h3>
+                    <p>27 de Agosto de 1993</p>
+                  </div>
+                  <div class="text-sm mb-2 pb-4">
+                    <h3 class="text-gray-600 pb-1">Nacionalidade:</h3>
+                    <p>Brasileiro</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- adreess and contact details -->
+            <div class="flex flex-1 gap-36">
+              <div class="mb-5">
+                <h3 class="text-lg text-blue-500 mb-3">Endereço</h3>
+                <div class="">
+                  <div class="pb-5">
+                    <h3 class="text-gray-400 text-sm pb-1 font-semibold">
+                      Rua/Avenida/Apto
+                    </h3>
+                    <p>Rua Nova Vista, 421</p>
+                  </div>
+                  <div class="pb-5">
+                    <h3 class="text-gray-400 text-sm pb-1 font-semibold">
+                      Cidade:
+                    </h3>
+                    <p>Eunápolis</p>
+                  </div>
+                  <div class="pb-5">
+                    <h3 class="text-gray-400 text-sm pb-1 font-semibold">
+                      Estado
+                    </h3>
+                    <p class="">Bahia</p>
+                  </div>
+                  <div class="pb-5">
+                    <h3 class="text-gray-400 text-sm pb-1 font-semibold">
+                      País:
+                    </h3>
+                    <p>Brasil</p>
+                  </div>
+                </div>
+              </div>
+              <div class="">
+                <h3 class="text-lg text-blue-500 mb-3">Detalhes de Contato</h3>
+                <div class="pb-5">
+                  <h3 class="text-gray-400 text-sm pb-1 font-semibold">
+                    Telefone:
+                  </h3>
+                  <p>(00) 0 0000-0000</p>
+                </div>
+                <div class="pb-5">
+                  <h3 class="text-gray-400 text-sm pb-1 font-semibold">
+                    E-mail:
+                  </h3>
+                  <p>example@domain.com</p>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- last contract jobs -->
+          <div class="px-4">
+            <h3 class="text-lg text-blue-500 mb-3">
+              Últimos Trabalhos <br />
+              Contratados
+            </h3>
+            <!-- first review -->
+            <div class="space-y-4 pb-4">
+              <div
+                class="review items-center border border-gray-200 rounded-lg p-4 max-w-60"
+              >
+                <div class="flex flex-1 mb-4">
+                  <img
+                    src="./../../assets/imgs/search//50.png"
+                    alt="Sofia"
+                    class="w-12 h-12 rounded-full mr-4"
+                  />
+                  <div>
+                    <p class="text-gray-800 font-semibold pb-1">Sofia</p>
+                    <p class="text-xs text-gray-400">2 days ago</p>
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <p class="text-xs text-gray-600">
+                    Lorem Ipsum is simply dummy text of the printing industry.
+                  </p>
+                  <div class="flex items-center mt-1">
+                    <span class="text-yellow-400">★</span>
+                    <span class="text-yellow-400">★</span>
+                    <span class="text-yellow-400">★</span>
+                    <span class="text-yellow-400">★</span>
+                    <span class="text-gray-300">★</span>
+                    <span class="ml-2 text-sm text-gray-600">4.0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- second review -->
+            <div class="space-y-4 pb-4">
+              <div
+                class="review items-center border border-gray-200 rounded-lg p-4 max-w-60"
+              >
+                <div class="flex flex-1 mb-4">
+                  <img
+                    src="../../assets/imgs/search/50.png"
+                    alt="Sofia"
+                    class="w-12 h-12 rounded-full mr-4"
+                  />
+                  <div>
+                    <p class="text-gray-800 font-semibold pb-1">Sofia</p>
+                    <p class="text-xs text-gray-400">2 days ago</p>
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <p class="text-xs text-gray-600">
+                    Lorem Ipsum is simply dummy text of the printing industry.
+                  </p>
+                  <div class="flex items-center mt-1">
+                    <span class="text-yellow-400">★</span>
+                    <span class="text-yellow-400">★</span>
+                    <span class="text-yellow-400">★</span>
+                    <span class="text-yellow-400">★</span>
+                    <span class="text-gray-300">★</span>
+                    <span class="ml-2 text-sm text-gray-600">4.0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- ofertas (esqueci como escreve em inglês kkk) offers? -->
+          <div class="flex-1">
+            <div>
+              <h3 class="text-red-500 font-bold mb-3 text-3xl underline">
+                Oferta
+              </h3>
+              <div
+                class="offer-item border border-gray-200 rounded-lg overflow-hidden mb-5 px-5 bg-gray-100"
+              >
+                <h1 class="text-3xl text-gray-400 py-4">
+                  Pintura de carros clássicos
+                </h1>
+                <img
+                  src="../../assets/imgs/search/image3.png"
+                  alt="Pintura de carros clássicos"
+                  class="w-full h-auto"
+                />
+                <div class="p-4">
+                  <p class="text-sm text-gray-600 mt-2">
+                    ipsum libero vehicula arcu, eu iaculis tortor dolor nec augue.
+                    Morbi sapien neque, auctor sed justo id, iaculis consectetur
+                    nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Praesent dictum dui vel elementum tincidunt.
+                  </p>
+                  <p class="text-sm text-gray-500 mt-10">
+                    Amostra:
+                    <a
+                      href="https://instagram.com/souBomComCarrosColoridos"
+                      class="text-blue-500"
+                      >instagram.com/souBomComCarrosColoridos</a
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- accept / denied -->
+        <div
+          class="footer flex justify-between items-center p-4 bg-gray-50 border-t border-gray-200"
+        >
+          <button id="accept"
+            class="bg-green-500 text-white py-3 px-6 rounded-full shadow hover:bg-green-600"
+          >
+            Contratar
+          </button>
+          <button id="reject"
+            class="bg-red-500 text-white py-3 px-6 rounded-full shadow hover:bg-red-600"
+          >
+            Rejeitar
+          </button>
+        </div>
+      </div>
+      </div>
+
+    <!-- gradient -->
+    <div class="bg-gradient-to-br from-[#F8A728] via-[#F8A728] to-[#F75E1B]">
+      <header class="pt-8 container">
+        <div
+          class="bg-white px-5 py-2 rounded-full flex justify-between items-center h-20"
+        >
+          <div class="font-gotic leading-3">
+            <h4 class="text-4xl">
+              <span class="text-orange-300 font-bold">1</span
+              ><span class="text-[#4b538b] font-bold">CORRE</span>
+            </h4>
+            <h3 class="text-center underline text-[22px] text-[#4b538b]">
+              EUNAPOLIS
+            </h3>
+          </div>
+          <nav>
+            <ul class="flex gap-8 items-center text-gray-600">
+              <li><a href="">Buscar Freelancers</a></li>
+              <li><a href="">Entrar</a></li>
+              <li><a href="">Cadastrar</a></li>
+              <a
+                href="/"
+                class="py-2 px-6 bg-[#4b538b] text-white rounded-full"
+              >
+                Postar Trabalho
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <main class="container pt-10 pb-20 grid">
+        
+      </main>
+      <div class="overflow-hidden rotate-180 w-100  leading-none block">
+        <svg 
+          class="w-full h-24 block"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+            opacity=".25"
+            class="fill-white"
+          ></path>
+          <path
+            d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+            opacity=".5"
+            class="fill-white"
+          ></path>
+          <path
+            d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
+            class="fill-white"
+          ></path>
+        </svg>
+      </div>
+    </div>
+
+    <!-- search section -->
+    <section class="flex justify-center items-center gap-5 mt-10 mb-20">
+      <div class="relative w-[60%]">
+        <input type="text" class="w-full p-4 border-[#ddd] shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] rounded-md" placeholder="Pesquisar serviço" />
+        <button class="absolute right-0  border-[#ddd] p-3 rounded-md cursor-pointer text-xl"><i class="fa fa-search mr-2"></i></button>
+      </div>
+    </section>
+
+    <!-- search results -->
+    <section class="container">
+      <div class="flex flex-col justify-center">
+        <div class="grid grid-cols-[repeat(auto-fit,_minmax(350px,_1fr))] gap-5 px-[10%]">
+          <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
+            <div class="flex items-center space-x-4">
+              <img src="../../assets/imgs/search/50.png" class="w-16 h-16 rounded-full" alt="Foto de Fabricio">
+
+              <div class="ml-4">
+                  <h3 class="text-lg font-semibold">Fabricio</h3>
+                  <p class="text-gray-500 text-sm">Pequi, EUN</p>
+              </div>
+  
+            </div>
+            <div class="flex items-center justify-between mt-4">
+              <span class="bg-green-100 text-green-600 text-sm px-4 py-1 rounded-full">Pedreiro</span>
+              <div class="flex space-x-4">
+                  <a href="/"><i class="fa fa-instagram text-2xl text-gray-500 hover:text-pink-500 cursor-pointer "></i></a>
+                  <a href="/"><i class="fa fa-facebook text-2xl text-gray-500 hover:text-blue-600 cursor-pointer"></i></a>
+                  <a href="/"><i class="fa fa-whatsapp text-2xl text-gray-500 hover:text-green-500 cursor-pointer"></i></a>
+              </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <p class="text-gray-500">Construção da Laje</p>
+            <div class="text-xl font-bold">R$3.457</div>
+        </div>
+  
+
+            <button id="offer-popup" class="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+            Visualizar
+            </button>
+  
+          </div>
+          <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
+            <div class="flex items-center space-x-4">
+              <img src="../../assets/imgs/search/50.png" class="w-16 h-16 rounded-full" alt="Foto de Fabricio">
+
+              <div class="ml-4">
+                  <h3 class="text-lg font-semibold">Fabricio</h3>
+                  <p class="text-gray-500 text-sm">Pequi, EUN</p>
+              </div>
+  
+            </div>
+            <div class="flex items-center justify-between mt-4">
+              <span class="bg-green-100 text-green-600 text-sm px-4 py-1 rounded-full">Pedreiro</span>
+              <div class="flex space-x-4">
+                  <a href="/"><i class="fa fa-instagram text-2xl text-gray-500 hover:text-pink-500 cursor-pointer "></i></a>
+                  <a href="/"><i class="fa fa-facebook text-2xl text-gray-500 hover:text-blue-600 cursor-pointer"></i></a>
+                  <a href="/"><i class="fa fa-whatsapp text-2xl text-gray-500 hover:text-green-500 cursor-pointer"></i></a>
+              </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <p class="text-gray-500">Construção da Laje</p>
+            <div class="text-xl font-bold">R$3.457</div>
+        </div>
+  
+
+            <button id="offer-popup" class="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+            Visualizar
+            </button>
+  
+          </div>
+          <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
+            <div class="flex items-center space-x-4">
+              <img src="../../assets/imgs/search/50.png" class="w-16 h-16 rounded-full" alt="Foto de Fabricio">
+
+              <div class="ml-4">
+                  <h3 class="text-lg font-semibold">Fabricio</h3>
+                  <p class="text-gray-500 text-sm">Pequi, EUN</p>
+              </div>
+  
+            </div>
+            <div class="flex items-center justify-between mt-4">
+              <span class="bg-green-100 text-green-600 text-sm px-4 py-1 rounded-full">Pedreiro</span>
+              <div class="flex space-x-4">
+                  <a href="/"><i class="fa fa-instagram text-2xl text-gray-500 hover:text-pink-500 cursor-pointer "></i></a>
+                  <a href="/"><i class="fa fa-facebook text-2xl text-gray-500 hover:text-blue-600 cursor-pointer"></i></a>
+                  <a href="/"><i class="fa fa-whatsapp text-2xl text-gray-500 hover:text-green-500 cursor-pointer"></i></a>
+              </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <p class="text-gray-500">Construção da Laje</p>
+            <div class="text-xl font-bold">R$3.457</div>
+        </div>
+  
+
+            <button id="offer-popup" class="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+            Visualizar
+            </button>
+  
+          </div>
+          <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
+            <div class="flex items-center space-x-4">
+              <img src="../../assets/imgs/search/50.png" class="w-16 h-16 rounded-full" alt="Foto de Fabricio">
+
+              <div class="ml-4">
+                  <h3 class="text-lg font-semibold">Fabricio</h3>
+                  <p class="text-gray-500 text-sm">Pequi, EUN</p>
+              </div>
+  
+            </div>
+            <div class="flex items-center justify-between mt-4">
+              <span class="bg-green-100 text-green-600 text-sm px-4 py-1 rounded-full">Pedreiro</span>
+              <div class="flex space-x-4">
+                  <a href="/"><i class="fa fa-instagram text-2xl text-gray-500 hover:text-pink-500 cursor-pointer "></i></a>
+                  <a href="/"><i class="fa fa-facebook text-2xl text-gray-500 hover:text-blue-600 cursor-pointer"></i></a>
+                  <a href="/"><i class="fa fa-whatsapp text-2xl text-gray-500 hover:text-green-500 cursor-pointer"></i></a>
+              </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <p class="text-gray-500">Construção da Laje</p>
+            <div class="text-xl font-bold">R$3.457</div>
+        </div>
+  
+
+            <button id="offer-popup" class="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+            Visualizar
+            </button>
+  
+          </div>
+          <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
+            <div class="flex items-center space-x-4">
+              <img src="../../assets/imgs/search/50.png" class="w-16 h-16 rounded-full" alt="Foto de Fabricio">
+
+              <div class="ml-4">
+                  <h3 class="text-lg font-semibold">Fabricio</h3>
+                  <p class="text-gray-500 text-sm">Pequi, EUN</p>
+              </div>
+  
+            </div>
+            <div class="flex items-center justify-between mt-4">
+              <span class="bg-green-100 text-green-600 text-sm px-4 py-1 rounded-full">Pedreiro</span>
+              <div class="flex space-x-4">
+                  <a href="/"><i class="fa fa-instagram text-2xl text-gray-500 hover:text-pink-500 cursor-pointer "></i></a>
+                  <a href="/"><i class="fa fa-facebook text-2xl text-gray-500 hover:text-blue-600 cursor-pointer"></i></a>
+                  <a href="/"><i class="fa fa-whatsapp text-2xl text-gray-500 hover:text-green-500 cursor-pointer"></i></a>
+              </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <p class="text-gray-500">Construção da Laje</p>
+            <div class="text-xl font-bold">R$3.457</div>
+        </div>
+  
+
+            <button id="offer-popup" class="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+            Visualizar
+            </button>
+  
+          </div>
+          <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
+            <div class="flex items-center space-x-4">
+              <img src="../../assets/imgs/search/50.png" class="w-16 h-16 rounded-full" alt="Foto de Fabricio">
+
+              <div class="ml-4">
+                  <h3 class="text-lg font-semibold">Fabricio</h3>
+                  <p class="text-gray-500 text-sm">Pequi, EUN</p>
+              </div>
+  
+            </div>
+            <div class="flex items-center justify-between mt-4">
+              <span class="bg-green-100 text-green-600 text-sm px-4 py-1 rounded-full">Pedreiro</span>
+              <div class="flex space-x-4">
+                  <a href="/"><i class="fa fa-instagram text-2xl text-gray-500 hover:text-pink-500 cursor-pointer "></i></a>
+                  <a href="/"><i class="fa fa-facebook text-2xl text-gray-500 hover:text-blue-600 cursor-pointer"></i></a>
+                  <a href="/"><i class="fa fa-whatsapp text-2xl text-gray-500 hover:text-green-500 cursor-pointer"></i></a>
+              </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <p class="text-gray-500">Construção da Laje</p>
+            <div class="text-xl font-bold">R$3.457</div>
+        </div>
+  
+
+            <button id="offer-popup" class="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+            Visualizar
+            </button>
+  
+          </div>
+          <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
+            <div class="flex items-center space-x-4">
+              <img src="../../assets/imgs/search/50.png" class="w-16 h-16 rounded-full" alt="Foto de Fabricio">
+
+              <div class="ml-4">
+                  <h3 class="text-lg font-semibold">Fabricio</h3>
+                  <p class="text-gray-500 text-sm">Pequi, EUN</p>
+              </div>
+  
+            </div>
+            <div class="flex items-center justify-between mt-4">
+              <span class="bg-green-100 text-green-600 text-sm px-4 py-1 rounded-full">Pedreiro</span>
+              <div class="flex space-x-4">
+                  <a href="/"><i class="fa fa-instagram text-2xl text-gray-500 hover:text-pink-500 cursor-pointer "></i></a>
+                  <a href="/"><i class="fa fa-facebook text-2xl text-gray-500 hover:text-blue-600 cursor-pointer"></i></a>
+                  <a href="/"><i class="fa fa-whatsapp text-2xl text-gray-500 hover:text-green-500 cursor-pointer"></i></a>
+              </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <p class="text-gray-500">Construção da Laje</p>
+            <div class="text-xl font-bold">R$3.457</div>
+        </div>
+  
+
+            <button id="offer-popup" class="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+            Visualizar
+            </button>
+  
+          </div>
+          
+        </div>
+        
+      </div>
+      <div class="text-center mb-20 mt-20">
+        <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">&laquo;</button>
+        <button class="w-8 h-8 rounded-full bg-blue-500 text-white">1</button>
+        <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">2</button>
+        <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">3</button>
+        <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">4</button>
+        <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">&raquo;</button>
+      </div>
+    </section>
+
+    <!-- footer -->
+    <footer class="container flex flex-col items-center">
+
+      <div class="flex justify-between flex-wrap gap-5 p-2 max-w-[80%]">
+      
+        <div class="flex-1 min-w-48 gap-3">
+          <div class="leading-4 text-4xl pb-4 font-gotic">
+            <a href="#">
+              <h6 class="text-[#4b538b] font-bold""><span class="text-[#f7a21b]">1</span>CORRE</h6>
+            </a>
+          </div>
+
+          <div class="text-sm text-[#9D9D9D] text-balance">
+            <p>
+              Uma ponte entre ideias e talentos, simplificando a conexão entre
+              clientes e freelancers para transformar projetos em realidade.
+            </p>
+          </div>
+          <div class="pt-10">
+            <a href="#"> <i class="fa fa-instagram"></i> </a>
+            <a href="#"> <i class="fa fa-github"></i> </a>
+            <a href="#"> <i class="fa fa-linkedin"></i> </a>
+          </div>
+        </div>
+
+        <div class="flex-1 min-w-48 gap-3" >
+          <h1 class="text-xl text-[#4b538b] font-semibold hover:text-[#f7a21b] transition-all duration-300 ease-in-out">Para clientes</h1>
+          <ul class="text-[#9D9D9D]">
+            <li><a href="../cadastro/cadastro.html">Criar conta</a></li>
+            <li><a href="#">Buscar freelancers</a></li>
+            <li><a href="#">Política de privacidade</a></li>
+          </ul>
+        </div>
+
+        <div  class="flex-1 min-w-48 gap-3">
+          <h1 class="text-xl text-[#4b538b] font-semibold hover:text-[#f7a21b] transition-all duration-300 ease-in-out">Para freelancers</h1>
+          <ul class="text-[#9D9D9D]">
+            <li><a href="../cadastro/cadastro.html">Criar conta</a></li>
+            <li><a href="#">Política de privacidade</a></li>
+          </ul>
+        </div>
+
+        <div  class="flex-1 min-w-48 gap-3">
+          <h1 class="text-xl text-[#4b538b] font-semibold hover:text-[#f7a21b] transition-all duration-300 ease-in-out">Entre em contato</h1>
+          <p class="text-[#9D9D9D] text-sm">📍 Eunápolis | BA</p>
+          <p class="text-[#9D9D9D] text-sm">📞 +55 (73)9 9999-9999</p>
+          <p class="text-[#9D9D9D] text-sm">✉️ suporte@1corre.com</p>
+        </div>
+            
+      </div>
+      <div class="text-sm text-[#9D9D9D] text-center pt-10">
+        <p>© 2024 - 1CORRE. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+    <script>
+      const popupButton = document.getElementById('offer-popup');
+      const screenPopup = document.getElementById('screen-popup');
+
+      popupButton.addEventListener('click', () => {
+        screenPopup.classList.toggle('hidden');
+        screenPopup.classList.toggle('flex');
+      })
+
+      screenPopup.addEventListener('click', (e) => {
+        if(e.target.id === 'modal' || e.target.id === 'reject') {
+          screenPopup.classList.add('hidden');
+          screenPopup.classList.remove('flex');
+        }
+      })
+    </script>
+  </body>
+</html>
