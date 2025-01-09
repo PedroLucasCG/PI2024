@@ -17,9 +17,9 @@ class Avaliacao {
         }
 
         if ($id) {
-            $query = "UPDATE Avaliacao SET 
-                comentario = :comentario, 
-                grau = :grau, 
+            $query = "UPDATE Avaliacao SET
+                comentario = :comentario,
+                grau = :grau,
                 Acordo = :Acordo,
             WHERE idAvaliacao = :id";
         } else {
@@ -69,6 +69,43 @@ class Avaliacao {
             ];
         } else {
             return ["msg" => "A avaliação não foi encontrada."];
+        }
+    }
+
+    public function getALL($freelancer_id, $contratante_id): array {
+        if (!isset($freelancer_id) || !isset($contratante_id)) {
+            return ["msg" => "O id do freelancer ou contrante é necessário para recuperar avaliação."];
+        }
+        $query = "SELECT * FROM avaliacao ";
+
+        $conditions = [];
+
+        if ($freelancer_id) {
+            $conditions[] = "Freelancer = $freelancer_id";
+        }
+
+        if ($contratante_id) {
+            $conditions[] = "Contratante = $contratante_id";
+        }
+
+        if (!empty($conditions)) {
+            $query .= "WHERE " . implode(" AND ", $conditions) . " ";
+        }
+
+        $query .= " JOIN acordo ON Acordo = idAcordo JOIN oferta ON Oferta = idOferta";
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->execute();
+        $data = $stmt->fetch();
+
+        if ($data) {
+            return [
+                "msg" => "Acordo recuperado com sucesso",
+                "data" => $data,
+            ];
+        } else {
+            return ["msg" => "Nenhum Acordo não foi encontrado."];
         }
     }
 

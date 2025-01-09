@@ -23,9 +23,9 @@ class Acordo {
         }
 
         if ($id) {
-            $query = "UPDATE Acordo SET 
-                valor = :valor, 
-                descricao = :descricao, 
+            $query = "UPDATE Acordo SET
+                valor = :valor,
+                descricao = :descricao,
                 modalidade = :modalidade,
                 estado = :estado
                 Contratante = :Contratante,
@@ -60,7 +60,7 @@ class Acordo {
         }
     }
 
-    public function get($id) {
+    public function get($id): array {
         if (!isset($id)) {
             return ["msg" => "O id é necessário para recuperar acordo."];
         }
@@ -84,7 +84,44 @@ class Acordo {
         }
     }
 
-    public function delete($id) {
+    public function getALL($freelancer_id, $contratante_id): array {
+        if (!isset($freelancer_id) || !isset($contratante_id)) {
+            return ["msg" => "O id do freelancer ou contrante é necessário para recuperar acordo."];
+        }
+        $query = "SELECT * FROM acordo ";
+
+        $conditions = [];
+
+        if ($freelancer_id) {
+            $conditions[] = "Freelancer = $freelancer_id";
+        }
+
+        if ($contratante_id) {
+            $conditions[] = "Contratante = $contratante_id";
+        }
+
+        if (!empty($conditions)) {
+            $query .= "WHERE " . implode(" AND ", $conditions) . " ";
+        }
+
+        $query .= "JOIN oferta ON Oferta = idOferta";
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->execute();
+        $data = $stmt->fetch();
+
+        if ($data) {
+            return [
+                "msg" => "Acordo recuperado com sucesso",
+                "data" => $data,
+            ];
+        } else {
+            return ["msg" => "Nenhum Acordo não foi encontrado."];
+        }
+    }
+
+    public function delete($id): array {
         if (!isset($id)) {
             return ["msg" => "O id é necessário para deletar acordo."];
         }
@@ -100,11 +137,3 @@ class Acordo {
         }
     }
 }
-
-$Acordo = new Acordo($pdo);
-
-$Acordo->upsert(1, 1, 200.89, "capinar 100 metros de quintal", "ativo", "horista");
-
-$Acordo->upsert(1, 200.89, "capinar 100 metros de quintal", "ativo", "horista", id: 1);
-
-$Acordo->get(1);

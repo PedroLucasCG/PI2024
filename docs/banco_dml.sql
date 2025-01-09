@@ -1,3 +1,16 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema 1corre_manager
+-- -----------------------------------------------------
+
 -- -----------------------------------------------------
 -- Schema 1corre_manager
 -- -----------------------------------------------------
@@ -204,3 +217,27 @@ CREATE TABLE IF NOT EXISTS `1corre_manager`.`telefone` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `1corre_manager`.`periodo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `1corre_manager`.`periodo` (
+  `idperiodo` INT NOT NULL AUTO_INCREMENT,
+  `Oferta` INT(11) NOT NULL,
+  `dia` VARCHAR(45) NOT NULL,
+  `hora_inicio` TIME NOT NULL,
+  `hora_final` TIME NOT NULL,
+  PRIMARY KEY (`idperiodo`),
+  INDEX `fk_periodo_oferta1_idx` (`Oferta` ASC),
+  CONSTRAINT `fk_periodo_oferta1`
+    FOREIGN KEY (`Oferta`)
+    REFERENCES `1corre_manager`.`oferta` (`idOferta`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
