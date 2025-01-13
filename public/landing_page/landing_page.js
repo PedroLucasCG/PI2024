@@ -6,7 +6,7 @@ console.log(value);
 if (!value.error) {
     entrar.style.display = "none";
     cadastrar.style.display = "none";
-    profilePic.src = `../../blob/${value.idPessoa}/profile.png`;
+    profilePic.src = `../../uploads/${value.idPessoa}/profile.png`;
     profilePic.addEventListener("click", () => {
         profileDropdown.style.display = profileDropdown.style.display == "block" ? "none" : "block";
     });

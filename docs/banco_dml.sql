@@ -18,35 +18,6 @@ CREATE SCHEMA IF NOT EXISTS `1corre_manager` DEFAULT CHARACTER SET utf8 ;
 USE `1corre_manager` ;
 
 -- -----------------------------------------------------
--- Table `1corre_manager`.`area`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `1corre_manager`.`area` (
-  `idArea` INT(11) NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idArea`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `1corre_manager`.`servico`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `1corre_manager`.`servico` (
-  `idServico` INT(11) NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
-  `Area` INT(11) NOT NULL,
-  PRIMARY KEY (`idServico`),
-  INDEX `fk_Servico_Area1_idx` (`Area` ASC),
-  CONSTRAINT `fk_Servico_Area1`
-    FOREIGN KEY (`Area`)
-    REFERENCES `1corre_manager`.`area` (`idArea`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `1corre_manager`.`endereco`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `1corre_manager`.`endereco` (
@@ -87,25 +58,38 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `1corre_manager`.`area`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `1corre_manager`.`area` (
+  `idArea` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idArea`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `1corre_manager`.`oferta`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `1corre_manager`.`oferta` (
-  `idOferta` INT(11) NOT NULL,
-  `Servico` INT(11) NOT NULL,
+  `idOferta` INT(11) NOT NULL AUTO_INCREMENT,
   `descricao` VARCHAR(200) NOT NULL,
   `preco` DOUBLE NULL DEFAULT NULL,
   `Freelancer` INT(11) NOT NULL,
+  `Area` INT(11) NOT NULL,
+  `titulo` VARCHAR(120) NOT NULL,
+  `foto` VARCHAR(45) NULL,
   PRIMARY KEY (`idOferta`),
-  INDEX `fk_Freelancer_has_Servico_Servico1_idx` (`Servico` ASC),
   INDEX `fk_oferta_pessoa1_idx` (`Freelancer` ASC),
-  CONSTRAINT `fk_Freelancer_has_Servico_Servico1`
-    FOREIGN KEY (`Servico`)
-    REFERENCES `1corre_manager`.`servico` (`idServico`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  INDEX `fk_oferta_area1_idx` (`Area` ASC),
   CONSTRAINT `fk_oferta_pessoa1`
     FOREIGN KEY (`Freelancer`)
     REFERENCES `1corre_manager`.`pessoa` (`idPessoa`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_oferta_area1`
+    FOREIGN KEY (`Area`)
+    REFERENCES `1corre_manager`.`area` (`idArea`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -141,27 +125,6 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `1corre_manager`.`amostra`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `1corre_manager`.`amostra` (
-  `idAmostra` INT(11) NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
-  `descricao` VARCHAR(800) NULL DEFAULT NULL,
-  `Oferta` INT(11) NOT NULL,
-  `url` VARCHAR(120) NULL DEFAULT NULL,
-  `imagem` VARCHAR(130) NULL DEFAULT NULL,
-  PRIMARY KEY (`idAmostra`),
-  INDEX `fk_Amostra_Oferta1_idx` (`Oferta` ASC),
-  CONSTRAINT `fk_Amostra_Oferta1`
-    FOREIGN KEY (`Oferta`)
-    REFERENCES `1corre_manager`.`oferta` (`idOferta`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `1corre_manager`.`avaliacao`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `1corre_manager`.`avaliacao` (
@@ -184,7 +147,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `1corre_manager`.`quebra`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `1corre_manager`.`quebra` (
-  `idQuebra` INT(11) NOT NULL,
+  `idQuebra` INT(11) NOT NULL AUTO_INCREMENT,
   `parte` ENUM('contratante', 'freelancer') NOT NULL COMMENT 'parte que quebrou o acordo',
   `descricao` VARCHAR(400) NOT NULL,
   `Acordo` INT(11) NOT NULL,

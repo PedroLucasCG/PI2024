@@ -1,4 +1,14 @@
 import Inputmask from "/node_modules/inputmask/dist/inputmask.es6.js";
+import get_login_data from "../get_login_data.js";
+import get_areas from "../get_areas.js";
+import get_ofertas from "../get_ofertas.js";
+
+//Informações de perfil - miniatura -
+(async () => {
+    const userData = await get_login_data();
+    profilePic.src = `../../uploads/${userData.idPessoa}/profile.png`;
+    profileName.innerText = userData.nome;
+})();
 
 // Funções de carregamento das seções
 function loadStatusAndReviews() {}
@@ -19,7 +29,7 @@ const horarioTemplate = `
     <span>
         {0}
         <img onclick="deleteHorario(this)" src="../../assets/icons/delete.svg" alt="Deletar horário">
-        <input type="hidden" value="{0}" name="horarios[]">
+        <input type="hidden" value="{0}" name="periodos[]">
     </span>
 `;
 
@@ -85,9 +95,27 @@ for (const panel of panelSelect) {
 }
 
 // Função para configurar a seção de ofertas
-function configureOfertaSection() {
+async function configureOfertaSection() {
     const horarioInput = document.getElementById("horario");
     const adicionarButton = document.getElementById("adicionar");
+    const idPessoa = document.getElementById("Freelancer");
+    const areaSelect = document.getElementById("area");
+    try {
+        const loginData = await get_login_data();
+        const areas = await get_areas();
+        await get_ofertas(9);
+        for (const area of areas.data) {
+            areaSelect.innerHTML += `<option value="${area.idArea}">${area.nome}</option>`;
+        }
+        console.log(idPessoa);
+        if (loginData && loginData.idPessoa) {
+            idPessoa.setAttribute("value", loginData.idPessoa);
+        } else {
+            console.error("Erro: Dados de login inválidos.");
+        }
+    } catch (error) {
+        console.error("Erro ao obter os dados de login:", error);
+    }
 
     if (horarioInput) {
         Inputmask({ mask: "99:99 - 99:99" }).mask(horarioInput);
@@ -101,10 +129,18 @@ function configureOfertaSection() {
 
             if (dia && horario && /\d{2}:\d{2} - \d{2}:\d{2}/.test(horario)) {
                 const horarioHTML = horarioTemplate.replace(/\{0\}/g, `${dia}, ${horario}`);
-                document.getElementById("horariosContainer").innerHTML += horarioHTML;
+                document.getElementById("horariosContainer").insertAdjacentHTML("beforeend", horarioHTML);
             } else {
                 alert("Por favor, preencha o dia e o horário corretamente.");
             }
+        });
+    }
+
+    // Botão para remover todos os horários (opcional)
+    const removerTodosButton = document.getElementById("removerTodos");
+    if (removerTodosButton) {
+        removerTodosButton.addEventListener("click", () => {
+            document.getElementById("horariosContainer").innerHTML = "";
         });
     }
 }

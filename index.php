@@ -6,11 +6,15 @@ require __DIR__ . '/models/usuario/pessoa.php';
 require __DIR__ . '/models/usuario/telefone.php';
 require __DIR__ . '/models/usuario/endereco.php';
 
+require __DIR__ . '/models/oferta/oferta.php';
+
 //services
 require __DIR__ . '/services/pessoa/autenticacao.php';
 require __DIR__ . '/services/pessoa/TelefoneService.php';
 require __DIR__ . '/services/pessoa/PessoaService.php';
 require __DIR__ . '/services/pessoa/EnderecoService.php';
+
+require __DIR__ . '/services/oferta/OfertaService.php';
 
 if (isset($_POST['form'])) {
     extract(array: $_POST);
@@ -20,6 +24,7 @@ if (isset($_POST['form'])) {
             $err = $auth->login($email, $senha);
             if (isset($err['erro'])) {
                 echo $err['erro'];
+                header(header: "Location: /public/login/login.html");
                 break;
             }
             header(header: "Location: /public/landing_page/landing_page.html");
@@ -40,17 +45,23 @@ if (isset($_POST['form'])) {
                 cep: isset($cep) ?? $cep,
                 terms: $terms
             );
-            if (isset($err['msg'])) {
-                echo $err['msg'];
+            if (isset($err['error'])) {
+                echo $err['error'];
                 break;
             }
 
             $err = $pessoa->create();
-            if (isset($err['msg'])) {
-                echo $err['msg'];
+            if (isset($err['error'])) {
+                echo $err['error'];
                 break;
             }
             header(header: "Location: /public/login/login.html");
+            break;
+        case "oferta":
+            $oferta = new Oferta($pdo);
+            $oferta->setOferta(descricao: $descricao, preco: $preco, Freelancer: $Freelancer, Area: $Area, periodos: $periodos, titulo: $titulo, files: $_FILES);
+            $oferta->create();
+            header(header: "Location: /public/profile/profile.html");
             break;
     }
     exit;

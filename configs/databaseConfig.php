@@ -16,7 +16,6 @@ $options = [
 
 try {
     $pdo = new PDO($dsn, $username, $password, $options);
-    echo "Conexão com o banco de dados bem sucedida.<br>";
 } catch (PDOException $e) {
     echo "Conexão com o banco de dados falhou: " . $e->getMessage();
 }

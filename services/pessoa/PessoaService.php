@@ -60,7 +60,7 @@ class PessoaService
                 foreach ($telefones as $key => $value) {
                     $telefone = new Telefone($this->pdo);
                     $err = $telefone->setTelefone( telefone: $value, pessoa_id: $this->pdo->lastInsertId());
-                    if (isset($err['msg']))
+                    if (isset($err['error']))
                         return $err;
                     $telefone->create();
                 }
@@ -68,7 +68,7 @@ class PessoaService
                 return ["msg" => "Pessoa criada com sucesso."];
             }
         } else {
-            return ["msg" => "Erro na execução da query."];
+            return ["error" => "Erro na execução da query."];
         }
     }
 
