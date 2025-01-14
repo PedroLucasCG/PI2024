@@ -1,7 +1,7 @@
 body {
     color: var(--type-color);
     display: grid;
-    grid-template-columns: .2fr 1fr;
+    grid-template-columns: .3fr 1fr;
     background-color: #ddd;
 }
 aside {
@@ -356,6 +356,7 @@ main > div {
     & form {
         margin-top: 2rem;
         padding-bottom: 0;
+
         & section {
             display: flex;
             justify-content: space-between;
@@ -369,6 +370,7 @@ main > div {
 
                 & input, select {
                     width: 30ch;
+                    border: 1px solid red;
                 };
 
                 & button {
@@ -415,7 +417,7 @@ main div form {
 }
 
 section.form input:not(form section div input){
-    width: 100ch;
+    width: min(100%, 100ch);
 }
 
 section.form input[type="submit"] {
@@ -471,5 +473,21 @@ section.form input[type="submit"] {
                 font-size: 1rem;
             }
         }
+    }
+}
+
+
+@media screen and (max-width: 1600px) {
+    section.form input:not(form section div input) {
+        width: min(100%, 50ch);
+    }
+
+    main > div form section :first-child {
+        grid-template-columns: none;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    & label {
+        font-size: 1rem; 
     }
 }

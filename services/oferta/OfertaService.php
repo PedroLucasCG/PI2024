@@ -108,28 +108,40 @@ class OfertaService
 
     public function get($idPessoa)
     {
-        if (!isset($idPessoa)) {
+        if (empty($idPessoa)) {
             return ["msg" => "O id é necessário para recuperar oferta."];
         }
 
         $query = "SELECT * FROM Oferta WHERE Freelancer = :id";
-
         $stmt = $this->pdo->prepare($query);
-
-        $stmt->bindParam(':id', $idPessoa);
-
+        $stmt->bindParam(':id', $idPessoa, PDO::PARAM_INT);
         $stmt->execute();
-        $data = $stmt->fetchAll();
+
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $result = [];
+        foreach ($data as $index => $row) {
+            $id = $row['idOferta'];
+            $queryPeriodos = "SELECT * FROM periodo WHERE Oferta = :id";
+            $stmtPeriodos = $this->pdo->prepare($queryPeriodos);
+            $stmtPeriodos->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmtPeriodos->execute();
+
+            $periodos = $stmtPeriodos->fetchAll(PDO::FETCH_ASSOC);
+
+            $result[$index] = array_merge($row, ['periodos' => $periodos]);
+        }
 
         if ($data) {
             return [
                 "msg" => "Oferta recuperada com sucesso",
-                "data" => $data,
+                "data" => $result,
             ];
         } else {
             return ["msg" => "A oferta não foi encontrada."];
         }
     }
+
 
     public function delete($id)
     {
@@ -139,6 +151,7 @@ class OfertaService
 
         $query = "DELETE FROM Oferta WHERE idOferta = :id";
 
+        $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':id', $id);
 
         if ($stmt->execute()) {
