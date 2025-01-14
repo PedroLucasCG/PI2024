@@ -33,6 +33,28 @@ const horarioTemplate = `
     </span>
 `;
 
+// Template HTML para exibição de ofertas cadastradas
+const ofertaTemplate = `
+    <div>
+        <h2>:titulo</h2>
+        <h4>:area</h4>
+        <img src="../../uploads/:idPessoa/:ofertaImg" alt="amostra de trabalho" onerror="this.src='../../assets/imgs/job-sample.jpg'">
+        <strong>:preco</strong>
+        <p>:descricao</p>
+
+        <div>
+            <!-- <span> segunda, 13:00 - 15:00</span> -->
+            :periodos
+        </div>
+
+        <div>
+            <span style="display: hidden" id="idOferta" value=":idOferta"></span>
+            <img src="../../assets/icons/delete.svg" alt="deletar oferta" id="deletarOferta">
+            <button id="editarOferta">editar</button>
+        </div>
+    </div>
+`;
+
 // Configuração das seções
 const sections = {
     atividade: {
