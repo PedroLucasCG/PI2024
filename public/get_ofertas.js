@@ -1,21 +1,21 @@
 export default async function get_ofertas (idPessoa) {
     try {
-        await fetch('/../../controllers/dashboard/ofertasFromFreelancer.php', {
+        const response = await fetch('/../../controllers/dashboard/ofertasFromFreelancer.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ idPessoa }),
         })
-            .then(response => response.json())
-            .then(result => {
-                console.log(result);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    } catch (err) {
-        console.log(err);
-    }
 
-}
+        if (!response.ok) {
+            throw new Error('Network response was not ok 😢');
+        }
+
+        const ofertas = await response.json();
+        console.log(ofertas);
+        return ofertas;
+    } catch (error) {
+        console.error('Algo deu errado ', error);
+    }
+};

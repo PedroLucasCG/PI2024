@@ -125,7 +125,19 @@ async function configureOfertaSection() {
     try {
         const loginData = await get_login_data();
         const areas = await get_areas();
-        await get_ofertas(9);
+        const ofertas = await get_ofertas(loginData.idPessoa);
+        const ofertasContainer = document.querySelector(".ofertas .slider");
+        for (const oferta of ofertas.data) {
+            ofertasContainer += ofertaTemplate
+                                    .replace(":titulo", oferta.titulo)
+                                    .replace(":area", areas.data.find(area => area.idArea === oferta.idArea))
+                                    .replace(":idPessoa", oferta.Freelancer)
+                                    .replace(":ofertaImg", oferta.foto)
+                                    .replace(":preco", oferta.preco)
+                                    .replace(":descricao", oferta.descricao)
+                                    .replace(":idOferta", oferta.idOferta);
+        }
+
         for (const area of areas.data) {
             areaSelect.innerHTML += `<option value="${area.idArea}">${area.nome}</option>`;
         }

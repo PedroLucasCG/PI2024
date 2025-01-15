@@ -11,4 +11,5 @@ $oferta->create();
 /**
  * trazer os periodos das ofertas
  * criar os cards de oferta de maneira dinamica
+ *      recuperar os periosdos em spans
  */
