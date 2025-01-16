@@ -149,11 +149,17 @@ class OfertaService
             return ["msg" => "O id é necessário para deletar oferta."];
         }
 
-        $query = "DELETE FROM Oferta WHERE idOferta = :id";
+        $query_periodo = "DELETE FROM periodo WHERE Oferta = :id";
+        $query = "DELETE FROM oferta WHERE idOferta = :id";
 
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':id', $id);
 
+        $stmt_periodo = $this->pdo->prepare($query_periodo);
+        $stmt_periodo->bindParam(':id', $id);
+
+        $stmt_periodo->execute();
+        
         if ($stmt->execute()) {
             return ["msg" => "Oferta deletada com sucesso."];
         } else {

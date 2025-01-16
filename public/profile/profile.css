@@ -369,8 +369,7 @@ main > div {
                 gap: 1rem;
 
                 & input, select {
-                    width: 30ch;
-                    border: 1px solid red;
+                    width: 20ch;
                 };
 
                 & button {
@@ -386,7 +385,7 @@ main > div {
             }
 
             & > :last-child {
-                width: 40%;
+                width: max(15rem, 30ch);
             }
 
             & > :last-child div {
@@ -394,6 +393,7 @@ main > div {
                 padding: 1rem;
                 border-radius: .5rem;
                 height: 10rem;
+                width: 100%;
                 overflow: auto;
 
                 & span {
@@ -460,6 +460,7 @@ section.form input[type="submit"] {
                 border-radius: 5rem;
                 padding: .2rem;
                 height: 2.5rem;
+                cursor: pointer;
             }
 
             & button {
@@ -471,13 +472,14 @@ section.form input[type="submit"] {
                 padding: .5rem;
                 border-radius: .5rem;
                 font-size: 1rem;
+                cursor: pointer;
             }
         }
     }
 }
 
 
-@media screen and (max-width: 1600px) {
+@media screen and (max-width: 1500px) {
     section.form input:not(form section div input) {
         width: min(100%, 50ch);
     }
@@ -488,6 +490,6 @@ section.form input[type="submit"] {
     }
 
     & label {
-        font-size: 1rem; 
+        font-size: 1rem;
     }
 }

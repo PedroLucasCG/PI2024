@@ -2,6 +2,7 @@ import Inputmask from "/node_modules/inputmask/dist/inputmask.es6.js";
 import get_login_data from "../get_login_data.js";
 import get_areas from "../get_areas.js";
 import get_ofertas from "../get_ofertas.js";
+import delete_oferta from "../delete_oferta.js";
 
 //Informações de perfil - miniatura -
 (async () => {
@@ -39,7 +40,7 @@ const ofertaTemplate = `
         <h2>:titulo</h2>
         <h4>:area</h4>
         <img src="../../uploads/:idPessoa/:ofertaImg" alt="amostra de trabalho" onerror="this.src='../../assets/imgs/job-sample.jpg'">
-        <strong>:preco</strong>
+        <strong>R$ :preco</strong>
         <p>:descricao</p>
 
         <div>
@@ -50,7 +51,6 @@ const ofertaTemplate = `
         <div>
             <span style="display: hidden" id="idOferta" value=":idOferta"></span>
             <img src="../../assets/icons/delete.svg" alt="deletar oferta" id="deletarOferta">
-            <button id="editarOferta">editar</button>
         </div>
     </div>
 `;
@@ -122,18 +122,27 @@ async function configureOfertaSection() {
     const adicionarButton = document.getElementById("adicionar");
     const idPessoa = document.getElementById("Freelancer");
     const areaSelect = document.getElementById("area");
+    const deletarOferta = document.getElementById("deletarOferta");
     try {
         const loginData = await get_login_data();
         const areas = await get_areas();
         const ofertas = await get_ofertas(loginData.idPessoa);
         const ofertasContainer = document.querySelector(".ofertas .slider");
-        for (const oferta of ofertas.data) {
-            ofertasContainer += ofertaTemplate
+        for (const oferta of ofertas?.data || []) {
+            let periodos = "";
+            for (const periodo of oferta.periodos) {
+                periodos += `<span idPeriodo="${periodo.idPeriodo}"> ${periodo.dia}, ${periodo.hora_inicio} - ${periodo.hora_final}</span>`;
+            }
+            ofertasContainer.innerHTML += ofertaTemplate
                                     .replace(":titulo", oferta.titulo)
-                                    .replace(":area", areas.data.find(area => area.idArea === oferta.idArea))
+                                    .replace(":area", areas.data.find(area => area.Area === oferta.idArea).nome)
                                     .replace(":idPessoa", oferta.Freelancer)
                                     .replace(":ofertaImg", oferta.foto)
-                                    .replace(":preco", oferta.preco)
+                                    .replace(":preco", oferta.preco.toLocaleString('pt-BR', {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2,
+                                    }))
+                                    .replace(":periodos", periodos)
                                     .replace(":descricao", oferta.descricao)
                                     .replace(":idOferta", oferta.idOferta);
         }
@@ -141,7 +150,6 @@ async function configureOfertaSection() {
         for (const area of areas.data) {
             areaSelect.innerHTML += `<option value="${area.idArea}">${area.nome}</option>`;
         }
-        console.log(idPessoa);
         if (loginData && loginData.idPessoa) {
             idPessoa.setAttribute("value", loginData.idPessoa);
         } else {
@@ -154,6 +162,19 @@ async function configureOfertaSection() {
     if (horarioInput) {
         Inputmask({ mask: "99:99 - 99:99" }).mask(horarioInput);
     }
+    if(deletarOferta) {
+        deletarOferta.addEventListener("click", async (event) => {
+            const parentElement = event.target.parentElement;
+            const idOfertaElement = parentElement.querySelector("#idOferta");
+
+            if (idOfertaElement) {
+                await delete_oferta(idOfertaElement.attributes.value.value);
+                console.log(idOfertaElement.attributes.value.value);
+            } else {
+                console.log("Element with ID 'idOferta' not found.");
+            }
+        });
+    }
 
     if (adicionarButton) {
         adicionarButton.addEventListener("click", (event) => {
@@ -161,7 +182,7 @@ async function configureOfertaSection() {
             const dia = document.getElementById("dia").value;
             const horario = horarioInput.value;
 
-            if (dia && horario && /\d{2}:\d{2} - \d{2}:\d{2}/.test(horario)) {
+            if (dia !== "selecione" && horario && /\d{2}:\d{2} - \d{2}:\d{2}/.test(horario)) {
                 const horarioHTML = horarioTemplate.replace(/\{0\}/g, `${dia}, ${horario}`);
                 document.getElementById("horariosContainer").insertAdjacentHTML("beforeend", horarioHTML);
             } else {
@@ -170,7 +191,6 @@ async function configureOfertaSection() {
         });
     }
 
-    // Botão para remover todos os horários (opcional)
     const removerTodosButton = document.getElementById("removerTodos");
     if (removerTodosButton) {
         removerTodosButton.addEventListener("click", () => {
