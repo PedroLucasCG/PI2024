@@ -480,6 +480,53 @@ section.form input[type="submit"] {
     }
 }
 
+/*Histórico*/
+.historico {
+    margin-top: 1rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+.historico > div {
+    padding: 1rem;
+    box-shadow: 0rem 0rem 1rem darkgray;
+    max-width: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 2rem;
+}
+.historico > div > img {
+    object-fit: cover;
+    height: 10rem;
+    border-radius: 1rem;
+}
+
+.historico > div > span {
+    margin: .5rem 0;
+    text-decoration: underline;
+}
+
+.historico .header {
+    margin-top: .5rem;
+    display: flex;
+    gap: .5rem;
+    flex-direction: row;
+    align-items: center;
+
+    & img {
+        object-fit: cover;
+        height: 2.5rem;
+        border-radius: 5rem;
+    }
+}
+
+.historico div > :last-child{
+    display: flex;
+    margin-top: .5rem;
+    justify-content: space-between;
+    align-items: baseline;
+}
 
 @media screen and (max-width: 1500px) {
     section.form input:not(form section div input) {

@@ -116,6 +116,26 @@ const cardTrabalhosAtivosFreelancer = `
     </div>
 `;
 
+// Template HTML para cards do Histórico
+const cardHistorico = `
+    <div>
+        <h2>:titulo</h2>
+        <img src=":ofertaImg" alt="imagem oferta" onerror="this.src='../../assets/imgs/job-sample.jpg'">
+        <div class="header">
+            <img src=":profileImg" alt="imagem de perfil" onerror="this.src='../../assets/icons/profile.svg'">
+            <strong>:nome</strong>
+        </div>
+        <span>:local</span>
+        <p>:descricao</p>
+        <input type="hidden" id="idAcordo" value=":idAcordo">
+        <span>:funcao</span>
+        <div>
+            <strong>R$ :valor</strong>
+            <span>:estado</span>
+        </div>
+    </div>
+`;
+
 // Configuração das seções
 const sections = {
     atividade: {
@@ -132,6 +152,11 @@ const sections = {
         html: "./sections/ofertas.html",
         panel: "oferta",
         function: configureOfertaSection,
+    },
+    historico:{
+        html: "./sections/historico.html",
+        panel: "historico",
+        function: configureHistoricoSection,
     },
     suporte: {
         html: "./sections/suporte.html",
@@ -293,7 +318,6 @@ async function configureProjectsSection() {
     }
 
     for (const proposta of propostasFreelancer?.data || []) {
-        const freelancer = await get_freelancer(proposta.Contratante);
         const card = cardPropostaFreelancer
             .replace(":ofertaImg", `../../uploads/${idPessoa}/${proposta.foto}`)
             .replace(":descricao", proposta.descricao)
@@ -374,4 +398,51 @@ async function configureProjectsSection() {
             await set_estado_acordo(idAcordo, "quebrado");
         });
     }
+}
+
+// Função para configurar a seção de Histórico
+async function configureHistoricoSection() {
+    const { idPessoa } = await get_login_data();
+    const acordosFinalizadosFreelancer = await get_acordos({ idFreelancer: idPessoa, estado: "finalizado" });
+    const acordosFinalizadosCliente = await get_acordos({ idContratante: idPessoa, estado: "finalizado" });
+    const historicoContainer = document.getElementsByClassName("historico")[0];
+
+    for (const acordo of acordosFinalizadosFreelancer?.data || []) {
+        const contratante = await get_freelancer(acordo.Contratante);
+        const endereco = await get_endereco(contratante.data.Endereco);
+        const card = cardHistorico
+            .replace(":titulo", acordo.titulo)
+            .replace(":ofertaImg", `../../uploads/${acordo.Contratante}/${acordo.foto}`)
+            .replace(":profileImg", `../../uploads/${acordo.Contratante}/${contratante.data.foto}`)
+            .replace(":nome", contratante.data.nome)
+            .replace(":local", `${endereco.data.cidade}/${endereco.data.bairro}`)
+            .replace(":descricao", acordo.descricao)
+            .replace(":valor", acordo.valor.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            }))
+            .replace(":funcao", "Freelancer")
+            .replace(":estado", acordo.estado);
+        historicoContainer.innerHTML += card;
+    }
+
+    for (const acordo of acordosFinalizadosCliente?.data || []) {
+        const freelancer = await get_freelancer(acordo.Freelancer);
+        const endereco = await get_endereco(freelancer.data.Endereco);
+        const card = cardHistorico
+            .replace(":titulo", acordo.titulo)
+            .replace(":ofertaImg", `../../uploads/${acordo.Freelancer}/${acordo.foto}`)
+            .replace(":profileImg", `../../uploads/${acordo.Freelancer}/${freelancer.data.foto}`)
+            .replace(":nome", freelancer.data.nome)
+            .replace(":local", `${endereco.data.cidade}/${endereco.data.bairro}`)
+            .replace(":descricao", acordo.descricao)
+            .replace(":valor", acordo.valor.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            }))
+            .replace(":funcao", "Contratante")
+            .replace(":estado", acordo.estado);
+        historicoContainer.innerHTML += card;
+    }
+
 }

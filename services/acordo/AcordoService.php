@@ -94,7 +94,11 @@ class AcordoService {
         }
 
         if ($status) {
-            $conditions[] = "estado = '$status'";
+            if ($status == "finalizado") {
+                $conditions[] = "estado = '$status' OR estado = 'quebrado'";
+            } else {
+                $conditions[] = "estado = '$status'";
+            }
         }
 
         if (!empty($conditions)) {
