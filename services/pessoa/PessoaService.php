@@ -8,7 +8,7 @@ class PessoaService
         $this->pdo = $pdo;
     }
 
-    public function upsert(array $pessoa)
+    public function upsert(array $pessoa): array|null
     {
         extract(array: $pessoa);
         extract($endereco);

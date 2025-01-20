@@ -258,6 +258,7 @@ main h1 {
             display: inline-block;
             height: 2.3rem;
             border-radius: 5rem;
+            object-fit: cover;
             padding: .2rem;
         }
 
@@ -293,6 +294,7 @@ main h1 {
     & img {
         object-fit: cover;
         height: 3rem;
+        border-radius: 5rem;
     }
 }
 

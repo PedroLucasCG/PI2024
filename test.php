@@ -1,11 +1,10 @@
 <?php
-require __DIR__ . '/models/oferta/oferta.php';
-require __DIR__ . '/services/oferta/OfertaService.php';
+require __DIR__ . '/services/acordo/AcordoService.php';
 require __DIR__ . '/configs/databaseConfig.php';
 
-$oferta = new Oferta($pdo);
-$oferta->setOferta(descricao: 'oferta', preco: 255, Freelancer: 9, Area: 1, periodos: ['segunda, 14:00 - 15:00'], titulo: 'Ofertona');
-$oferta->create();
+$service = new AcordoService($pdo);
+$result = $service->setEstado(3, "ativo");
+echo json_encode($result);
 
 //todos
 /**
