@@ -528,6 +528,101 @@ section.form input[type="submit"] {
     align-items: baseline;
 }
 
+/*Modal*/
+.modal {
+    backdrop-filter: blur(.8rem);
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    display: block;
+}
+
+.modal .close {
+    padding: 1rem;
+    margin-left: auto;
+    width: fit-content;
+    height: fit-content;
+    & img {
+        height: 3rem;
+        background-color: white;
+        border-radius: 5rem;
+        box-shadow: 0rem 0rem 1rem lightgrey;
+        cursor: pointer;
+    }
+}
+
+.modal main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+    gap: 1rem;
+    background: none;
+
+    & > div {
+        background-color: white;
+        border-radius: 2rem;
+        padding: 1rem;
+        height: 80svh;
+        box-shadow: 0rem 0rem 1rem lightgrey;
+        overflow: auto;
+        flex-direction: column;
+    }
+}
+
+.parceiros {
+    gap: .5rem;
+
+    & > :last-child {
+        margin-top: auto;
+    }
+}
+.parceiros img {
+    height: 10rem;
+    border-radius: 5rem;
+    width: fit-content;
+    object-fit: cover;
+    margin: 0 auto;
+}
+
+.parceiros strong,  .acordos strong{
+    font-size: 2rem;
+    display: block;
+    text-align: center;
+    margin: .5rem 0;
+
+    & em {
+        font-style: normal;
+        display: inline-block;
+        background-color: var(--logo-primary-color);
+        color: var(--logo-secondary-color);
+        border-radius: .5rem;
+        padding: .3rem;
+    }
+}
+
+.acordos img {
+    border-radius: 1rem;
+    height: 40%;
+    object-fit: cover;
+}
+
+.acordos {
+    gap: .5rem;
+}
+
+.acordos > div {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
+.acordos > div > span {
+    font-style: normal;
+    display: inline-block;
+    background-color: var(--logo-primary-color);
+    color: var(--logo-secondary-color);
+    border-radius: .5rem;
+    padding: .3rem;
+}
+
 @media screen and (max-width: 1500px) {
     section.form input:not(form section div input) {
         width: min(100%, 50ch);

@@ -21,6 +21,13 @@ function loadStatusAndReviews() {}
 function loadProposalsAndProjects() {}
 function suporte() {}
 
+// close modal
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
+window.closeModal = closeModal;
+
 // Função para deletar horário
 function deleteHorario(element) {
     if (element && element.parentElement) {
@@ -54,7 +61,7 @@ const ofertaTemplate = `
 
         <div>
             <span style="display: hidden" id="idOferta" value=":idOferta"></span>
-            <img src="../../assets/icons/delete.svg" alt="deletar oferta" id="deletarOferta">
+            <img src="../../assets/icons/delete.svg" alt="deletar oferta" id="deletarOferta" name="deletarOferta">
         </div>
     </div>
 `;
@@ -168,7 +175,7 @@ const sections = {
 // Elementos principais
 const main = document.getElementsByTagName("main")[0];
 const panelSelect = document.querySelectorAll("li[panel]");
-
+const mainContent = main.innerHTML;
 // Adiciona eventos de clique aos painéis
 for (const panel of panelSelect) {
     panel.addEventListener("click", async function () {
@@ -185,7 +192,7 @@ for (const panel of panelSelect) {
                 // Carrega o conteúdo da seção
                 const response = await fetch(section.html);
                 const content = await response.text();
-                main.innerHTML = content;
+                main.innerHTML = mainContent + content;
                 section.function();
                 this.setAttribute("selected", true);
             } catch (error) {
@@ -243,17 +250,20 @@ async function configureOfertaSection() {
         Inputmask({ mask: "99:99 - 99:99" }).mask(horarioInput);
     }
     if(ofertasContainer.children.length !== 0) {
-        deletarOferta.addEventListener("click", async (event) => {
-            const parentElement = event.target.parentElement;
-            const idOfertaElement = parentElement.querySelector("#idOferta");
+        const buttons = document.querySelectorAll('img[name="deletarOferta"]');
+        for (const deletarOferta of buttons) {
+            deletarOferta.addEventListener("click", async (event) => {
+                const parentElement = event.target.parentElement;
+                const idOfertaElement = parentElement.querySelector("#idOferta");
 
-            if (idOfertaElement) {
-                await delete_oferta(idOfertaElement.attributes.value.value);
-                console.log(idOfertaElement.attributes.value.value);
-            } else {
-                console.log("Element with ID 'idOferta' not found.");
-            }
-        });
+                if (idOfertaElement) {
+                    await delete_oferta(idOfertaElement.attributes.value.value);
+                    console.log(idOfertaElement.attributes.value.value);
+                } else {
+                    console.log("Element with ID 'idOferta' not found.");
+                }
+            });
+        }
     }
 
     if (adicionarButton) {
