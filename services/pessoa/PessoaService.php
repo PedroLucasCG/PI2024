@@ -8,7 +8,7 @@ class PessoaService
         $this->pdo = $pdo;
     }
 
-    public function upsert(array $pessoa)
+    public function upsert(array $pessoa): array|null
     {
         extract(array: $pessoa);
         extract($endereco);
@@ -17,20 +17,17 @@ class PessoaService
             estado: $estado,
             cidade: $cidade,
             bairro: $bairro,
-            cep: $cep
         );
         $endereco_id = $endereco->create();
 
         if ($id) {
             $query = "UPDATE pessoa SET
-                nome = :nome,
                 email = :email,
                 data_nasc = :data_nasc,
-                cpf = :cpf,
                 senha = :senha,
                 usuario = :usuario,
                 data_registro = :data_registro,
-                endereco_id = :endereco_id
+                Endereco = :endereco_id
                 WHERE idPessoa = :id";
         } else {
             $query = "INSERT INTO pessoa (nome, email, data_nasc, cpf, senha, usuario, data_registro, Endereco)
@@ -40,10 +37,12 @@ class PessoaService
         $stmt = $this->pdo->prepare($query);
         $current_date = date('Y-m-d');
 
-        $stmt->bindParam(':nome', $nome);
+        if (!isset($id)) {
+            $stmt->bindParam(':nome', $nome);
+            $stmt->bindParam(':cpf', $cpf);
+        }
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':data_nasc', $data_nasc);
-        $stmt->bindParam(':cpf', $cpf);
         $stmt->bindParam(':senha', $senha);
         $stmt->bindParam(':usuario', $usuario);
         $stmt->bindParam(':data_registro', $current_date);
@@ -55,12 +54,48 @@ class PessoaService
 
         if ($stmt->execute()) {
             if ($id) {
+                print_r($_FILES);
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    if (isset($_FILES['profileImg']) && $_FILES['profileImg']['error'] === UPLOAD_ERR_OK) {
+                        $fileTmpPath = $_FILES['profileImg']['tmp_name'];
+                        $fileName = $_FILES['profileImg']['name'];
+                        $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+
+                        session_start();
+                        $uploadDir = __DIR__ . '/../../uploads/' . $_SESSION['login']['idPessoa'] . '/';
+
+                        if (!is_dir($uploadDir)) {
+                            mkdir($uploadDir, 0777, true);
+                        }
+
+                        $fileNameNew = substr(md5(microtime()),rand(0,26),5) . $_SESSION['login']['idPessoa'] . '.' . $fileExtension;
+                        $destPath = $uploadDir . $fileNameNew;
+
+                        $query = "UPDATE pessoa SET foto = '$fileNameNew' WHERE idPessoa = " . $_SESSION['login']['idPessoa'] ;
+                        $stmt = $this->pdo->prepare($query);
+                        try {
+                            $stmt->execute();
+                        } catch (PDOException $ex) {
+                            echo "ALgo deu errado a imagem da oferta" . $ex->getMessage();
+                        }
+
+                        if (move_uploaded_file($fileTmpPath, $destPath)) {
+                            echo "Arquivo movido com sucesso";
+                        } else {
+                            echo "Erro na movimentação do arquivo";
+                        }
+                    } else {
+                        echo "Nenhum arquivo enviado ou houve algum erro";
+                    }
+                } else {
+                    echo "Solicitação inválida";
+                }
                 return ["msg" => "Pessoa atualizada com sucesso."];
             } else {
                 foreach ($telefones as $key => $value) {
                     $telefone = new Telefone($this->pdo);
                     $err = $telefone->setTelefone( telefone: $value, pessoa_id: $this->pdo->lastInsertId());
-                    if (isset($err['msg']))
+                    if (isset($err['error']))
                         return $err;
                     $telefone->create();
                 }
@@ -68,7 +103,7 @@ class PessoaService
                 return ["msg" => "Pessoa criada com sucesso."];
             }
         } else {
-            return ["msg" => "Erro na execução da query."];
+            return ["error" => "Erro na execução da query."];
         }
     }
 

@@ -1,7 +1,7 @@
 body {
     color: var(--type-color);
     display: grid;
-    grid-template-columns: .2fr 1fr;
+    grid-template-columns: .3fr 1fr;
     background-color: #ddd;
 }
 aside {
@@ -11,11 +11,12 @@ aside {
     border-radius: 1rem;
     box-shadow: 1rem 1rem 1rem darkgray;
 }
-aside h1 {
+aside h1 a{
     text-align: center;
     font-size: 4rem;
     font-family: 'LeagueGothic-Regular';
     color: var(--logo-secondary-color);
+    display: block;
 }
 
 aside section > *:not(h1) {
@@ -73,6 +74,7 @@ aside section {
 
 .profile img {
     display: block;
+    border-radius: 10rem;
     object-fit: cover;
     height: 3rem;
 }
@@ -256,6 +258,7 @@ main h1 {
             display: inline-block;
             height: 2.3rem;
             border-radius: 5rem;
+            object-fit: cover;
             padding: .2rem;
         }
 
@@ -291,6 +294,7 @@ main h1 {
     & img {
         object-fit: cover;
         height: 3rem;
+        border-radius: 5rem;
     }
 }
 
@@ -354,6 +358,7 @@ main > div {
     & form {
         margin-top: 2rem;
         padding-bottom: 0;
+
         & section {
             display: flex;
             justify-content: space-between;
@@ -366,7 +371,7 @@ main > div {
                 gap: 1rem;
 
                 & input, select {
-                    width: 30ch;
+                    width: 20ch;
                 };
 
                 & button {
@@ -382,7 +387,7 @@ main > div {
             }
 
             & > :last-child {
-                width: 40%;
+                width: max(15rem, 30ch);
             }
 
             & > :last-child div {
@@ -390,6 +395,7 @@ main > div {
                 padding: 1rem;
                 border-radius: .5rem;
                 height: 10rem;
+                width: 100%;
                 overflow: auto;
 
                 & span {
@@ -413,7 +419,7 @@ main div form {
 }
 
 section.form input:not(form section div input){
-    width: 100ch;
+    width: min(100%, 100ch);
 }
 
 section.form input[type="submit"] {
@@ -446,15 +452,17 @@ section.form input[type="submit"] {
 
         & div {
             display: flex;
+            flex-wrap: wrap;
             margin-top: 1rem;
             gap: 1rem;
 
             & img {
                 display: inline-block;
                 filter: brightness(0) saturate(100%) invert(7%) sepia(92%) saturate(5451%) hue-rotate(354deg) brightness(150%) contrast(110%);
-                border-radius: 5rem;
+                border-radius: 10rem;
                 padding: .2rem;
                 height: 2.5rem;
+                cursor: pointer;
             }
 
             & button {
@@ -466,7 +474,375 @@ section.form input[type="submit"] {
                 padding: .5rem;
                 border-radius: .5rem;
                 font-size: 1rem;
+                cursor: pointer;
             }
         }
+    }
+}
+
+/*Histórico*/
+.historico {
+    margin-top: 1rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+.historico > div {
+    padding: 1rem;
+    box-shadow: 0rem 0rem 1rem darkgray;
+    max-width: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 2rem;
+}
+.historico > div > img {
+    object-fit: cover;
+    height: 10rem;
+    border-radius: 1rem;
+}
+
+.historico > div > span {
+    margin: .5rem 0;
+    text-decoration: underline;
+}
+
+.historico .header {
+    margin-top: .5rem;
+    display: flex;
+    gap: .5rem;
+    flex-direction: row;
+    align-items: center;
+
+    & img {
+        object-fit: cover;
+        height: 2.5rem;
+        border-radius: 10rem;
+    }
+}
+
+.historico div > :last-child{
+    display: flex;
+    margin-top: .5rem;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+/*Modal*/
+.modal {
+    backdrop-filter: blur(.8rem);
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    display: none;
+}
+
+.modal .close {
+    padding: 1rem;
+    margin-left: auto;
+    width: fit-content;
+    height: fit-content;
+    & img {
+        height: 3rem;
+        background-color: white;
+        border-radius: 5rem;
+        box-shadow: 0rem 0rem 1rem lightgrey;
+        cursor: pointer;
+    }
+}
+
+.modal main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1rem;
+    background: none;
+
+    & > div {
+        background-color: white;
+        border-radius: 2rem;
+        padding: 1rem;
+        height: 80svh;
+        box-shadow: 0rem 0rem 1rem lightgrey;
+        overflow: auto;
+        flex-direction: column;
+    }
+}
+
+.parceiros {
+    gap: .5rem;
+
+    & > :last-child {
+        margin-top: auto;
+    }
+}
+.parceiros img {
+    height: 10rem;
+    border-radius: 10rem;
+    width: fit-content;
+    object-fit: cover;
+    margin: 0 auto;
+}
+
+.parceiros strong,  .acordos strong{
+    font-size: 1.2rem;
+    display: block;
+    text-align: center;
+    margin: .5rem 0;
+
+    & em {
+        font-style: normal;
+        display: inline-block;
+        background-color: var(--logo-primary-color);
+        color: var(--logo-secondary-color);
+        border-radius: .5rem;
+        padding: .3rem;
+    }
+}
+
+.acordos img {
+    border-radius: 1rem;
+    height: 40%;
+    object-fit: cover;
+}
+
+.acordos {
+    gap: .5rem;
+}
+
+.acordos > div {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
+.acordos > div > span {
+    font-style: normal;
+    display: inline-block;
+    background-color: var(--logo-primary-color);
+    color: var(--logo-secondary-color);
+    border-radius: .5rem;
+    padding: .3rem;
+}
+
+/*Perfil*/
+section.perfil {
+    & div img {
+        display: block;
+        width: fit-content;
+        height: 10rem;
+        border-radius: 10rem;
+        margin: 0 auto;
+    }
+    & form{
+        display: grid;
+        padding: 0;
+        margin: 0;
+        grid-template-columns: 1fr 1fr;
+        gap: .5rem;
+    }
+
+    & form input,
+    & form select  {
+        position: relative;
+        font-size: 1rem;
+        border: var(--type-color) solid .1rem;
+        background-color: white;
+    }
+    & .input-wrapper {
+        margin: 0;
+
+        & input {
+            width: 100%;
+        }
+    }
+    & form select, .selects input {
+        width: 20ch;
+        margin: 0;
+        height: 100%;
+    }
+
+    & input[disabled] {
+        opacity: .6;
+    }
+
+    & form :nth-child(even){
+        grid-column-start: 1;
+    }
+
+    & form :nth-child(odd):not( > :first-child){
+        grid-column-start: 2;
+    }
+
+    & form h2,
+    & form > div.terms,
+    & form > div.endereco,
+    & form input[type="submit"],
+    & form .input-wrapper[type="password"] {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
+    & div.terms {
+        display: flex;
+        align-items: baseline;
+        gap: .5rem;
+        margin: 0;
+        margin-left: 1rem;
+
+        & input {
+            transform: scale(1.3);
+        }
+    }
+
+    & div.endereco {
+        display: flex;
+        justify-content: space-between;
+        gap: .5rem;
+        margin: 0;
+    }
+
+    & div.endereco .input-wrapper {
+        width: 45%;
+    }
+
+    & div.selects {
+        margin: 0;
+        display: flex;
+        gap: .5rem;
+        padding-bottom: 1rem;
+    }
+
+    & input[type="submit"] {
+        border: none;
+        margin: 0 auto 1rem;
+        width: 60%;
+        background-color: var(--accent-color);
+    }
+
+    & p{
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    & .input-wrapper {
+        position: relative;
+    }
+    & .input-wrapper::before {
+        position: absolute;
+        top: -.5rem;
+        left: 1rem;
+        content: "label";
+        display: block;
+        padding: 0 .5rem;
+        font-size: .8rem;
+        background-color: white;
+        z-index: 5;
+    }
+
+    & input[type="checkbox"]{
+        border: solid red 1px;
+        background-color: red;
+        display: inline;
+    }
+
+    & .input-wrapper > span {
+        padding: 0 1rem;
+        color: #FF3800;
+    }
+
+    & .input-wrapper:has(input[type="checkbox"])::before {
+        content: "";
+    }
+
+    & .input-wrapper:has(input[name="senha"])::before {
+        content: "Senha*";
+    }
+
+    & .input-wrapper:has(input[id="check_senha"])::before {
+        content: "Confirme a sua Senha*";
+    }
+
+    & .input-wrapper:has(input[name="bairro"])::before {
+        content: "Bairro*";
+    }
+
+    & .input-wrapper:has(select[name="cidade"])::before {
+        content: "Cidade*";
+    }
+
+    & .input-wrapper:has(select[name="estado"])::before {
+        content: "Estado*";
+    }
+
+    & .input-wrapper:has(input[name="email"])::before {
+        content: "E-mail*";
+    }
+
+    & .input-wrapper:has(input[name="telefone"])::before {
+        content: "Telefone*";
+    }
+
+    & .input-wrapper:has(input[name="endereco"])::before {
+        content: "Endereço";
+    }
+
+    & .input-wrapper:has(input[name="cpf"])::before {
+        content: "CPF*";
+    }
+
+    & .input-wrapper:has(input[name="usuario"])::before {
+        content: "Usuário*";
+    }
+
+    & .input-wrapper:has(input[name="nome"])::before {
+        content: "Nome*";
+    }
+
+    & .input-wrapper:has(input[name="data_nasc"])::before {
+        content: "Data de Nascimento*";
+    }
+
+    & .input-wrapper:has(input[type="file"])::before {
+        content: "Enviar imagem";
+    }
+
+    @media screen and (max-width: 1360px) {
+        body {
+            background-image: url("/assets/imgs/background-signin-vertical.jpg");
+            background-position: right 35rem center;
+            background-attachment: fixed;
+        }
+        .input-wrapper:not(:has(input[type="checkbox"])), div.endereco .input-wrapper {
+            width: 100%;
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+
+        .endereco, .selects {
+            flex-wrap: wrap;
+            width: 100%;
+            & select, input{
+                width: 100%;
+            }
+        }
+        .selects {
+            & .input-wrapper:not( :first-child) {
+                margin-top: 1rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1500px) {
+    section.form input:not(form section div input) {
+        width: min(100%, 50ch);
+    }
+
+    main > div form section :first-child {
+        grid-template-columns: none;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    & label {
+        font-size: 1rem;
     }
 }

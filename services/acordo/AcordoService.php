@@ -1,9 +1,5 @@
 <?php
-include __DIR__ . '/config/databaseConfig.php';
-include __DIR__ . '/services/oferta/oferta.php';
-include __DIR__ . '/services/pessoa/contratante.php';
-
-class Acordo {
+class AcordoService {
     private $pdo;
 
     public function __construct($pdo) {
@@ -65,7 +61,11 @@ class Acordo {
             return ["msg" => "O id é necessário para recuperar acordo."];
         }
 
-        $query = "SELECT * FROM Acordo WHERE idAcordo = :id";
+        $query = "SELECT *
+                FROM acordo
+                JOIN oferta ON Oferta = idOferta
+                JOIN area ON Area = idArea
+                WHERE idAcordo = :id";
 
         $stmt = $this->pdo->prepare($query);
 
@@ -74,21 +74,28 @@ class Acordo {
         $stmt->execute();
         $data = $stmt->fetch();
 
-        if ($data) {
+        $id = $data['idOferta'];
+        $queryPeriodos = "SELECT * FROM periodo WHERE Oferta = :id";
+        $stmtPeriodos = $this->pdo->prepare($queryPeriodos);
+        $stmtPeriodos->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmtPeriodos->execute();
+
+        $periodos = $stmtPeriodos->fetchAll(PDO::FETCH_ASSOC);
+
+        $result = array_merge($data, ['periodos' => $periodos]);
+
+        if ($result) {
             return [
                 "msg" => "Acordo recuperado com sucesso",
-                "data" => $data,
+                "data" => $result,
             ];
         } else {
             return ["msg" => "O Acordo não foi encontrado."];
         }
     }
 
-    public function getALL($freelancer_id, $contratante_id): array {
-        if (!isset($freelancer_id) || !isset($contratante_id)) {
-            return ["msg" => "O id do freelancer ou contrante é necessário para recuperar acordo."];
-        }
-        $query = "SELECT * FROM acordo ";
+    public function getAll(?int $freelancer_id, ?int $contratante_id, ?string $status): array {
+        $query = "SELECT * FROM acordo JOIN oferta ON Oferta = idOferta";
 
         $conditions = [];
 
@@ -100,16 +107,22 @@ class Acordo {
             $conditions[] = "Contratante = $contratante_id";
         }
 
-        if (!empty($conditions)) {
-            $query .= "WHERE " . implode(" AND ", $conditions) . " ";
+        if ($status) {
+            if ($status == "finalizado") {
+                $conditions[] = "estado = '$status' OR estado = 'quebrado'";
+            } else {
+                $conditions[] = "estado = '$status'";
+            }
         }
 
-        $query .= "JOIN oferta ON Oferta = idOferta";
+        if (!empty($conditions)) {
+            $query .= " WHERE " . implode(" AND ", $conditions) . " ";
+        }
 
         $stmt = $this->pdo->prepare($query);
 
         $stmt->execute();
-        $data = $stmt->fetch();
+        $data = $stmt->fetchAll();
 
         if ($data) {
             return [
@@ -121,13 +134,24 @@ class Acordo {
         }
     }
 
+    public function setEstado(int $idAcordo, string $estado): array {
+        $query = "UPDATE acordo SET estado = '$estado' WHERE idAcordo = $idAcordo";
+        $stmt = $this->pdo->prepare($query);
+
+        if($stmt->execute()) {
+            return ["msg" => "Estado atualizado com sucesso."];
+        } else {
+            return ["error" => "Ocorreu um erro na alteração do estado"];
+        }
+    }
+
     public function delete($id): array {
         if (!isset($id)) {
             return ["msg" => "O id é necessário para deletar acordo."];
         }
 
         $query = "DELETE FROM Acordo WHERE idAcordo = :id";
-
+        $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':id', $id);
 
         if ($stmt->execute()) {

@@ -1,6 +1,6 @@
-export default async function get_login_data () {
+export default async function get_areas () {
     try {
-        const response = await fetch('../../controllers/session/verify.php', {
+        const response = await fetch('../../controllers/common/listAreas.php', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -11,9 +11,9 @@ export default async function get_login_data () {
             throw new Error('Network response was not ok 😢');
         }
 
-        const loginData = await response.json();
-        console.log(loginData);
-        return loginData;
+        const areas = await response.json();
+        console.log(areas);
+        return areas;
     } catch (error) {
         console.error('Algo deu errado ', error);
     }
