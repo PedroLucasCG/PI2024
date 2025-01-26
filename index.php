@@ -30,10 +30,12 @@ if (isset($_POST['form'])) {
             header(header: "Location: /public/landing_page/landing_page.html");
             break;
         case "cadastro":
+            $date = DateTimeImmutable::createFromFormat("d/m/Y", $data_nasc);
+            $date_formatted = $date->format("Y-m-d");
             $pessoa = new Pessoa(pdo: $pdo);
             $err = $pessoa->setPessoa(
                 nome: $nome,
-                data_nasc: $data_nasc,
+                data_nasc: $date_formated,
                 cpf: $cpf,
                 senha: $senha,
                 email: $email,
@@ -62,6 +64,34 @@ if (isset($_POST['form'])) {
             $oferta->setOferta(descricao: $descricao, preco: $preco, Freelancer: $Freelancer, Area: $Area, periodos: $periodos, titulo: $titulo, files: $_FILES);
             $oferta->create();
             header(header: "Location: /public/profile/profile.html");
+            break;
+        case "atualizarPerfil":
+            $date = DateTimeImmutable::createFromFormat("d/m/Y", $data_nasc);
+            $date_formatted = $date->format("Y-m-d");
+            $pessoa = new Pessoa(pdo: $pdo);
+            $err = $pessoa->setPessoaUpdate(
+                data_nasc: $date_formatted,
+                senha: $senha,
+                email: $email,
+                telefones: [$telefone],
+                estado: $estado,
+                cidade: $cidade,
+                bairro: $bairro,
+                usuario: $usuario,
+                id: $idPessoa,
+            );
+            if (isset($err['error'])) {
+                echo $err['error'];
+                break;
+            }
+
+            print_r($_FILES);
+            $err = $pessoa->update();
+            if (isset($err['error'])) {
+                echo $err['error'];
+                break;
+            }
+            //header(header: "Location: /public/profile/profile.html");
             break;
     }
     exit;

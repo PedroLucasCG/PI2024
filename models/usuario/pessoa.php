@@ -43,13 +43,34 @@ class Pessoa
         return null;
     }
 
+    public function setPessoaUpdate(string $data_nasc, string $senha, string $email, array $telefones, string $estado, string $cidade, string $bairro, string $usuario, int $id): ?array
+    {
+        if (isset($id)) {
+            if($this->count('idPessoa', $id) == 0) {
+                return [ 'error' => 'O id passado não corresponde a nenhum registro de pessoa no sistema.'];
+            }
+            $this->id = $id;
+        } else {
+            return ['error' => 'O id tem que ser definido para atualzar o cadastro'];
+        }
+
+        $this->data_nasc = $data_nasc;
+        $this->senha = $senha;
+        $this->email = $email;
+        $this->usuario = $usuario;
+        $this->endereco = ['estado' => $estado, 'cidade' => $cidade, 'bairro' => $bairro];
+        $this->telefones = $telefones;
+
+        return null;
+    }
+
     public function getAllAttributes(): array
     {
         return [
             'id' => $this->id,
-            'nome' => $this->nome,
+            'nome' => isset($this->nome) ?? "",
             'data_nasc' => $this->data_nasc,
-            'cpf' => $this->cpf,
+            'cpf' => isset($this->cpf) ?? "",
             'senha' => $this->senha,
             'email' => $this->email,
             'usuario' => $this->usuario,
@@ -59,6 +80,13 @@ class Pessoa
     }
 
     public function create(): ?array {
+        $service = new PessoaService(pdo: $this->pdo);
+        $err = $service->upsert(pessoa: $this->getAllAttributes());
+        if (isset($err['error'])) return $err;
+        return null;
+    }
+
+    public function update(): ?array {
         $service = new PessoaService(pdo: $this->pdo);
         $err = $service->upsert(pessoa: $this->getAllAttributes());
         if (isset($err['error'])) return $err;

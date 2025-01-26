@@ -1,8 +1,6 @@
 <?php
-include __DIR__ . '/config/databaseConfig.php';
-include __DIR__ . '/services/acordo/acordo.php';
 
-class Avaliacao {
+class AvaliacaoService {
     private $pdo;
 
     public function __construct($pdo) {
@@ -53,7 +51,7 @@ class Avaliacao {
             return ["msg" => "O id é necessário para recuperar avaliação."];
         }
 
-        $query = "SELECT * FROM Avaliação WHERE idAvaliacao = :id";
+        $query = "SELECT * FROM avaliacao WHERE Acordo = :id";
 
         $stmt = $this->pdo->prepare($query);
 
@@ -125,11 +123,3 @@ class Avaliacao {
         }
     }
 }
-
-$avaliacao = new Avaliacao($pdo);
-
-$avaliacao->upsert("trabalho muito mal feito", 3, 1);
-
-$avaliacao->upsert("trabalho muito mau feito", 3, 1, id: 1);
-
-$avaliacao->get(1);

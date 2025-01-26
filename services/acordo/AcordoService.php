@@ -61,7 +61,11 @@ class AcordoService {
             return ["msg" => "O id é necessário para recuperar acordo."];
         }
 
-        $query = "SELECT * FROM Acordo WHERE idAcordo = :id";
+        $query = "SELECT *
+                FROM acordo
+                JOIN oferta ON Oferta = idOferta
+                JOIN area ON Area = idArea
+                WHERE idAcordo = :id";
 
         $stmt = $this->pdo->prepare($query);
 
@@ -70,10 +74,20 @@ class AcordoService {
         $stmt->execute();
         $data = $stmt->fetch();
 
-        if ($data) {
+        $id = $data['idOferta'];
+        $queryPeriodos = "SELECT * FROM periodo WHERE Oferta = :id";
+        $stmtPeriodos = $this->pdo->prepare($queryPeriodos);
+        $stmtPeriodos->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmtPeriodos->execute();
+
+        $periodos = $stmtPeriodos->fetchAll(PDO::FETCH_ASSOC);
+
+        $result = array_merge($data, ['periodos' => $periodos]);
+
+        if ($result) {
             return [
                 "msg" => "Acordo recuperado com sucesso",
-                "data" => $data,
+                "data" => $result,
             ];
         } else {
             return ["msg" => "O Acordo não foi encontrado."];

@@ -43,7 +43,7 @@ class TelefoneService {
             return ["msg" => "O id é necessário para recuperar telefone."];
         }
 
-        $query = "SELECT * FROM Telefone WHERE idTelefone = :id";
+        $query = "SELECT * FROM telefone WHERE Pessoa = :id";
 
         $stmt = $this->pdo->prepare($query);
 

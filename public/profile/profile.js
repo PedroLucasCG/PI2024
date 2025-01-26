@@ -8,17 +8,36 @@ import get_freelancer from "../get_freelancer.js";
 import set_estado_acordo from "../set_estado_acordo.js";
 import delete_acordo from "../delete_Acordo.js";
 import get_endereco from "../get_endereco.js";
+import get_acordo from "../get_acordo.js";
+import get_telefone from "../get_telefone.js";
+import get_avaliacao from "../get_avaliacao.js";
 
 //Informações de perfil - miniatura -
 (async () => {
     const userData = await get_login_data();
-    profilePic.src = `../../uploads/${userData.idPessoa}/profile.png`;
+    const foto = await get_freelancer(userData.idPessoa).then(value => value.data.foto);
+    profilePic.src = `../../uploads/${userData.idPessoa}/${foto}`;
     profileName.innerText = userData.nome;
 })();
 
+function getYearDifference(date1, date2) {
+    const years1 = parseInt(date1.getFullYear());
+    const years2 = parseInt(date2.getFullYear());
+    const months1 = parseInt(date1.getMonth());
+    const months2 = parseInt(date2.getMonth());
+    const days1 = parseInt(date1.getDate());
+    const days2 = parseInt(date2.getDate());
+
+    let differenceInYears = years2 - years1;
+
+    if (months1 > months2 || (months1 === months2 && days1 > days2)) {
+        differenceInYears--;
+    }
+    return Math.abs(differenceInYears);
+}
+
 // Funções de carregamento das seções
 function loadStatusAndReviews() {}
-function loadProposalsAndProjects() {}
 function suporte() {}
 
 // close modal
@@ -69,7 +88,7 @@ const ofertaTemplate = `
 // Template HTML para cards de propostas de trabalho
 const cardPropostaCliente = `
     <div>
-        <img src=":ofertaImg" alt="imagem da oferta" onerror="this.src='../../assets/imgs/job-sample.jpg'">
+        <img onclick="showDetails(this.parentElement)" src=":ofertaImg" alt="imagem da oferta" onerror="this.src='../../assets/imgs/job-sample.jpg'">
         <strong>:titulo</strong>
         <p>:descricao</p>
         <div>
@@ -86,7 +105,7 @@ const cardPropostaCliente = `
 
 const cardPropostaFreelancer = `
     <div>
-        <img src=":ofertaImg" alt="imagem da oferta" onerror="this.src='../../assets/imgs/job-sample.jpg'">
+        <img onclick="showDetails(this.parentElement)" src=":ofertaImg" alt="imagem da oferta" onerror="this.src='../../assets/imgs/job-sample.jpg'">
         <strong>:titulo</strong>
         <p>:descricao</p>
         <div>
@@ -103,7 +122,7 @@ const cardPropostaFreelancer = `
 // Template HTML para cards de trabalhos ativos
 const cardTrabalhosAtivosFreelancer = `
     <div>
-        <div class="header">
+        <div class="header" onclick="showDetails(this.parentElement)">
             <img src=":freelancerImage" alt="imagem de perfil" onerror="this.src='../../assets/icons/profile.svg'">
             <div>
                 <strong>:nome</strong>
@@ -116,7 +135,7 @@ const cardTrabalhosAtivosFreelancer = `
             <strong>R$ :preco</strong>
         </div>
         <div class="actions">
-            <input type="hidden" id="idAcordo" value=":idAcordo">
+            <input type="hidden" value=":idAcordo" id="idAcordo">
             <button id="finalizarServico">Finalizar Serviço</button>
             <button id="cancelarServico"><img src="../../assets/icons/delete.svg" alt="deletar projeto"></button>
         </div>
@@ -125,7 +144,7 @@ const cardTrabalhosAtivosFreelancer = `
 
 // Template HTML para cards do Histórico
 const cardHistorico = `
-    <div>
+    <div onclick="showDetails(this)">
         <h2>:titulo</h2>
         <img src=":ofertaImg" alt="imagem oferta" onerror="this.src='../../assets/imgs/job-sample.jpg'">
         <div class="header">
@@ -134,13 +153,95 @@ const cardHistorico = `
         </div>
         <span>:local</span>
         <p>:descricao</p>
-        <input type="hidden" id="idAcordo" value=":idAcordo">
+        <input type="hidden" value=":idAcordo" id="idAcordo">
         <span>:funcao</span>
         <div>
             <strong>R$ :valor</strong>
             <span>:estado</span>
         </div>
     </div>
+`;
+
+// Template HTML para modal
+const sectionsModal = {
+    parceiro: `
+    <h1>Parceiro</h1>
+    <img src=":profileImg" alt="parceiro profile foto" onerror="this.src='../../assets/icons/profile.svg'">
+    <strong>:nome</strong>
+    <p>:cidade/:bairro</h3>
+    <p>Idade: :idade anos</p>
+    <p>Email: :email</p>
+    <p>Telefone: :telefone</p>
+    <div>
+        <strong><em id="servicosCancelados">:servicosCancelados</em> serviços cancelados</strong>
+        <strong><em id="servicosConcluidos">:servicosConcluidos</em> serviços concluídos</strong>
+        <strong>Avaliação Média <em id="servicosMedia">:mediaServicos</em></strong>
+    </div>
+    `,
+    oferta: `
+    <h1>Acordo</h1>
+    <img src=":ofertaImg" alt="imagem da oferta" onerror="this.src='../../assets/imgs/job-sample.jpg'">
+    <strong>:titulo</strong>
+    <p>:area</p>
+    <p>:descricao</p>
+    <strong>R$ :valor</strong>
+    <div>
+        <!-- <span>segunda, 13:00 - 15:00</span> -->
+        :periodos
+    </div>
+    `,
+    avaliacao: `
+    <h1>Avaliação</h1>
+    <div>
+        <h3>Nota</h3>
+        <!-- <img src="../../assets/icons/star.svg" alt="estrela"> -->
+        :estrelas
+    </div>
+    <p>
+        :avaliacao
+    </p>
+    `,
+};
+
+// Tempplate HTML editar perfil
+
+const editarPerfilTemplate = `
+        <div><img src=":profileImg" alt="imagem de perfil" onerror="this.src='../../assets/icons/profile.svg'"></div>
+        <form action="../../index.php" method="post" enctype="multipart/form-data">
+            <h1>Atualizar Perfil:</h1>
+            <div class="input-wrapper"><input type="text" name="nome" placeholder="Ex.: Joaquim Mercedes" required disabled value=":nome"></div>
+            <div class="input-wrapper"><input type="text" name="data_nasc" id="data_nasc" placeholder="00/00/0000" required value=":data_nasc"></div>
+            <div class="input-wrapper"><input type="text" name="cpf" id="cpf" placeholder="000.000.000-00" required disabled value=":cpf"></div>
+            <div class="input-wrapper"><input type="text" name="usuario" placeholder="Ex.: Joaquim Pinturas" required value=":usuario"></div>
+            <div class="input-wrapper"><input type="email" name="email" placeholder="email@umcorre.com" required value=":email"></div>
+            <div class="input-wrapper"><input type="text" name="telefone" id="telefone" placeholder="(00)0 0000-0000" required value=":telefone"></div>
+
+            <div class="endereco">
+                <div class="selects">
+                    <div class="input-wrapper"><select name="estado" id="estado" required>
+                        <option selected disabled>Ex.: Bahia</option>
+                    </select></div>
+
+                    <div class="input-wrapper"><select name="cidade" id="cidade" required>
+                        <option selected disabled>Ex.: Eunápolis</option>
+                    </select></div>
+
+                    <div class="input-wrapper"><input type="text" name="bairro" id="bairro" placeholder="Ex.: Juca Rosa" required value=":bairro"></div>
+                </div>
+            </div>
+
+            <div class="input-wrapper" type="password"><input type="password" name="senha" id="senha" required></div>
+            <div class="input-wrapper" type="password">
+                <input type="password" id="check_senha" required>
+                <span>Os campos não conferem!</span>
+            </div>
+            <div class="input-wrapper">
+                <input type="file" name="profileImg" id="profileImg">
+            </div>
+            <input type="hidden" name="idPessoa" value=":idPessoa">
+            <input type="submit" value="Salvar Alterações" id="submit_form">
+            <input type="hidden" name="form" value="atualizarPerfil">
+        </form>
 `;
 
 // Configuração das seções
@@ -169,17 +270,22 @@ const sections = {
         html: "./sections/suporte.html",
         panel: "suporte",
         function: suporte,
+    },
+    perfil: {
+        html: "./sections/perfil.html",
+        panel: "perfil",
+        function: configureUpdatePerfil,
     }
 };
 
 // Elementos principais
 const main = document.getElementsByTagName("main")[0];
-const panelSelect = document.querySelectorAll("li[panel]");
+const panelSelect = document.querySelectorAll("[panel]");
 const mainContent = main.innerHTML;
 // Adiciona eventos de clique aos painéis
 for (const panel of panelSelect) {
     panel.addEventListener("click", async function () {
-        const selectedPanel = document.querySelector("li[selected]");
+        const selectedPanel = document.querySelector("[selected]");
         if (selectedPanel) {
             selectedPanel.removeAttribute("selected");
         }
@@ -397,14 +503,14 @@ async function configureProjectsSection() {
     const cancelarButtons = trabalhosClienteContainer.parentElement.querySelectorAll(".actions #cancelarServico");
     for (const button of finalizarButtons) {
         button.addEventListener("click", async function () {
-            const idAcordo = this.parentElement.querySelector("input").attributes[2].value;
+            const idAcordo = this.parentElement.querySelector("input").attributes[1].value;
             await set_estado_acordo(idAcordo, "finalizado");
         });
     }
 
     for (const button of cancelarButtons) {
         button.addEventListener("click", async function () {
-            const idAcordo = this.parentElement.querySelector("input").attributes[2].value;
+            const idAcordo = this.parentElement.querySelector("input").attributes[1].value;
             await set_estado_acordo(idAcordo, "quebrado");
         });
     }
@@ -427,6 +533,7 @@ async function configureHistoricoSection() {
             .replace(":nome", contratante.data.nome)
             .replace(":local", `${endereco.data.cidade}/${endereco.data.bairro}`)
             .replace(":descricao", acordo.descricao)
+            .replace(":idAcordo", acordo.idAcordo)
             .replace(":valor", acordo.valor.toLocaleString('pt-BR', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
@@ -445,6 +552,7 @@ async function configureHistoricoSection() {
             .replace(":profileImg", `../../uploads/${acordo.Freelancer}/${freelancer.data.foto}`)
             .replace(":nome", freelancer.data.nome)
             .replace(":local", `${endereco.data.cidade}/${endereco.data.bairro}`)
+            .replace(":idAcordo", acordo.idAcordo)
             .replace(":descricao", acordo.descricao)
             .replace(":valor", acordo.valor.toLocaleString('pt-BR', {
                 minimumFractionDigits: 2,
@@ -456,3 +564,188 @@ async function configureHistoricoSection() {
     }
 
 }
+
+// Função para configurar a seção de Atualizar perfil
+async function configureUpdatePerfil() {
+    const containerPerfil = document.querySelector("section.perfil");
+    const { idPessoa } = await get_login_data();
+    const userData = await get_freelancer(idPessoa).then(value => value.data);
+    const userTelefone = await get_telefone(userData.idPessoa);
+    const endereco = await get_endereco(userData.Endereco);
+    const dataNascimento = new Date(userData.data_nasc.replace("-", "/"));
+    console.log(dataNascimento);
+    const editarHTML = editarPerfilTemplate
+        .replace(":nome", userData.nome)
+        .replace(":data_nasc", dataNascimento.toLocaleDateString('pt-br'))
+        .replace(":cpf", userData.cpf)
+        .replace(":usuario", userData.usuario)
+        .replace(":email", userData.email)
+        .replace(":telefone", userTelefone.data.telefone)
+        .replace(":bairro", endereco.data.bairro)
+        .replace(":idPessoa", userData.idPessoa)
+        .replace(":profileImg", `../../uploads/${userData.idPessoa}/${userData.foto}`)
+        .replace(":endereco", endereco.data.endereco);
+
+    containerPerfil.innerHTML = editarHTML;
+
+    const cidade = document.querySelector("#cidade");
+    const check_senha_display = document.querySelector(".input-wrapper > span");
+    check_senha_display.style.display = 'none';
+    submit_form.setAttribute('disabled', true);
+    var cidade_id;
+
+    //mascaras de input
+    Inputmask({"mask": "(99) 9 9999-9999"}).mask(telefone);
+    Inputmask({"mask": "999.999.999-99"}).mask(cpf);
+    Inputmask({"mask": "99/99/9999"}).mask(data_nasc);
+
+
+    //dados da API do IBGE sobre as localidades
+    const estados = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados/')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json()
+        })
+        .then(data => {
+            return data.sort((a, b) => a.nome.localeCompare(b.nome));
+        })
+        .catch(error => {
+            console.error('Error during fetch:', error);
+        });
+
+    estados.forEach(item => {
+        const option = document.createElement('option');
+        option.textContent = item.nome;
+        option.setAttribute('value', item.nome);
+        option.setAttribute('id', item.id)
+        if (item.nome === endereco.data.estado) {
+            option.setAttribute('selected', true);
+        }
+        estado.appendChild(option);
+    });
+
+    const selected_id = Array.from(estado.children).filter(option => option.selected)[0].attributes.id.value;
+    const cidades = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selected_id}/municipios`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json()
+        })
+        .then(data => {
+            return data.sort((a, b) => a.nome.localeCompare(b.nome));
+        })
+        .catch(error => {
+            console.error('Error during fetch:', error);
+        });
+
+        cidades.forEach(item => {
+            const option = document.createElement('option');
+            option.textContent = item.nome;
+            option.setAttribute('value', item.nome);
+            option.setAttribute('id', item.id)
+            if (item.nome === endereco.data.cidade) {
+                option.setAttribute('selected', true);
+            }
+            cidade.appendChild(option);
+        });
+    estado.addEventListener('change', async function(event) {
+        const selected_id = Array.from(event.target).filter(option => option.selected)[0].attributes.id.value;
+        cidade_id = selected_id;
+        cidade.innerHTML = "";
+        bairro.value = "";
+        const cidades = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selected_id}/municipios`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json()
+            })
+            .then(data => {
+                return data.sort((a, b) => a.nome.localeCompare(b.nome));
+            })
+            .catch(error => {
+                console.error('Error during fetch:', error);
+            });
+
+            cidades.forEach(item => {
+                const option = document.createElement('option');
+                option.textContent = item.nome;
+                option.setAttribute('value', item.nome);
+                option.setAttribute('id', item.id)
+                if (item.nome === endereco.data.cidade) {
+                    option.setAttribute('selected', true);
+                }
+                cidade.appendChild(option);
+            });
+    });
+
+    cidade.addEventListener('change', () => {
+        bairro.removeAttribute('disabled');
+    })
+
+
+    //verificação de senha
+    check_senha.addEventListener('input', (e) => {
+        if (check_senha.value === senha.value) {
+            check_senha_display.style.display = "none";
+            submit_form.removeAttribute('disabled');
+        } else {
+            check_senha_display.style.display = "block";
+        }
+    });
+}
+
+async function showDetails(card) {
+    const idAcordo = card.querySelector("#idAcordo").attributes[1].value;
+    const { idPessoa } = await get_login_data();
+    const acordo = await get_acordo(idAcordo);
+    const modal = document.querySelector(".modal");
+
+    let periodos = "";
+    for (const periodo of acordo.data?.periodos || []) {
+        periodos += `<span>${periodo.dia}, ${periodo.hora_inicio} - ${periodo.hora_final}</span>`;
+    }
+
+    const ofertaHTML = sectionsModal.oferta
+        .replace(":ofertaImg", `../../uploads/${acordo.data.Freelancer}/${acordo.data.foto}`)
+        .replace(":titulo", acordo.data.titulo)
+        .replace(":area", acordo.data.nome)
+        .replace(":descricao", acordo.data.descricao)
+        .replace(":periodos", periodos)
+        .replace(":valor", acordo.data.valor);
+
+    console.log(acordo.data.Freelancer === idPessoa ? acordo.data.Contratante : acordo.data.Freelancer);
+    const freelancer = await get_freelancer(
+        acordo.data.Freelancer === idPessoa ? acordo.data.Contratante : acordo.data.Freelancer
+    );
+    const endereco = await get_endereco(freelancer.data.Endereco);
+    const telefone = await get_telefone(freelancer.data.idPessoa);
+
+    const parceiroHTML = sectionsModal.parceiro
+        .replace(":profileImg", `../../uploads/${freelancer.data.idPessoa}/${freelancer.data.foto}`)
+        .replace(":nome", freelancer.data.nome)
+        .replace(":cidade", endereco.data.cidade)
+        .replace(":bairro", endereco.data.bairro)
+        .replace(":idade", getYearDifference(new Date(freelancer.data.data_nasc), new Date()))
+        .replace(":email", freelancer.data?.email || "Nenhum E-mail cadastrado")
+        .replace(":telefone", telefone.data?.telefone || "Nenhum número cadastrado");
+
+    const avaliacao = await get_avaliacao(idAcordo);
+    let estrelas = "";
+    for (const c = 0; c < parseInt(avaliacao.data?.grau || 0); c++) {
+        estrelas += '<img src="../../assets/icons/star.svg" alt="estrela">';
+    }
+    const avaliacaoHTML = avaliacao.data ? sectionsModal.avaliacao
+        .replace(":estrelas", estrelas)
+        .replace(":avaliacao", avaliacao.data.comentario)
+        : "<h3>Nenhuma avaliação</h3>";
+
+    modal.querySelector(".parceiros").innerHTML = parceiroHTML;
+    modal.querySelector(".acordos").innerHTML = ofertaHTML;
+    modal.querySelector(".avaliacoes").innerHTML = avaliacaoHTML;
+    modal.style.display = "block";
+}
+window.showDetails = showDetails;
