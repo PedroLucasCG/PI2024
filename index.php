@@ -35,7 +35,7 @@ if (isset($_POST['form'])) {
             $pessoa = new Pessoa(pdo: $pdo);
             $err = $pessoa->setPessoa(
                 nome: $nome,
-                data_nasc: $date_formated,
+                data_nasc: $date_formatted,
                 cpf: $cpf,
                 senha: $senha,
                 email: $email,
@@ -91,7 +91,7 @@ if (isset($_POST['form'])) {
                 echo $err['error'];
                 break;
             }
-            //header(header: "Location: /public/profile/profile.html");
+            header(header: "Location: /public/profile/profile.html");
             break;
     }
     exit;

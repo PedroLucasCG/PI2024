@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>1CORRE</title>
-    <link rel="stylesheet" href="output.css" />
+    <link rel="stylesheet" href="output.css?v=3" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,10 +17,10 @@
     />
     <!-- Link para icones de mídias sociais -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <script src="./search.js?v=1" type="module"></script>
 
   </head>
-  
+
   <body class="font-popins">
 
     <!-- popup -->
@@ -48,7 +48,7 @@
                   alt="Foto de perfil"
                   class="w-64 h-80 rounded-md mb-5"
                 />
-  
+
                 <div class="pt-4">
                   <div class="text-sm mb-2 pb-4">
                     <h3 class="text-gray-600 pb-1">Nome:</h3>
@@ -69,7 +69,7 @@
                 </div>
               </div>
             </div>
-  
+
             <!-- adreess and contact details -->
             <div class="flex flex-1 gap-36">
               <div class="mb-5">
@@ -118,7 +118,7 @@
               </div>
             </div>
           </div>
-  
+
           <!-- last contract jobs -->
           <div class="px-4">
             <h3 class="text-lg text-blue-500 mb-3">
@@ -156,7 +156,7 @@
                 </div>
               </div>
             </div>
-  
+
             <!-- second review -->
             <div class="space-y-4 pb-4">
               <div
@@ -189,7 +189,7 @@
               </div>
             </div>
           </div>
-  
+
           <!-- ofertas (esqueci como escreve em inglês kkk) offers? -->
           <div class="flex-1">
             <div>
@@ -227,7 +227,7 @@
             </div>
           </div>
         </div>
-  
+
         <!-- accept / denied -->
         <div
           class="footer flex justify-between items-center p-4 bg-gray-50 border-t border-gray-200"
@@ -253,34 +253,43 @@
           class="bg-white px-5 py-2 rounded-full flex justify-between items-center h-20"
         >
           <div class="font-gotic leading-3">
-            <h4 class="text-4xl">
-              <span class="text-orange-300 font-bold">1</span
-              ><span class="text-[#4b538b] font-bold">CORRE</span>
-            </h4>
-            <h3 class="text-center underline text-[22px] text-[#4b538b]">
-              EUNAPOLIS
-            </h3>
+            <a href="../landing_page/landing_page.html">
+                <h4 class="text-4xl">
+                <span class="text-orange-300 font-bold">1</span
+                ><span class="text-[#4b538b] font-bold">CORRE</span>
+                </h4>
+                <h3 class="text-center underline text-[22px] text-[#4b538b]">
+                EUNAPOLIS
+                </h3>
+            </a>
           </div>
           <nav>
-            <ul class="flex gap-8 items-center text-gray-600">
-              <li><a href="">Buscar Freelancers</a></li>
-              <li><a href="">Entrar</a></li>
-              <li><a href="">Cadastrar</a></li>
-              <a
+            <ul class="flex gap-8 items-center text-gray-600 nav-links">
+                <a
                 href="/"
                 class="py-2 px-6 bg-[#4b538b] text-white rounded-full"
+                id="postarTrabalho"
               >
                 Postar Trabalho
               </a>
+              <li><a id="entrar" href="../login/login.html">Entrar</a></li>
+              <li><a id="cadastrar" href=href="../cadastro/cadastro.html">Cadastrar</a></li>
+              <li class="profileContainer">
+                <img src="../../assets/icons/profile.svg" id="profilePic" onerror="this.src='../../assets/icons/profile.svg'">
+                <div id="profileDropdown">
+                    <span id="dashboard">Dashboard</span>
+                    <span id="sair">Sair</span>
+                </div>
+            </li>
             </ul>
           </nav>
         </div>
       </header>
       <main class="container pt-10 pb-20 grid">
-        
+
       </main>
       <div class="overflow-hidden rotate-180 w-100  leading-none block">
-        <svg 
+        <svg
           class="w-full h-24 block"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1200 120"
@@ -324,7 +333,7 @@
                   <h3 class="text-lg font-semibold">Fabricio</h3>
                   <p class="text-gray-500 text-sm">Pequi, EUN</p>
               </div>
-  
+
             </div>
             <div class="flex items-center justify-between mt-4">
               <span class="bg-green-100 text-green-600 text-sm px-4 py-1 rounded-full">Pedreiro</span>
@@ -338,12 +347,12 @@
             <p class="text-gray-500">Construção da Laje</p>
             <div class="text-xl font-bold">R$3.457</div>
         </div>
-  
+
 
             <button id="offer-popup" class="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
             Visualizar
             </button>
-  
+
           </div>
           <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
             <div class="flex items-center space-x-4">
@@ -353,7 +362,7 @@
                   <h3 class="text-lg font-semibold">Fabricio</h3>
                   <p class="text-gray-500 text-sm">Pequi, EUN</p>
               </div>
-  
+
             </div>
             <div class="flex items-center justify-between mt-4">
               <span class="bg-green-100 text-green-600 text-sm px-4 py-1 rounded-full">Pedreiro</span>
@@ -367,12 +376,12 @@
             <p class="text-gray-500">Construção da Laje</p>
             <div class="text-xl font-bold">R$3.457</div>
         </div>
-  
+
 
             <button id="offer-popup" class="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
             Visualizar
             </button>
-  
+
           </div>
           <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
             <div class="flex items-center space-x-4">
@@ -382,7 +391,7 @@
                   <h3 class="text-lg font-semibold">Fabricio</h3>
                   <p class="text-gray-500 text-sm">Pequi, EUN</p>
               </div>
-  
+
             </div>
             <div class="flex items-center justify-between mt-4">
               <span class="bg-green-100 text-green-600 text-sm px-4 py-1 rounded-full">Pedreiro</span>
@@ -396,12 +405,12 @@
             <p class="text-gray-500">Construção da Laje</p>
             <div class="text-xl font-bold">R$3.457</div>
         </div>
-  
+
 
             <button id="offer-popup" class="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
             Visualizar
             </button>
-  
+
           </div>
           <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
             <div class="flex items-center space-x-4">
@@ -411,7 +420,7 @@
                   <h3 class="text-lg font-semibold">Fabricio</h3>
                   <p class="text-gray-500 text-sm">Pequi, EUN</p>
               </div>
-  
+
             </div>
             <div class="flex items-center justify-between mt-4">
               <span class="bg-green-100 text-green-600 text-sm px-4 py-1 rounded-full">Pedreiro</span>
@@ -425,12 +434,12 @@
             <p class="text-gray-500">Construção da Laje</p>
             <div class="text-xl font-bold">R$3.457</div>
         </div>
-  
+
 
             <button id="offer-popup" class="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
             Visualizar
             </button>
-  
+
           </div>
           <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
             <div class="flex items-center space-x-4">
@@ -440,7 +449,7 @@
                   <h3 class="text-lg font-semibold">Fabricio</h3>
                   <p class="text-gray-500 text-sm">Pequi, EUN</p>
               </div>
-  
+
             </div>
             <div class="flex items-center justify-between mt-4">
               <span class="bg-green-100 text-green-600 text-sm px-4 py-1 rounded-full">Pedreiro</span>
@@ -454,12 +463,12 @@
             <p class="text-gray-500">Construção da Laje</p>
             <div class="text-xl font-bold">R$3.457</div>
         </div>
-  
+
 
             <button id="offer-popup" class="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
             Visualizar
             </button>
-  
+
           </div>
           <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
             <div class="flex items-center space-x-4">
@@ -469,7 +478,7 @@
                   <h3 class="text-lg font-semibold">Fabricio</h3>
                   <p class="text-gray-500 text-sm">Pequi, EUN</p>
               </div>
-  
+
             </div>
             <div class="flex items-center justify-between mt-4">
               <span class="bg-green-100 text-green-600 text-sm px-4 py-1 rounded-full">Pedreiro</span>
@@ -483,12 +492,12 @@
             <p class="text-gray-500">Construção da Laje</p>
             <div class="text-xl font-bold">R$3.457</div>
         </div>
-  
+
 
             <button id="offer-popup" class="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
             Visualizar
             </button>
-  
+
           </div>
           <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
             <div class="flex items-center space-x-4">
@@ -498,7 +507,7 @@
                   <h3 class="text-lg font-semibold">Fabricio</h3>
                   <p class="text-gray-500 text-sm">Pequi, EUN</p>
               </div>
-  
+
             </div>
             <div class="flex items-center justify-between mt-4">
               <span class="bg-green-100 text-green-600 text-sm px-4 py-1 rounded-full">Pedreiro</span>
@@ -512,16 +521,16 @@
             <p class="text-gray-500">Construção da Laje</p>
             <div class="text-xl font-bold">R$3.457</div>
         </div>
-  
+
 
             <button id="offer-popup" class="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
             Visualizar
             </button>
-  
+
           </div>
-          
+
         </div>
-        
+
       </div>
       <div class="text-center mb-20 mt-20">
         <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">&laquo;</button>
@@ -537,7 +546,7 @@
     <footer class="container flex flex-col items-center">
 
       <div class="flex justify-between flex-wrap gap-5 p-2 max-w-[80%]">
-      
+
         <div class="flex-1 min-w-48 gap-3">
           <div class="leading-4 text-4xl pb-4 font-gotic">
             <a href="#">
@@ -562,7 +571,6 @@
           <h1 class="text-xl text-[#4b538b] font-semibold hover:text-[#f7a21b] transition-all duration-300 ease-in-out">Para clientes</h1>
           <ul class="text-[#9D9D9D]">
             <li><a href="../cadastro/cadastro.html">Criar conta</a></li>
-            <li><a href="#">Buscar freelancers</a></li>
             <li><a href="#">Política de privacidade</a></li>
           </ul>
         </div>
@@ -581,7 +589,7 @@
           <p class="text-[#9D9D9D] text-sm">📞 +55 (73)9 9999-9999</p>
           <p class="text-[#9D9D9D] text-sm">✉️ suporte@1corre.com</p>
         </div>
-            
+
       </div>
       <div class="text-sm text-[#9D9D9D] text-center pt-10">
         <p>© 2024 - 1CORRE. Todos os direitos reservados.</p>

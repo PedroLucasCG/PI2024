@@ -68,9 +68,9 @@ class Pessoa
     {
         return [
             'id' => $this->id,
-            'nome' => isset($this->nome) ?? "",
+            'nome' => isset($this->nome) ? $this->nome : "",
             'data_nasc' => $this->data_nasc,
-            'cpf' => isset($this->cpf) ?? "",
+            'cpf' => isset($this->cpf) ? $this->cpf : "",
             'senha' => $this->senha,
             'email' => $this->email,
             'usuario' => $this->usuario,
