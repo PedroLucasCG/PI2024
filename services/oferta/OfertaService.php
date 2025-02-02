@@ -106,13 +106,85 @@ class OfertaService
         }
     }
 
-    public function get($idPessoa)
+    public function get($idOferta)
     {
+        if (empty($idOferta)) {
+            return ["msg" => "O id é necessário para recuperar oferta."];
+        }
+
+        $query = "SELECT
+        `pessoa`.`idPessoa`,
+        `pessoa`.`nome` AS nomePessoa,
+        `pessoa`.`data_nasc`,
+        `pessoa`.`cpf`,
+        `pessoa`.`senha`,
+        `pessoa`.`usuario`,
+        `pessoa`.`email`,
+        `pessoa`.`Endereco`,
+        `pessoa`.`data_registro`,
+        `pessoa`.`foto` AS pessoaFoto,
+        `endereco`.`idEndereco`,
+        `endereco`.`cep`,
+        `endereco`.`estado`,
+        `endereco`.`cidade`,
+        `endereco`.`bairro`,
+        `oferta`.`idOferta`,
+        `oferta`.`descricao`,
+        `oferta`.`preco`,
+        `oferta`.`Freelancer`,
+        `oferta`.`Area`,
+        `oferta`.`titulo`,
+        `oferta`.`foto` AS ofertaFoto,
+        `telefone`.`idTelefone`,
+        `telefone`.`telefone`,
+        `telefone`.`Pessoa`,
+        `area`.`idArea`,
+        `area`.`nome`
+        FROM oferta
+        JOIN pessoa ON Freelancer = idPessoa
+        JOIN endereco ON Endereco = idEndereco
+        JOIN telefone ON Pessoa = idPessoa
+        JOIN area ON Area = idArea
+        WHERE idOferta = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':id', $idOferta, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $result = [];
+        foreach ($data as $index => $row) {
+            $id = $row['idOferta'];
+            $queryPeriodos = "SELECT * FROM periodo WHERE Oferta = :id";
+            $stmtPeriodos = $this->pdo->prepare($queryPeriodos);
+            $stmtPeriodos->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmtPeriodos->execute();
+
+            $periodos = $stmtPeriodos->fetchAll(PDO::FETCH_ASSOC);
+
+            $result[$index] = array_merge($row, ['periodos' => $periodos]);
+        }
+
+        if ($data) {
+            return [
+                "msg" => "Oferta recuperada com sucesso",
+                "data" => $result[0],
+            ];
+        } else {
+            return ["msg" => "A oferta não foi encontrada."];
+        }
+    }
+
+    public function getByFreelancer($idPessoa) {
         if (empty($idPessoa)) {
             return ["msg" => "O id é necessário para recuperar oferta."];
         }
 
-        $query = "SELECT * FROM Oferta WHERE Freelancer = :id";
+        $query = "SELECT
+        *
+        FROM pessoa
+        JOIN oferta ON Freelancer = idPessoa
+        WHERE idPessoa = :id";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':id', $idPessoa, PDO::PARAM_INT);
         $stmt->execute();
@@ -141,7 +213,56 @@ class OfertaService
             return ["msg" => "A oferta não foi encontrada."];
         }
     }
+    public function getAll(?string $search = '', ?string $cidade, ?int $page = 0, ?int $size = 30): array
+    {
+        $offset = $size * $page;
+        $query = "SELECT * FROM oferta
+        JOIN pessoa ON Freelancer = idPessoa
+        JOIN endereco ON idEndereco = Endereco
+        WHERE endereco.cidade = :cidade
+        AND (oferta.titulo LIKE :search1 OR oferta.descricao LIKE :search2)
+        LIMIT :size OFFSET :offset";
 
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindParam(':cidade', $cidade, PDO::PARAM_STR);
+        $stmt->bindParam(':size', $size, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+        $searchParam = "%" . $search . "%";
+        $stmt->bindParam(':search1', $searchParam, PDO::PARAM_STR);
+        $stmt->bindParam(':search2', $searchParam, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $result = [];
+        foreach ($data as $index => $row) {
+            $id = $row['idOferta'];
+            $queryPeriodos = "SELECT * FROM periodo WHERE Oferta = :id";
+            $stmtPeriodos = $this->pdo->prepare($queryPeriodos);
+            $stmtPeriodos->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmtPeriodos->execute();
+
+            $periodos = $stmtPeriodos->fetchAll(PDO::FETCH_ASSOC);
+
+            $result[$index] = array_merge($row, ['periodos' => $periodos]);
+        }
+
+        if ($data) {
+            $countQuery = "SELECT COUNT(*) FROM oferta";
+            $stmt = $this->pdo->prepare($countQuery);
+            $totalData = $stmt->execute();
+            return [
+                "msg" => "Oferta recuperada com sucesso",
+                "data" => $result,
+                "totalPages" => ceil($totalData/$size),
+            ];
+        } else {
+            return ["msg" => "A oferta não foi encontrada."];
+        }
+    }
 
     public function delete($id)
     {
@@ -159,7 +280,7 @@ class OfertaService
         $stmt_periodo->bindParam(':id', $id);
 
         $stmt_periodo->execute();
-        
+
         if ($stmt->execute()) {
             return ["msg" => "Oferta deletada com sucesso."];
         } else {
