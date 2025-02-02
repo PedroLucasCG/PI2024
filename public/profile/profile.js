@@ -47,6 +47,21 @@ function closeModal() {
 
 window.closeModal = closeModal;
 
+async function select(section) {
+    try {
+        const response = await fetch(section.html);
+        const content = await response.text();
+        main.innerHTML = mainContent + content;
+        section.function();
+        const selectedPanel = document.querySelector("[selected]");
+        if (selectedPanel) {
+            selectedPanel.removeAttribute("selected");
+        }
+    } catch (error) {
+        console.error("Erro ao carregar a seção:", error);
+    }
+}
+
 // Função para deletar horário
 function deleteHorario(element) {
     if (element && element.parentElement) {
@@ -285,10 +300,6 @@ const mainContent = main.innerHTML;
 // Adiciona eventos de clique aos painéis
 for (const panel of panelSelect) {
     panel.addEventListener("click", async function () {
-        const selectedPanel = document.querySelector("[selected]");
-        if (selectedPanel) {
-            selectedPanel.removeAttribute("selected");
-        }
 
         const panelItem = this.getAttribute("panel");
         const section = sections[panelItem];
@@ -296,10 +307,7 @@ for (const panel of panelSelect) {
         if (section) {
             try {
                 // Carrega o conteúdo da seção
-                const response = await fetch(section.html);
-                const content = await response.text();
-                main.innerHTML = mainContent + content;
-                section.function();
+                await select(section);
                 this.setAttribute("selected", true);
             } catch (error) {
                 console.error("Erro ao carregar a seção:", error);
@@ -309,6 +317,16 @@ for (const panel of panelSelect) {
         }
     });
 }
+
+if (!localStorage.getItem("section")) {
+    localStorage.setItem("section", "projetos");
+}
+
+(async () => {
+    await select(sections[localStorage.getItem("section")]);
+    const panelSelect = document.querySelector(`[panel='${localStorage.getItem("section")}']`);
+    panelSelect.setAttribute("selected", true);
+})();
 
 // Função para configurar a seção de ofertas
 async function configureOfertaSection() {

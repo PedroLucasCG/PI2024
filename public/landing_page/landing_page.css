@@ -82,6 +82,7 @@ header {
     display: block;
     height: 3.5rem;
     object-fit: cover;
+    aspect-ratio: 1;
     border-radius: 5rem;
     background: url('../../assets/icons/profile.svg') no-repeat center center;
     background-size: cover;
@@ -90,7 +91,7 @@ header {
 
 .nav-links div {
     position: absolute;
-    left: -70%;
+    left: -100%;
     bottom: -230%;
     background-color: white;
     border-radius: 1rem;

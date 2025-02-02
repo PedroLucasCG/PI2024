@@ -28,6 +28,12 @@ if (!value.error) {
                     console.error("Error:", error);
                 });
     });
+
+    const navbarButton = document.getElementById("navbar-button");
+    navbarButton.addEventListener("click", () => {
+        localStorage.setItem("section", "ofertas");
+        window.location.replace('../profile/profile.html');
+    });
 } else {
     const profile = document.querySelector('li.profileContainer');
     profile.style.display = 'none';
