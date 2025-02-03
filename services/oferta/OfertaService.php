@@ -10,7 +10,7 @@ class OfertaService
     }
 
     public function upsert($oferta): array
-    {
+{
         extract($oferta);
         if ($id) {
             $query = "UPDATE Oferta SET

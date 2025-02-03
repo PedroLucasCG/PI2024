@@ -3,6 +3,8 @@ import get_freelancer from "../get_freelancer.js";
 import get_paginated_ofertas from "../get_paginated_ofertas.js";
 import get_areas from "../get_areas.js";
 import get_oferta from "../get_oferta.js";
+import get_recent_avaliacoes from "../get_recent_avaliacoes.js";
+import set_oferta from "../set_oferta.js?v=1";
 
 
 const cardHTMLTemplate = `
@@ -68,6 +70,12 @@ const popupHTMLTemplate = `
               <div class="mb-5">
                 <h3 class="text-lg text-blue-500 mb-3">Endereço</h3>
                 <div class="">
+                <div class="pb-5">
+                    <h3 class="text-gray-400 text-sm pb-1 font-semibold">
+                      Bairro
+                    </h3>
+                    <p class="">:bairro</p>
+                  </div>
                   <div class="pb-5">
                     <h3 class="text-gray-400 text-sm pb-1 font-semibold">
                       Cidade:
@@ -106,69 +114,7 @@ const popupHTMLTemplate = `
               Últimos Trabalhos <br />
               Contratados
             </h3>
-            <!-- first review -->
-            <div class="space-y-4 pb-4">
-              <div
-                class="review items-center border border-gray-200 rounded-lg p-4 max-w-60"
-              >
-                <div class="flex flex-1 mb-4">
-                  <img
-                    src="./../../assets/imgs/search//50.png"
-                    alt="Sofia"
-                    class="w-12 h-12 rounded-full mr-4"
-                  />
-                  <div>
-                    <p class="text-gray-800 font-semibold pb-1">Sofia</p>
-                    <p class="text-xs text-gray-400">2 days ago</p>
-                  </div>
-                </div>
-                <div class="mb-4">
-                  <p class="text-xs text-gray-600">
-                    Lorem Ipsum is simply dummy text of the printing industry.
-                  </p>
-                  <div class="flex items-center mt-1">
-                    <span class="text-yellow-400">★</span>
-                    <span class="text-yellow-400">★</span>
-                    <span class="text-yellow-400">★</span>
-                    <span class="text-yellow-400">★</span>
-                    <span class="text-gray-300">★</span>
-                    <span class="ml-2 text-sm text-gray-600">4.0</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- second review -->
-            <div class="space-y-4 pb-4">
-              <div
-                class="review items-center border border-gray-200 rounded-lg p-4 max-w-60"
-              >
-                <div class="flex flex-1 mb-4">
-                  <img
-                    src="../../assets/imgs/search/50.png"
-                    alt="Sofia"
-                    class="w-12 h-12 rounded-full mr-4"
-                  />
-                  <div>
-                    <p class="text-gray-800 font-semibold pb-1">Sofia</p>
-                    <p class="text-xs text-gray-400">2 days ago</p>
-                  </div>
-                </div>
-                <div class="mb-4">
-                  <p class="text-xs text-gray-600">
-                    Lorem Ipsum is simply dummy text of the printing industry.
-                  </p>
-                  <div class="flex items-center mt-1">
-                    <span class="text-yellow-400">★</span>
-                    <span class="text-yellow-400">★</span>
-                    <span class="text-yellow-400">★</span>
-                    <span class="text-yellow-400">★</span>
-                    <span class="text-gray-300">★</span>
-                    <span class="ml-2 text-sm text-gray-600">4.0</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            :reviews
           </div>
 
           <!-- ofertas (esqueci como escreve em inglês kkk) offers? -->
@@ -196,6 +142,11 @@ const popupHTMLTemplate = `
                 </div>
                 <div class="p-4">
                   <p class="text-sm text-gray-600 mt-2">
+                    R$ :preco
+                  </p>
+                </div>
+                <div class="p-4">
+                  <p class="text-sm text-gray-600 mt-2">
                     :periodos
                   </p>
                 </div>
@@ -210,14 +161,20 @@ const popupHTMLTemplate = `
         >
           <button id="accept"
             class="bg-green-500 text-white py-3 px-6 rounded-full shadow hover:bg-green-600"
+            onclick="efetutarProposta(this)"
           >
             Contratar
           </button>
+          <div>
+            <label for="valor">Digite o valor que deseja pagar: </label>
+            <input type="number" step=".01" id="valor">
+            <input type="hidden" id="idOferta" value=":idOferta">
+          </div>
         </div>
       </div>
 `;
 
-const review = `
+const reviewHTMLTemplate = `
 <div class="space-y-4 pb-4">
               <div
                 class="review items-center border border-gray-200 rounded-lg p-4 max-w-60"
@@ -235,7 +192,7 @@ const review = `
                 </div>
                 <div class="mb-4">
                   <p class="text-xs text-gray-600">
-                    Lorem Ipsum is simply dummy text of the printing industry.
+                    :comentario
                   </p>
                   <div class="flex items-center mt-1">
                     :estrelas
@@ -264,6 +221,19 @@ async function showJobs(ofertas) {
     }
 }
 
+async function efetutarProposta(oferta) {
+    const idOferta = oferta.parentElement.querySelector("input#idOferta").attributes[2].value;
+    const valor = oferta.parentElement.querySelector("input#valor").value;
+
+    const ofertaDetail = await get_oferta(idOferta);
+    const login = await get_login_data();
+
+    console.log(valor, ofertaDetail.data.descricao, 'proposto', 'horista', login.idPessoa, idOferta);
+    await set_oferta(valor || ofertaDetail.data.preco, ofertaDetail.data.descricao, 'proposto', 'horista', login.idPessoa, idOferta);
+}
+
+window.efetutarProposta = efetutarProposta;
+
 function closePopup() {
     const modal = document.getElementById("screen-popup");
     modal.style.display = "none";
@@ -276,6 +246,21 @@ async function showPopUp(oferta) {
     const idOferta = oferta.parentElement.querySelector("input").attributes[2].value;
     const ofertaDetail = await get_oferta(idOferta);
     const dataNascimento = new Date(ofertaDetail.data.data_nasc.replace("-", "/"));
+    const reviews = await get_recent_avaliacoes(ofertaDetail.data.Freelancer);
+
+    let reviewCard = "";
+    for (const review of reviews.data) {
+        let estrelas = "";
+        for (let c = 0; c < parseInt(review.grau || 0); c++) {
+            estrelas += '<img src="../../assets/icons/star.svg" alt="estrela">';
+        }
+        reviewCard = reviewHTMLTemplate
+            .replace(":contratanteImage", `../../uploads/${review.Freelancer}/${review.foto}`)
+            .replace(":nome", review.nome)
+            .replace(":comentario", review.comentario)
+            .replace(":estrelas", estrelas)
+            .replace(":nota", review.grau);
+    }
 
     let periodos = "";
     for (const periodo of ofertaDetail.data.periodos) {
@@ -287,12 +272,19 @@ async function showPopUp(oferta) {
             .replace(":dataNascimento", dataNascimento.toLocaleDateString('pt-br'))
             .replace(":cidade", ofertaDetail.data.cidade)
             .replace(":estado", ofertaDetail.data.estado)
+            .replace(":bairro", ofertaDetail.data.bairro)
             .replace(":telefone", ofertaDetail.data.telefone)
             .replace(":email", ofertaDetail.data.email)
             .replace(":ofertaImg", `../../uploads/${ofertaDetail.data.Freelancer}/${ofertaDetail.data.ofertaFoto}`)
             .replace(":titulo", ofertaDetail.data.titulo)
+            .replace(":preco", ofertaDetail.data.preco.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            }))
             .replace(":descricao", ofertaDetail.data.descricao)
-            .replace(":periodos", periodos);
+            .replace(":idOferta", ofertaDetail.data.idOferta)
+            .replace(":periodos", periodos)
+            .replace(":reviews", reviewCard);
     modal.style.display = "block";
 }
 window.showPopUp = showPopUp;

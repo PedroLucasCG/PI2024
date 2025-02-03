@@ -753,7 +753,7 @@ async function showDetails(card) {
 
     const avaliacao = await get_avaliacao(idAcordo);
     let estrelas = "";
-    for (const c = 0; c < parseInt(avaliacao.data?.grau || 0); c++) {
+    for (let c = 0; c < parseInt(avaliacao.data?.grau || 0); c++) {
         estrelas += '<img src="../../assets/icons/star.svg" alt="estrela">';
     }
     const avaliacaoHTML = avaliacao.data ? sectionsModal.avaliacao

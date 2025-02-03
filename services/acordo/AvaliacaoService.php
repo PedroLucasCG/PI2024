@@ -70,6 +70,34 @@ class AvaliacaoService {
         }
     }
 
+    public function getByFreelancer($idPessoa) {
+        if (!isset($idPessoa)) {
+            return ["msg" => "O id é necessário para recuperar avaliação."];
+        }
+
+        $query = "SELECT * FROM avaliacao
+         JOIN acordo ON idAcordo = Acordo
+         JOIN oferta ON idOferta = Oferta
+         JOIN pessoa ON idPessoa = Freelancer
+         WHERE Freelancer = :id";
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindParam(':id', $idPessoa);
+
+        $stmt->execute();
+        $data = $stmt->fetchAll();
+
+        if ($data) {
+            return [
+                "msg" => "Avaliação recuperada com sucesso",
+                "data" => $data,
+            ];
+        } else {
+            return ["msg" => "A avaliação não foi encontrada."];
+        }
+    }
+
     public function getALL($freelancer_id, $contratante_id): array {
         if (!isset($freelancer_id) || !isset($contratante_id)) {
             return ["msg" => "O id do freelancer ou contrante é necessário para recuperar avaliação."];

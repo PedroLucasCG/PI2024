@@ -1556,6 +1556,10 @@ div.close img {
     color: red;
 }
 
+#screen-popup input {
+    border: solid darkgray 1px;
+}
+
 @media (min-width: 640px) {
   .sm\:text-6xl {
     font-size: 3.75rem;

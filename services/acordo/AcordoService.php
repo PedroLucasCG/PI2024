@@ -8,16 +8,6 @@ class AcordoService {
 
     public function upsert($id = null, $valor, $descricao = null, $estado, $modalidade, $Contratante, $Oferta) {
 
-        $oferta = new Oferta($this->pdo);
-        if(!isset($oferta->get($Oferta)['data'])) {
-            return ["msg" => "Oferta não consta no sistema."];
-        }
-
-        $contratante = new Contratante($this->pdo);
-        if(!isset($contratante->get($Contratante)['data'])) {
-            return ["msg" => "Contratante não consta no sistema."];
-        }
-
         if ($id) {
             $query = "UPDATE Acordo SET
                 valor = :valor,
@@ -29,7 +19,7 @@ class AcordoService {
             WHERE idAcordo = :id";
         } else {
             $query = "INSERT INTO Acordo (valor, descricao, estado, modalidade, Contratante, Oferta)
-                VALUES (:valor, :descricao, :estado,  :modalidade, :Contratante, :Oferta,)";
+                VALUES (:valor, :descricao, :estado,  :modalidade, :Contratante, :Oferta)";
         }
 
         $stmt = $this->pdo->prepare($query);
@@ -99,26 +89,25 @@ class AcordoService {
 
         $conditions = [];
 
-        if ($freelancer_id) {
-            $conditions[] = "Freelancer = $freelancer_id";
+        if (isset($freelancer_id)) {
+            array_push($conditions, "Freelancer = $freelancer_id");
         }
 
-        if ($contratante_id) {
-            $conditions[] = "Contratante = $contratante_id";
+        if (isset($contratante_id)) {
+            array_push($conditions, "Contratante = $contratante_id");
         }
 
-        if ($status) {
+        if (isset($status)) {
             if ($status == "finalizado") {
-                $conditions[] = "estado = '$status' OR estado = 'quebrado'";
+                array_push($conditions, "(estado = '$status' OR estado = 'quebrado')");
             } else {
-                $conditions[] = "estado = '$status'";
+                array_push($conditions, "estado = '$status'");
             }
         }
 
         if (!empty($conditions)) {
             $query .= " WHERE " . implode(" AND ", $conditions) . " ";
         }
-
         $stmt = $this->pdo->prepare($query);
 
         $stmt->execute();
