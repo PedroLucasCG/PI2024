@@ -103,14 +103,14 @@ header {
     border-bottom: var(--type-color) 1px solid;
 }
 
-.nav-links div > * {
+.nav-links div>* {
     display: block;
     padding: .5rem;
     cursor: pointer;
     color: var(--type-color);
 }
 
-.nav-links div > *:hover {
+.nav-links div>*:hover {
     transform: scale(1.1);
 }
 
@@ -413,13 +413,13 @@ header {
     /* Tornar a imagem semi-transparente */
 }
 
-.card p {
+.card a>p {
     z-index: 2;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     font-weight: bold;
-    color: #fff;
+    color: #000000;
     margin: 0;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 2px 4px rgb(0, 0, 0);
     pointer-events: none;
     /* Para evitar interações no texto */
 }

@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `1corre_manager`.`acordo` (
   `Oferta` INT(11) NOT NULL,
   `valor` DOUBLE NOT NULL,
   `descricao` VARCHAR(300) NULL DEFAULT NULL,
-  `estado` ENUM('proposto', 'ativo', 'pausado', 'finalizado', 'proposto', 'quebrado') NOT NULL,
+  `estado` ENUM('proposto', 'ativo', 'pausado', 'finalizado', 'quebrado') NOT NULL,
   `modalidade` ENUM('horista', 'total') NOT NULL,
   `Contratante` INT(11) NOT NULL,
   PRIMARY KEY (`idAcordo`),
