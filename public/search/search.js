@@ -212,7 +212,7 @@ const paginationHTMLTemplate = `
     <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">&raquo;</button>
 `;
 
-async function showJobs(ofertas) {
+async function showJobs(ofertas, page = 1) {
     const ofertasContainer = document.getElementById("ofertasContainer");
     const paginationContainer = document.getElementById("pagination");
     const areas = await get_areas();
@@ -229,13 +229,25 @@ async function showJobs(ofertas) {
 
         ofertasContainer.innerHTML += card;
     }
-    let paginationItems = `<button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">&laquo;</button>`;
+    let paginationItems = `<button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300" onclick="getPage(${0})">&laquo;</button>`;
     for (let c = 1; c <= ofertas.totalPages; c++) {
-        paginationItems += `<button class="w-8 h-8 rounded-full bg-blue-500 text-white">${c}</button>`;
+        if (c === page + 1) {
+            paginationItems += `<button class="w-8 h-8 rounded-full bg-blue-500 text-white" onclick="getPage(${c-1})">${c}</button>`;
+            continue;
+        }
+        paginationItems += `<button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300" onclick="getPage(${c-1})">${c}</button>`;
     }
-    paginationItems += `<button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">&raquo;</button>`;
+    paginationItems += `<button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300" onclick="getPage(${ofertas.totalPages-1})">&raquo;</button>`;
     paginationContainer.innerHTML = paginationItems;
 }
+//bg-blue-500 text-white"
+async function getPage(page) {
+    const ofertas = await get_paginated_ofertas({ page });
+    ofertasContainer.innerHTML = "";
+    await showJobs(ofertas, page);
+}
+
+window.getPage = getPage;
 
 async function efetutarProposta(oferta) {
     const idOferta = oferta.parentElement.querySelector("input#idOferta").attributes[2].value;
@@ -307,11 +319,10 @@ async function showPopUp(oferta) {
 window.showPopUp = showPopUp;
 
 const value = await get_login_data();
-console.log(value);
 (async () => {
     const ofertas = await get_paginated_ofertas();
     ofertasContainer.innerHTML = "";
-    await showJobs(ofertas);
+    await showJobs(ofertas, 0);
 })();
 if (!value.error) {
     entrar.style.display = "none";

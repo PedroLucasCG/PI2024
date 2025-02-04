@@ -219,13 +219,19 @@ class OfertaService
         $query = "SELECT * FROM oferta
         JOIN pessoa ON Freelancer = idPessoa
         JOIN endereco ON idEndereco = Endereco
-        WHERE endereco.cidade = :cidade
-        AND (oferta.titulo LIKE :search1 OR oferta.descricao LIKE :search2)
-        LIMIT :size OFFSET :offset";
+        WHERE (oferta.titulo LIKE :search1 OR oferta.descricao LIKE :search2)";
+
+        if($cidade) {
+            $query .= " AND endereco.cidade = :cidade ";
+        }
+
+        $query .= " LIMIT :size OFFSET :offset ";
 
         $stmt = $this->pdo->prepare($query);
 
-        $stmt->bindParam(':cidade', $cidade, PDO::PARAM_STR);
+        if($cidade) {
+            $stmt->bindParam(':cidade', $cidade, PDO::PARAM_STR);
+        }
         $stmt->bindParam(':size', $size, PDO::PARAM_INT);
         $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 
@@ -251,13 +257,14 @@ class OfertaService
         }
 
         if ($data) {
-            $countQuery = "SELECT COUNT(*) FROM oferta";
+            $countQuery = "SELECT COUNT(*) AS total FROM oferta";
             $stmt = $this->pdo->prepare($countQuery);
-            $totalData = $stmt->execute();
+            $stmt->execute();
+            $total = $stmt->fetch(PDO::FETCH_ASSOC);
             return [
                 "msg" => "Oferta recuperada com sucesso",
                 "data" => $result,
-                "totalPages" => ceil($totalData/$size),
+                "totalPages" => ceil($total['total']/$size),
             ];
         } else {
             return ["msg" => "A oferta não foi encontrada."];
