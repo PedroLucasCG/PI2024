@@ -6,7 +6,7 @@ require __DIR__ . '/../../configs/databaseConfig.php';
 $data = json_decode(file_get_contents('php://input'), true);
 $search = $data['search'] ?? '';
 $page = $data['page'] ?? 0;
-$size = $data['size'] ?? 1;
+$size = $data['size'] ?? 20;
 
 session_start();
 $enderecoService = new EnderecoService($pdo);

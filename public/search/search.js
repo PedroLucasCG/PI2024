@@ -6,6 +6,7 @@ import get_oferta from "../get_oferta.js";
 import get_recent_avaliacoes from "../get_recent_avaliacoes.js";
 import set_oferta from "../set_oferta.js?v=1";
 
+let search = '';
 
 const cardHTMLTemplate = `
     <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
@@ -203,20 +204,11 @@ const reviewHTMLTemplate = `
             </div>
 `;
 
-const paginationHTMLTemplate = `
-    <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">&laquo;</button>
-    <button class="w-8 h-8 rounded-full bg-blue-500 text-white">1</button>
-    <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">2</button>
-    <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">3</button>
-    <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">4</button>
-    <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">&raquo;</button>
-`;
-
 async function showJobs(ofertas, page = 1) {
     const ofertasContainer = document.getElementById("ofertasContainer");
     const paginationContainer = document.getElementById("pagination");
     const areas = await get_areas();
-    for (const oferta of ofertas.data) {
+    for (const oferta of ofertas.data || []) {
         const card = cardHTMLTemplate
             .replace(":freelancerImage", `../../uploads/${oferta.Freelancer}/${oferta.foto}`)
             .replace(":nome", oferta.nome)
@@ -238,16 +230,28 @@ async function showJobs(ofertas, page = 1) {
         paginationItems += `<button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300" onclick="getPage(${c-1})">${c}</button>`;
     }
     paginationItems += `<button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300" onclick="getPage(${ofertas.totalPages-1})">&raquo;</button>`;
-    paginationContainer.innerHTML = paginationItems;
+    if (ofertas.data)
+        paginationContainer.innerHTML = paginationItems;
+    else
+    paginationContainer.innerHTML = "<p>Nenhum item correspode a pesquisa</p>";
 }
-//bg-blue-500 text-white"
 async function getPage(page) {
-    const ofertas = await get_paginated_ofertas({ page });
+    const ofertas = await get_paginated_ofertas({ page, search });
     ofertasContainer.innerHTML = "";
     await showJobs(ofertas, page);
 }
 
 window.getPage = getPage;
+
+document
+    .getElementById("search")
+    .querySelector("button")
+    .addEventListener("click", async (event) => {
+        search = event.target.parentElement.parentElement.querySelector("input").value;
+        const ofertas = await get_paginated_ofertas({ search });
+        ofertasContainer.innerHTML = "";
+        await showJobs(ofertas, 0);
+    });
 
 async function efetutarProposta(oferta) {
     const idOferta = oferta.parentElement.querySelector("input#idOferta").attributes[2].value;

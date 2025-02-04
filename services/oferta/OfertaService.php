@@ -221,8 +221,14 @@ class OfertaService
         JOIN endereco ON idEndereco = Endereco
         WHERE (oferta.titulo LIKE :search1 OR oferta.descricao LIKE :search2)";
 
+        $countQuery = "SELECT COUNT(*) as total FROM oferta
+        JOIN pessoa ON Freelancer = idPessoa
+        JOIN endereco ON idEndereco = Endereco
+        WHERE (oferta.titulo LIKE :search1 OR oferta.descricao LIKE :search2)";
+
         if($cidade) {
             $query .= " AND endereco.cidade = :cidade ";
+            $countQuery .= " AND endereco.cidade = :cidade ";
         }
 
         $query .= " LIMIT :size OFFSET :offset ";
@@ -257,8 +263,14 @@ class OfertaService
         }
 
         if ($data) {
-            $countQuery = "SELECT COUNT(*) AS total FROM oferta";
             $stmt = $this->pdo->prepare($countQuery);
+            if($cidade) {
+                $stmt->bindParam(':cidade', $cidade, PDO::PARAM_STR);
+            }
+
+            $searchParam = "%" . $search . "%";
+            $stmt->bindParam(':search1', $searchParam, PDO::PARAM_STR);
+            $stmt->bindParam(':search2', $searchParam, PDO::PARAM_STR);
             $stmt->execute();
             $total = $stmt->fetch(PDO::FETCH_ASSOC);
             return [
