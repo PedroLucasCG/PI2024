@@ -5,7 +5,7 @@ import get_ofertas from "../get_ofertas.js";
 // Teste
 (async () => {
     const testes1 = await get_areas();
-    console.log(teste1.data);
+    console.log(testes1.data);
 
     const testes2 = await get_ofertas();
     console.log(testes2.data)

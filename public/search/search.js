@@ -203,8 +203,18 @@ const reviewHTMLTemplate = `
             </div>
 `;
 
+const paginationHTMLTemplate = `
+    <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">&laquo;</button>
+    <button class="w-8 h-8 rounded-full bg-blue-500 text-white">1</button>
+    <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">2</button>
+    <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">3</button>
+    <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">4</button>
+    <button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">&raquo;</button>
+`;
+
 async function showJobs(ofertas) {
     const ofertasContainer = document.getElementById("ofertasContainer");
+    const paginationContainer = document.getElementById("pagination");
     const areas = await get_areas();
     for (const oferta of ofertas.data) {
         const card = cardHTMLTemplate
@@ -219,6 +229,12 @@ async function showJobs(ofertas) {
 
         ofertasContainer.innerHTML += card;
     }
+    let paginationItems = `<button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">&laquo;</button>`;
+    for (let c = 1; c <= ofertas.totalPages; c++) {
+        paginationItems += `<button class="w-8 h-8 rounded-full bg-blue-500 text-white">${c}</button>`;
+    }
+    paginationItems += `<button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">&raquo;</button>`;
+    paginationContainer.innerHTML = paginationItems;
 }
 
 async function efetutarProposta(oferta) {
@@ -228,8 +244,9 @@ async function efetutarProposta(oferta) {
     const ofertaDetail = await get_oferta(idOferta);
     const login = await get_login_data();
 
-    console.log(valor, ofertaDetail.data.descricao, 'proposto', 'horista', login.idPessoa, idOferta);
     await set_oferta(valor || ofertaDetail.data.preco, ofertaDetail.data.descricao, 'proposto', 'horista', login.idPessoa, idOferta);
+    localStorage.setItem("section", "projetos");
+    window.location.replace('../profile/profile.html');
 }
 
 window.efetutarProposta = efetutarProposta;
