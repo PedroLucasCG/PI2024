@@ -38,3 +38,4 @@ if (!value.error) {
     const profile = document.querySelector('li.profileContainer');
     profile.style.display = 'none';
 }
+
