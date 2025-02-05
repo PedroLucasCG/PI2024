@@ -6,5 +6,5 @@ if (isset($_SESSION['error'])) {
     echo json_encode($_SESSION['error']);
     unset($_SESSION['error']);
 } else {
-    echo json_encode(['error' => 'Não há erro.']);
+    echo json_encode([['msg' => 'Não há erro.',]]);
 }

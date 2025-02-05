@@ -76,19 +76,19 @@ class PessoaService
                         try {
                             $stmt->execute();
                         } catch (PDOException $ex) {
-                            echo "ALgo deu errado a imagem da oferta" . $ex->getMessage();
+                            return ["error" => "ALgo deu errado a imagem da oferta" . $ex->getMessage()];
                         }
 
                         if (move_uploaded_file($fileTmpPath, $destPath)) {
                             echo "Arquivo movido com sucesso";
                         } else {
-                            echo "Erro na movimentação do arquivo";
+                            return ["error" => "Erro na movimentação do arquivo"];
                         }
                     } else {
-                        echo "Nenhum arquivo enviado ou houve algum erro";
+                        return ["error" => "Nenhum arquivo enviado ou houve algum erro"];
                     }
                 } else {
-                    echo "Solicitação inválida";
+                    return ["error" => "Solicitação inválida."];
                 }
                 return ["msg" => "Pessoa atualizada com sucesso."];
             } else {

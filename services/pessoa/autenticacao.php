@@ -21,10 +21,10 @@ class Autenticacao
             $data = $stmt->fetch(mode: PDO::FETCH_ASSOC);
 
         } catch (PDOException $ex) {
-            return ['erro' => 'Ocorreu um erro ao realizar o login do usuário. ' . $ex->getMessage()];
+            return ['error' => 'Ocorreu um erro ao realizar o login do usuário. ' . $ex->getMessage()];
         }
         if (!$data) {
-            return ['erro' => 'O login do usuário não existe.'];
+            return ['error' => 'O login do usuário não existe.'];
         } else {
             session_start();
             $_SESSION['login'] = $data;

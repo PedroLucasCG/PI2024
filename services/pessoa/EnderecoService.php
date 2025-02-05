@@ -38,7 +38,7 @@ class EnderecoService {
                 return ["msg" => "Endereço criado com sucesso", "id" => $this->pdo->lastInsertId()];
             }
         } else {
-            return ["msg" => "Erro na execução da query."];
+            return ["error" => "Erro na execução da query."];
         }
     }
 
@@ -62,7 +62,7 @@ class EnderecoService {
                 "data" => $data,
             ];
         } else {
-            return ["msg" => "O endereço não foi encontrado."];
+            return ["error" => "O endereço não foi encontrado."];
         }
     }
 

@@ -233,7 +233,7 @@ async function showJobs(ofertas, page = 1) {
     if (ofertas.data)
         paginationContainer.innerHTML = paginationItems;
     else
-    paginationContainer.innerHTML = "<p>Nenhum item correspode a pesquisa</p>";
+    paginationContainer.innerHTML = "<p>Nenhum item correspode a pesquisa.</p>";
 }
 async function getPage(page) {
     const ofertas = await get_paginated_ofertas({ page, search });

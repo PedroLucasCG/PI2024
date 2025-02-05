@@ -1,4 +1,5 @@
 <?php
+session_start();
 require __DIR__ . '/configs/databaseConfig.php';
 
 //models
@@ -22,12 +23,16 @@ if (isset($_POST['form'])) {
         case "login":
             $auth = new Autenticacao(pdo: $pdo);
             $err = $auth->login($email, $senha);
-            if (isset($err['erro'])) {
-                echo $err['erro'];
+            if (isset($err['error'])) {
+                if (isset($_SESSION['error'])) {
+                    array_push($_SESSION['error'], $err['error']);
+                } else {
+                    $_SESSION['error'] = [$err['error']];
+                }
                 header(header: "Location: /public/login/login.html");
                 break;
             }
-            header(header: "Location: /public/landing_page/landing_page.html");
+           header(header: "Location: /public/landing_page/landing_page.html");
             break;
         case "cadastro":
             $date = DateTimeImmutable::createFromFormat("d/m/Y", $data_nasc);
@@ -48,14 +53,22 @@ if (isset($_POST['form'])) {
                 terms: $terms
             );
             if (isset($err['error'])) {
-                echo $err['error'];
-                break;
+                if (isset($_SESSION['error'])) {
+                    array_push($_SESSION['error'], $err['error']);
+                } else {
+                    $_SESSION['error'] = [$err['error']];
+                }
+                header(header: "Location: /public/cadastro/cadastro.html");
             }
 
             $err = $pessoa->create();
             if (isset($err['error'])) {
-                echo $err['error'];
-                break;
+                if (isset($_SESSION['error'])) {
+                    array_push($_SESSION['error'], $err['error']);
+                } else {
+                    $_SESSION['error'] = [$err['error']];
+                }
+                header(header: "Location: /public/cadastro/cadastro.html");
             }
             header(header: "Location: /public/login/login.html");
             break;
@@ -81,15 +94,20 @@ if (isset($_POST['form'])) {
                 id: $idPessoa,
             );
             if (isset($err['error'])) {
-                echo $err['error'];
-                break;
+                if (isset($_SESSION['error'])) {
+                    array_push($_SESSION['error'], $err['error']);
+                } else {
+                    $_SESSION['error'] = [$err['error']];
+                }
             }
 
-            print_r($_FILES);
             $err = $pessoa->update();
             if (isset($err['error'])) {
-                echo $err['error'];
-                break;
+                if (isset($_SESSION['error'])) {
+                    array_push($_SESSION['error'], $err['error']);
+                } else {
+                    $_SESSION['error'] = [$err['error']];
+                }
             }
             header(header: "Location: /public/profile/profile.html");
             break;
