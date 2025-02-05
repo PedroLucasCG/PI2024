@@ -268,12 +268,12 @@ const sections = {
     },
     projetos: {
         html: "./sections/projetos.html",
-        panel: "projeto",
+        panel: "projetos",
         function: configureProjectsSection,
     },
     ofertas: {
         html: "./sections/ofertas.html",
-        panel: "oferta",
+        panel: "ofertas",
         function: configureOfertaSection,
     },
     historico:{
@@ -308,6 +308,7 @@ for (const panel of panelSelect) {
             try {
                 // Carrega o conteúdo da seção
                 await select(section);
+                localStorage.setItem("section", section.panel);
                 this.setAttribute("selected", true);
             } catch (error) {
                 console.error("Erro ao carregar a seção:", error);
