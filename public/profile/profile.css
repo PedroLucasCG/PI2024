@@ -843,6 +843,10 @@ section.perfil {
     display: block;
 }
 
+main > div.responsive {
+    display: none;
+}
+
 @media screen and (max-width: 1080px) {
     aside {
         position: absolute;
@@ -852,6 +856,7 @@ section.perfil {
         background: rgba(255, 255, 255, .6);
         backdrop-filter: blur(10px);
         border-radius: 0;
+        z-index: 1000;
     }
 
     body {
@@ -863,7 +868,7 @@ section.perfil {
          }
     }
 
-    aside > div.responsive, main > div.responsive{
+    main > div.responsive{
         display: inherit;
         position: absolute;
         top: 5%;
@@ -872,6 +877,7 @@ section.perfil {
         background-color: #ddd;
         border-radius: 1rem 0 0 1rem;
         cursor: pointer;
+        z-index: 1000;
     }
 
     section.form input:not(form section div input) {
