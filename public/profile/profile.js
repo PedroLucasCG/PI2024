@@ -12,6 +12,16 @@ import get_acordo from "../get_acordo.js";
 import get_telefone from "../get_telefone.js";
 import get_avaliacao from "../get_avaliacao.js";
 
+function showHideSideBar () {
+    console.log("pedro");
+    const aside = document.getElementsByTagName("aside")[0];
+    const button = document.querySelector("main div.responsive");
+    button.innerHTML = button.innerText === "<" ? ">" : "<";
+    aside.classList.toggle("visible");
+};
+
+window.showHideSideBar = showHideSideBar;
+
 //Informações de perfil - miniatura -
 (async () => {
     const userData = await get_login_data();
@@ -387,6 +397,7 @@ async function configureOfertaSection() {
                 } else {
                     console.log("Element with ID 'idOferta' not found.");
                 }
+                window.location.reload();
             });
         }
     }
@@ -403,6 +414,7 @@ async function configureOfertaSection() {
             } else {
                 alert("Por favor, preencha o dia e o horário corretamente.");
             }
+            window.location.reload();
         });
     }
 
@@ -429,7 +441,7 @@ async function configureProjectsSection() {
 
     for (const proposta of propostasCliente?.data || []) {
         const card = cardPropostaCliente
-            .replace(":ofertaImg", `../../uploads/${idPessoa}/${proposta.foto}`)
+            .replace(":ofertaImg", `../../uploads/${proposta.Freelancer}/${proposta.foto}`)
             .replace(":descricao", proposta.descricao)
             .replace(":titulo", proposta.titulo)
             .replace(":preco", proposta.valor.toLocaleString('pt-BR', {
@@ -448,13 +460,14 @@ async function configureProjectsSection() {
                     .attributes[1].value;
                 console.log(idAcordo);
                 await delete_acordo(proposta.idAcordo);
+                window.location.reload();
             });
         }
     }
 
     for (const proposta of propostasFreelancer?.data || []) {
         const card = cardPropostaFreelancer
-            .replace(":ofertaImg", `../../uploads/${idPessoa}/${proposta.foto}`)
+            .replace(":ofertaImg", `../../uploads/${proposta.Contratante}/${proposta.foto}`)
             .replace(":descricao", proposta.descricao)
             .replace(":titulo", proposta.titulo)
             .replace(":preco", proposta.valor.toLocaleString('pt-BR', {
@@ -472,6 +485,7 @@ async function configureProjectsSection() {
                     .querySelector("input#idAcordo")
                     .attributes[1].value;
                 await set_estado_acordo(idAcordo, "ativo");
+                window.location.reload();
             });
         }
 
@@ -482,6 +496,7 @@ async function configureProjectsSection() {
                     .attributes[1].value;
                 console.log(idAcordo);
                 await delete_acordo(proposta.idAcordo);
+                window.location.reload();
             });
         }
     }
@@ -502,12 +517,29 @@ async function configureProjectsSection() {
             }));
         trabalhosClienteContainer.innerHTML += card;
     }
+    let finalizarButtons = trabalhosClienteContainer.parentElement.querySelectorAll(".actions #finalizarServico");
+    let cancelarButtons = trabalhosClienteContainer.parentElement.querySelectorAll(".actions #cancelarServico");
+    for (const button of finalizarButtons) {
+        button.addEventListener("click", async function () {
+            const idAcordo = this.parentElement.querySelector("input").attributes[1].value;
+            await set_estado_acordo(idAcordo, "finalizado");
+            window.location.reload();
+        });
+    }
+
+    for (const button of cancelarButtons) {
+        button.addEventListener("click", async function () {
+            const idAcordo = this.parentElement.querySelector("input").attributes[1].value;
+            await set_estado_acordo(idAcordo, "quebrado");
+            window.location.reload();
+        });
+    }
     for (const trabalho of trabalhosFreelancer?.data || []) {
-        const freelancer = await get_freelancer(trabalho.Freelancer);
+        const contratante = await get_freelancer(trabalho.Contratante);
         const endereco = await get_endereco(freelancer.data.Endereco);
         const card = cardTrabalhosAtivosFreelancer
-            .replace(":freelancerImage", `../../uploads/${trabalho.Freelancer}/${freelancer.data.foto}`)
-            .replace(":nome", freelancer.data.nome)
+            .replace(":freelancerImage", `../../uploads/${trabalho.Contratante}/${contratante.data.foto}`)
+            .replace(":nome", contratante.data.nome)
             .replace(":bairro", endereco.data.bairro)
             .replace(":area", areas.data.find(area => area.idArea === trabalho.Area).nome)
             .replace(":descricao", trabalho.descricao)
@@ -518,12 +550,13 @@ async function configureProjectsSection() {
             }));
         trabalhosFreelancerContainer.innerHTML += card;
     }
-    const finalizarButtons = trabalhosClienteContainer.parentElement.querySelectorAll(".actions #finalizarServico");
-    const cancelarButtons = trabalhosClienteContainer.parentElement.querySelectorAll(".actions #cancelarServico");
+    finalizarButtons = trabalhosFreelancerContainer.parentElement.querySelectorAll(".actions #finalizarServico");
+    cancelarButtons = trabalhosFreelancerContainer.parentElement.querySelectorAll(".actions #cancelarServico");
     for (const button of finalizarButtons) {
         button.addEventListener("click", async function () {
             const idAcordo = this.parentElement.querySelector("input").attributes[1].value;
             await set_estado_acordo(idAcordo, "finalizado");
+            window.location.reload();
         });
     }
 
@@ -531,6 +564,7 @@ async function configureProjectsSection() {
         button.addEventListener("click", async function () {
             const idAcordo = this.parentElement.querySelector("input").attributes[1].value;
             await set_estado_acordo(idAcordo, "quebrado");
+            window.location.reload();
         });
     }
 }
@@ -547,7 +581,7 @@ async function configureHistoricoSection() {
         const endereco = await get_endereco(contratante.data.Endereco);
         const card = cardHistorico
             .replace(":titulo", acordo.titulo)
-            .replace(":ofertaImg", `../../uploads/${acordo.Contratante}/${acordo.foto}`)
+            .replace(":ofertaImg", `../../uploads/${acordo.Freelancer}/${acordo.foto}`)
             .replace(":profileImg", `../../uploads/${acordo.Contratante}/${contratante.data.foto}`)
             .replace(":nome", contratante.data.nome)
             .replace(":local", `${endereco.data.cidade}/${endereco.data.bairro}`)

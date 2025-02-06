@@ -35,7 +35,10 @@ if (!value.error) {
         window.location.replace('../profile/profile.html');
     });
 } else {
+    const navbarButton = document.getElementById("navbar-button");
+    navbarButton.addEventListener("click", () => {
+        window.location.replace('../login/login.html');
+    });
     const profile = document.querySelector('li.profileContainer');
     profile.style.display = 'none';
 }
-

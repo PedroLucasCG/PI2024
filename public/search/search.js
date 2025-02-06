@@ -259,7 +259,9 @@ async function efetutarProposta(oferta) {
 
     const ofertaDetail = await get_oferta(idOferta);
     const login = await get_login_data();
-
+    if (login.error) {
+        window.location.replace('../login/login.html');
+    }
     await set_oferta(valor || ofertaDetail.data.preco, ofertaDetail.data.descricao, 'proposto', 'horista', login.idPessoa, idOferta);
     localStorage.setItem("section", "projetos");
     window.location.replace('../profile/profile.html');
@@ -359,6 +361,10 @@ if (!value.error) {
         window.location.replace('../profile/profile.html');
     });
 } else {
+    const navbarButton = document.getElementById("postarTrabalho");
+    navbarButton.addEventListener("click", () => {
+        window.location.replace('../login/login.html');
+    });
     const profile = document.querySelector('li.profileContainer');
     profile.style.display = 'none';
 }

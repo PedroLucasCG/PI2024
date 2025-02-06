@@ -839,7 +839,87 @@ section.perfil {
     }
 }
 
-@media screen and (max-width: 1500px) {
+.visible {
+    display: block;
+}
+
+@media screen and (max-width: 1080px) {
+    aside {
+        position: absolute;
+        inset: 0 0 0 0;
+        display: none;
+        margin: 0;
+        background: rgba(255, 255, 255, .6);
+        backdrop-filter: blur(10px);
+        border-radius: 0;
+    }
+
+    body {
+        width: 100%;
+        grid-template-columns: 1fr;
+
+         & > main {
+            margin: 0;
+         }
+    }
+
+    aside > div.responsive, main > div.responsive{
+        display: inherit;
+        position: absolute;
+        top: 5%;
+        right: 0;
+        font-size: 3rem;
+        background-color: #ddd;
+        border-radius: 1rem 0 0 1rem;
+        cursor: pointer;
+    }
+
+    section.form input:not(form section div input) {
+        width: min(100%, 50ch);
+        font-size: 1.2rem;
+    }
+
+    form section div input, form section div select, section.form select{
+        padding: .6rem;
+        width: 100%;
+    }
+
+    main > div {
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+        & form {
+            & section {
+                flex-wrap: wrap;
+                justify-content: center;
+                & > :first-child {
+                    grid-template-columns: 1fr;
+                    & input, select {
+                        width: 100%;
+                    }
+                }
+
+                & > * {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    .ofertas .slider {
+        display: flex;
+        width: 90svw;
+        height: fit-content;
+        overflow: auto;
+    }
+
+    .ofertas .slider {
+        & > div {
+            min-height: 35rem;
+            aspect-ratio: 1/1;
+        }
+}
+
+@media screen and (max-width: 1500px) and (min-width: 1081) {
     section.form input:not(form section div input) {
         width: min(100%, 50ch);
     }
