@@ -1,7 +1,9 @@
 /* CORPO */
 
 body {
-    background-color: #7b7b7b;
+    background-color: #ffffff;
+    font-size: 16px;
+
 }
 
 .container {
@@ -232,7 +234,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 150px;
+    gap: 50px;
 }
 
 .frame-content h3 {
@@ -344,7 +346,8 @@ header {
     text-align: right;
 }
 
-#text_b3 h1 span {
+#text_b3 h1 span,
+#text_b3 p span {
     color: var(--logo-primary-color);
 }
 
@@ -581,12 +584,18 @@ header {
 }
 
 /* Acho que não ta funcional pq o site não ta responsivo direito */
-@media screen and (max-width: 768px) {
+@media(max-width: 882px) {
     .card-wrapper {
         margin: 0 20px 35px;
+        width: 30%;
+        height: auto;
     }
 
     .card-wrapper .swiper-slide-button {
+        display: none;
+    }
+
+    .card-wrapper .swiper-pagination-bullet {
         display: none;
     }
 }
@@ -726,3 +735,218 @@ footer {
 }
 
 /* FIM DIVISOR ONDAS */
+
+/* FIM CONTEUDOS */
+
+/* ***************************** RESPONSIVIDADE ***************************** */
+
+
+/* Esconde as imagens */
+@media(max-width:1260px) {
+    #image_b1 {
+        display: none;
+    }
+
+    #image_b3 {
+        display: none;
+    }
+
+    .card-wrapper {
+        max-width: 800px;
+    }
+
+    .frame {
+        width: 60vh;
+    }
+
+    .frame-content {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 50px;
+        flex-wrap: wrap;
+    }
+
+}
+
+/* Rpz, eu n sei o quanto disso aqui ta dando conflito, mas ta funcionando" */
+
+@media(max-width: 882px) {
+
+    .container {
+        overflow-x: hidden;
+    }
+
+    .block1 {
+        flex-direction: column;
+        padding: 10px 20px;
+    }
+
+    .block1 h1 {
+        font-size: 40px;
+    }
+
+    .block1 p {
+        font-size: 20px;
+    }
+
+    .block1 img {
+        height: 400px;
+    }
+
+    .block2 {
+        flex-direction: column;
+        padding: 10px 20px;
+    }
+
+    .frame {
+        width: 32vh;
+    }
+
+    .frame-content {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 50px;
+        flex-wrap: wrap;
+    }
+
+    .block3 {
+        flex-direction: column;
+        padding: 10px 20px;
+    }
+
+    #image_b3 img {
+        padding: 20px;
+        width: 400px;
+        height: auto;
+    }
+
+    #text_b3 h1 {
+        text-align: left;
+        font-size: 40px;
+    }
+
+    #text_b3 p {
+        font-size: 20px;
+    }
+
+    .block4 {
+        padding: 10px 20px;
+    }
+
+    .block4 h1 {
+        font-size: 40px;
+    }
+
+    .card-wrapper {
+        max-width: 800px;
+    }
+
+    .block5 {
+        padding: 10px 20px;
+    }
+
+    #text_b5 h1 {
+        font-size: 40px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .footer-logo {
+        font-size: 35px;
+    }
+
+    .footer-logo h6 {
+        font-size: 20px;
+    }
+
+    .footer-subtittle {
+        font-size: 16px;
+    }
+
+    .footer-description,
+    .footer-contact {
+        font-size: 12px;
+    }
+
+    .footer-section ul {
+        font-size: 12px;
+    }
+
+    .footer-botton {
+        font-size: 10px;
+    }
+
+    .fa {
+        font-size: 25px;
+        width: 25px;
+    }
+
+    .wave-divisor svg {
+        width: calc(129% + 1.3px);
+        height: 50px;
+    }
+}
+
+
+/* Menu Hamburger #DeliciaDeResponsividade #EuAdoroWEB 😀*/
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    border-radius: 5px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+.nav-links.active {
+    display: block;
+    position: absolute;
+    top: 8 0px;
+    left: 0px;
+    width: 100%;
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.nav-links li {
+    padding: 10px;
+    text-align: center;
+}
+
+.nav-links>a,
+.nav-links>.profileContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media (max-width: 882px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}

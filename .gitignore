@@ -3,3 +3,4 @@ vendor
 .phpunit.result.cache
 node_modules
 wordpress
+package-lock.json
