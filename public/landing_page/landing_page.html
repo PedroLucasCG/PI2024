@@ -22,20 +22,15 @@
     <!-- Link para icones de mídias sociais -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!-- Sript para atualização dos cards dinâmicos-->
     <script src="cardsdinamicos.js?v=1" type="module" defer></script>
+
+    <!-- Script para menu hamburger -->
+    <script src="hamburger.js?v=1" type="module" defer></script>
 
 </head>
 
 <body>
-
-    <!-- Rpz, não sei se entendi isso aq
-     home
-    <div id="unlogged" style="display: none;">
-        <a href="../login/login.html">login</a>
-        <a href="../cadastro/cadastro.html">cadastro</a>
-    </div>
-    <div id="logged" style="display: none;">logged</div>
-    -->
 
     <div class="container">
 
@@ -47,11 +42,17 @@
                     <h6 class="euna">EUNÁPOLIS</h6>
                 </div>
 
+                <div class="hamburger" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
                 <ul class="nav-links">
                     <li><a href="../search/search.html">Buscar Freelancers</a></li>
                     <li id="entrar"><a href="../login/login.html">Entrar</a></li>
                     <li id="cadastrar"><a href="../cadastro/cadastro.html">Cadastrar</a></li>
-                    <a href="#" id="navbar-button">Postar trabalho</a>
+                    <a href="../profile/profile.html" id="navbar-button">Postar trabalho</a>
                     <li class="profileContainer">
                         <img src="../../assets/icons/profile.svg" id="profilePic"
                             onerror="this.src='../../assets/icons/profile.svg'">
@@ -145,9 +146,9 @@
 
             <div id="text_b3">
                 <h1>Procure os melhores <span>Freelancers</span> aqui </h1>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ratione labore animi, error sunt
-                    repellendus illum, dolorum fuga aliquam ullam quasi enim quod aliquid aperiam vero reiciendis.
-                    Magnam dolores vitae omnis.
+                <p>Encontre os <strong><span>melhores freelancers</span> </strong>para o seu projeto de forma rápida e
+                    fácil, seja online ou presencial. Com diversos profissionais disponíveis, você pode escolher o ideal
+                    para o que precisa. Cadastre seu projeto e receba propostas agora!
                 </p>
             </div>
 
@@ -171,12 +172,13 @@
         <div class="block5">
 
             <div id="text_b5">
-                <h3>Logotipos, sites, capas de livros e muito mais!</h3>
+                <h3>Designs criativos, sites personalizados, serviços de pintura, construção e muito mais!</h3>
                 <h1>Confira os Melhores <span>Portfólios</span> Aqui</h1>
             </div>
 
             <div class="subblock5 swiper">
                 <div class="card-wrapper">
+
                     <ul class="card-list swiper-wrapper">
                         <li class="card-item swiper-slide">
                             <a href="#" class="card-link">
@@ -218,9 +220,6 @@
                                 <p class="badge">Lorem ipsum 4</p>
                                 <h2 class="card-tittle">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut,
                                     cupiditate.</h2>
-                                <button class="card-button material-symbols-outlined">
-                                    arrow_forward
-                                </button>
                             </a>
                         </li>
                     </ul>
