@@ -535,7 +535,7 @@ async function configureProjectsSection() {
     }
     for (const trabalho of trabalhosFreelancer?.data || []) {
         const contratante = await get_freelancer(trabalho.Contratante);
-        const endereco = await get_endereco(freelancer.data.Endereco);
+        const endereco = await get_endereco(contratante.data.Endereco);
         const card = cardTrabalhosAtivosFreelancer
             .replace(":freelancerImage", `../../uploads/${trabalho.Contratante}/${contratante.data.foto}`)
             .replace(":nome", contratante.data.nome)
