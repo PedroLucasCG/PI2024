@@ -284,7 +284,7 @@ async function showPopUp(oferta) {
     const reviews = await get_recent_avaliacoes(ofertaDetail.data.Freelancer);
 
     let reviewCard = "";
-    for (const review of reviews.data) {
+    for (const review of reviews.data || []) {
         let estrelas = "";
         for (let c = 0; c < parseInt(review.grau || 0); c++) {
             estrelas += '<img src="../../assets/icons/star.svg" alt="estrela">';

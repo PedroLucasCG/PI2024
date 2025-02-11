@@ -93,8 +93,8 @@ header {
 
 .nav-links div {
     position: absolute;
-    left: -100%;
-    bottom: -230%;
+    left: -50%;
+    bottom: -150%;
     background-color: white;
     border-radius: 1rem;
     padding: 1rem;
@@ -918,7 +918,7 @@ footer {
 .nav-links.active {
     display: block;
     position: absolute;
-    top: 8 0px;
+    top: 6.5rem;
     left: 0px;
     width: 100%;
     background-color: white;
@@ -948,5 +948,12 @@ footer {
 
     .hamburger {
         display: flex;
+    }
+
+    .nav-links div  {
+        height: 5rem;
+        z-index: 100;
+        inset: 0;
+        top: -100%;
     }
 }

@@ -414,7 +414,6 @@ async function configureOfertaSection() {
             } else {
                 alert("Por favor, preencha o dia e o horário corretamente.");
             }
-            window.location.reload();
         });
     }
 
