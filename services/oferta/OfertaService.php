@@ -216,8 +216,8 @@ class OfertaService
     public function getAll(?string $search = '', ?string $cidade, ?int $page = 0, ?int $size = 30): array
     {
         $offset = $size * $page;
-        $query = "SELECT * FROM oferta
-        JOIN pessoa ON Freelancer = idPessoa
+        $query = "SELECT * FROM pessoa
+        JOIN oferta ON Freelancer = idPessoa
         JOIN endereco ON idEndereco = Endereco
         WHERE (oferta.titulo LIKE :search1 OR oferta.descricao LIKE :search2)";
 

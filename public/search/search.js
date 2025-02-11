@@ -10,9 +10,10 @@ let search = '';
 
 const cardHTMLTemplate = `
     <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
+        <div id="ofertaImage">
+        <img src=":ofertaImg" alt="Foto do Freelancer" onerror="this.src='../../assets/imgs/job-sample.jpg'">
+        </div>
         <div class="flex items-center space-x-4">
-            <img src=":freelancerImage" class="w-16 h-16 rounded-full" alt="Foto do Freelancer" onerror="this.src='../../assets/imgs/job-sample.jpg'">
-
             <div class="ml-4">
                 <h3 class="text-lg font-semibold">:nome</h3>
                 <p class="text-gray-500 text-sm">:bairro, :cidade</p>
@@ -210,7 +211,7 @@ async function showJobs(ofertas, page = 1) {
     const areas = await get_areas();
     for (const oferta of ofertas.data || []) {
         const card = cardHTMLTemplate
-            .replace(":freelancerImage", `../../uploads/${oferta.Freelancer}/${oferta.foto}`)
+            .replace(":ofertaImg", `../../uploads/${oferta.Freelancer}/${oferta.foto}`)
             .replace(":nome", oferta.nome)
             .replace(":bairro", oferta.bairro)
             .replace(":cidade", oferta.cidade)
@@ -233,7 +234,7 @@ async function showJobs(ofertas, page = 1) {
     if (ofertas.data)
         paginationContainer.innerHTML = paginationItems;
     else
-    paginationContainer.innerHTML = "<p>Nenhum item correspode a pesquisa.</p>";
+    paginationContainer.innerHTML = "<p>Nenhum há itens.</p>";
 }
 async function getPage(page) {
     const ofertas = await get_paginated_ofertas({ page, search });

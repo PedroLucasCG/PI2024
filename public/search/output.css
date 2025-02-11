@@ -1559,7 +1559,17 @@ div.close img {
 #screen-popup input {
     border: solid darkgray 1px;
 }
+#ofertaImage img {
+    height: 10rem;
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 2/1;
+    transition: transform 1s ease-in-out;
+}
 
+#ofertaImage img:hover {
+    object-fit: scale-down;
+}
 @media (min-width: 640px) {
   .sm\:text-6xl {
     font-size: 3.75rem;
