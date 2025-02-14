@@ -57,7 +57,7 @@ const popupHTMLTemplate = `
 
                 <div class="pt-4">
                   <div class="text-sm mb-2 pb-4">
-                    <h3 class="text-gray-600 pb-1">Nome:</h3>
+                    <h3 class="font-bold text-gray-600 pb-1">Nome:</h3>
                     <p>:nome</p>
                   </div>
                 </div>
