@@ -1583,14 +1583,10 @@ div.close img {
   color: red;
 }
 
-<<<<<<< HEAD
-#screen-popup input { 
-    border: solid darkgray 1px;
-=======
 #screen-popup input {
   border: solid darkgray 1px;
->>>>>>> finale
 }
+
 #ofertaImage img {
   height: 10rem;
   width: 100%;
@@ -1601,6 +1597,10 @@ div.close img {
 
 #ofertaImage img:hover {
   object-fit: scale-down;
+}
+
+#ofertasContainer {
+    display: flex;
 }
 @media (min-width: 640px) {
   .sm\:text-6xl {

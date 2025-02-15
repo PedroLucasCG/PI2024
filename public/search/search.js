@@ -46,7 +46,7 @@ const popupHTMLTemplate = `
             <!-- picture and person details -->
             <h3 class="text-lg text-blue-500 mb-3">Detalhes Pessoais</h3>
             <div class="mb-5 flex flex-wrap">
-              
+
               <div class="flex flex-1 gap-11 to-down">
                 <img
                   src=":freelancerImage"
@@ -113,7 +113,7 @@ const popupHTMLTemplate = `
 
           <!-- ofertas (esqueci como escreve em inglês kkk) offers? -->
           <div class="">
-            
+
               <div
                 class="offer-item border border-gray-200 rounded-lg overflow-hidden mb-5 px-5 bg-gray-100"
               ><div>
@@ -165,7 +165,7 @@ const popupHTMLTemplate = `
           >
             Contratar
           </button>
-          
+
         </div>
       </div>
 `;
