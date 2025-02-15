@@ -20,13 +20,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="./search.js?v=23" type="module" defer></script>
     <script src="../get_any_errors.js?v=5" type="module" defer></script>
+        <!-- Script para menu hamburger -->
+        <script src="hamburger.js?v=1" type="module" defer></script>
 
   </head>
 
   <body class="font-popins">
 
     <!-- popup -->
-    <div id="screen-popup" class="fixed hidden w-full inset-0 z-40 container">
+    <div id="screen-popup" class="fixed hidden w-full inset-0 z-40 container fixed-scroll">
     </div>
 
     <!-- gradient -->
@@ -46,6 +48,12 @@
                 </h3>
             </a>
           </div>
+          <div class="hamburger" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
           <nav>
             <ul class="flex gap-8 items-center text-gray-600 nav-links">
               <li><a id="entrar" href="../login/login.html">Entrar</a></li>
@@ -109,7 +117,7 @@
     <!-- search results -->
     <section class="container">
       <div class="flex flex-col justify-center">
-        <div class="grid grid-cols-[repeat(auto-fit,_minmax(350px,_1fr))] gap-5 px-[10%]" id="ofertasContainer">
+        <div class="grid grid-cols-[repeat(auto-fit,_minmax(350px,_1fr))] gap-5 md:px-[10%] organiza" id="ofertasContainer">
 
           <div class="bg-white rounded-md p-8 shadow-[0_20px_30px_0_rgba(0,0,0,0.15)] text-center hover:-translate-y-2 transition-all duration-300 ease-in-out ">
             <div class="flex items-center space-x-4">
