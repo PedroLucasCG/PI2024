@@ -52,7 +52,7 @@ async function showPopUp(oferta) {
   for (const periodo of ofertaDetail.data.periodos) {
     periodos += `<span class='periodo'> ${periodo.dia}, ${periodo.hora_inicio} - ${periodo.hora_final} </span>`;
   }
-  modal.innerHTML += popupHTMLTemplate
+  modal.innerHTML = popupHTMLTemplate
     .replace(
       ':freelancerImage',
       `../../uploads/${ofertaDetail.data.Freelancer}/${ofertaDetail.data.pessoaFoto}`,

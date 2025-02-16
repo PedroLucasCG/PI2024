@@ -2,7 +2,6 @@ import get_login_data from "../get_login_data.js";
 import get_freelancer from "../get_freelancer.js";
 
 const value = await get_login_data();
-console.log(value);
 
 if (!value.error) {
     entrar.style.display = "none";

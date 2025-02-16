@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../form.css">
     <link rel="stylesheet" href="./login.css">
     <link rel="shortcut icon" href="../../assets/imgs/favicon.ico" type="image/x-icon">
-    <script src="./login.js" defer></script>
+    <script src="./login.js?v=3" defer></script>
     <script src="../get_any_errors.js?v=5" type="module" defer></script>
     <title>1CORRE</title>
 </head>
@@ -18,10 +18,10 @@
             <form action="../../index.php" method="post">
                 <h2>Seja Bem-vindo (a):</h2>
                 <input type="hidden" name="form" value="login">
-                <input type="text" name="email" placeholder="E-mail ou número de telefone">
-                <input type="password" name="senha" placeholder="Senha">
+                <input type="text" name="email" placeholder="E-mail ou número de telefone" id="email">
+                <input type="password" name="senha" placeholder="Senha" id="senha">
                 <div> <span class="toggle"><div id="remind"></div></span> <a href="">Esqueceu a Senha?</a></div>
-                <input type="submit" value="Entrar">
+                <input type="submit" value="Entrar" id="submit">
             </form>
             <p>Não tem uma conta? <a href="../cadastro/cadastro.html">Cadastre-se</a></p>
         </section>
