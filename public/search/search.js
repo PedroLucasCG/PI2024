@@ -135,6 +135,9 @@ const popupHTMLTemplate = `
                   </p>
                 </div>
                  <div class="py-4">
+                 <h4 class="text-2xl text-black py-4 font-bold">
+                  Disponibilidade:
+                </h1>
                   <p class="text-sm text-gray-600 mt-2">
                     :periodos
                   </p>
@@ -217,7 +220,10 @@ async function showJobs(ofertas, page = 1) {
                 areas.data.find((items) => items.idArea == oferta.Area).nome,
             )
             .replace(':titulo', oferta.titulo)
-            .replace(':preco', oferta.preco)
+            .replace(':preco', oferta.preco.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            }))
             .replace(':idOferta', oferta.idOferta);
 
         ofertasContainer.innerHTML += card;
@@ -303,7 +309,7 @@ async function showPopUp(oferta) {
         for (let c = 0; c < parseInt(review.grau || 0); c++) {
             estrelas += '<img src="../../assets/icons/star.svg" alt="estrela">';
         }
-        reviewCard = reviewHTMLTemplate
+        reviewCard += reviewHTMLTemplate
             .replace(
                 ':contratanteImage',
                 `../../uploads/${review.Freelancer}/${review.foto}`,
@@ -316,7 +322,7 @@ async function showPopUp(oferta) {
 
     let periodos = '';
     for (const periodo of ofertaDetail.data.periodos) {
-        periodos += `<span class='periodo'> ${periodo.dia}, ${periodo.hora_inicio} - ${periodo.hora_final} </span>`;
+        periodos += `<span class='periodo'>${periodo.dia}, ${periodo.hora_inicio} - ${periodo.hora_final} | </span>`;
     }
     modal.innerHTML = popupHTMLTemplate
         .replace(

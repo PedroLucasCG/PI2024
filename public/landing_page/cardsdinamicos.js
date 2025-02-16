@@ -16,6 +16,34 @@ function closePopup() {
   }
 
   window.closePopup = closePopup;
+  const reviewHTMLTemplate = `
+  <div class="space-y-4 pb-4">
+                <div
+                  class="review items-center border border-gray-200 rounded-lg p-4 max-w-60"
+                >
+                  <div class="flex flex-1 mb-4">
+                    <img
+                      src=":contratanteImage"
+                      alt="Avaliador foto"
+                      class="w-12 h-12 rounded-full mr-4"
+                      onerror="this.src='../../assets/icons/profile.svg'"
+                    />
+                    <div>
+                      <p class="text-gray-800 font-semibold pb-1">:nome</p>
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <p class="text-xs text-gray-600">
+                      :comentario
+                    </p>
+                    <div class="flex items-center mt-1">
+                      :estrelas
+                      <span class="ml-2 text-sm text-gray-600">:nota</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  `;
 
 async function showPopUp(oferta) {
   const modal = document.getElementById('screen-popup');
@@ -33,7 +61,7 @@ async function showPopUp(oferta) {
     for (let c = 0; c < parseInt(review.grau || 0); c++) {
       estrelas += '<img src="../../assets/icons/star.svg" alt="estrela">';
     }
-    reviewCard = reviewHTMLTemplate
+    reviewCard += reviewHTMLTemplate
       .replace(
         ':contratanteImage',
         `../../uploads/${review.Freelancer}/${review.foto}`,
@@ -46,7 +74,7 @@ async function showPopUp(oferta) {
 
   let periodos = '';
   for (const periodo of ofertaDetail.data.periodos) {
-    periodos += `<span class='periodo'> ${periodo.dia}, ${periodo.hora_inicio} - ${periodo.hora_final} </span>`;
+    periodos += `<span class='periodo'> ${periodo.dia}, ${periodo.hora_inicio} - ${periodo.hora_final} | </span>`;
   }
   modal.innerHTML = popupHTMLTemplate
     .replace(
@@ -233,6 +261,9 @@ const popupHTMLTemplate = `
                 </div>
                  <div class="py-4">
                   <p class="text-sm text-gray-600 mt-2">
+                  <h4 class="text-2xl text-black py-4 font-bold">
+                  Disponibilidade
+                </h1>
                     :periodos
                   </p>
                 </div>
