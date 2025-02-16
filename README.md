@@ -7,6 +7,7 @@
 
 ## Como usar
 - Coloque o repositório dentro da pasta do htdocs do xampp
+- npm install para dependências 
 - Inicie o servidor apache do xampp navegue até o endereço http://localhost/PI/index.php para entrar na página inicial do projeto
 
 ## Links importantes
