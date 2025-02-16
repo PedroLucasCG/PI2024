@@ -10,7 +10,8 @@
     <script src="./landing_page.js?v=4" type="module" defer></script>
     <title>1CORRE</title>
     <link rel="stylesheet" href="../main.css">
-    <link rel="stylesheet" href="./landing_page.css?v=9">
+    <link rel="stylesheet" href="../search/output.css">
+    <link rel="stylesheet" href="./landing_page.css?v=15">
     <link rel="shortcut icon" href="../../assets/imgs/favicon.ico" type="image/x-icon">
 
     <!-- Google Icon Arrow Forward -->
@@ -24,7 +25,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Sript para atualização dos cards dinâmicos-->
-    <script src="cardsdinamicos.js?v=1" type="module" defer></script>
+    <script src="cardsdinamicos.js?v=4" type="module" defer></script>
 
     <!-- Script para menu hamburger -->
     <script src="hamburger.js?v=1" type="module" defer></script>
@@ -32,8 +33,10 @@
 </head>
 
 <body>
-
-    <div class="container">
+    <!-- popup -->
+    <div id="screen-popup" class="fixed hidden w-full inset-0 z-40 container fixed-scroll">
+    </div>
+    <div class="container-landingpage">
 
         <header>
             <nav class="navbar">
@@ -165,7 +168,7 @@
             </div>
 
             <div id="button_aling_b4">
-                <a href="../search/search.html" id="button_b4">Ver todas as categorias</a>
+                <a href="../search/search.html" id="button_b4">Ver todas os serviços</a>
             </div>
 
         </div>
@@ -180,7 +183,7 @@
             <div class="subblock5 swiper">
                 <div class="card-wrapper">
 
-                    <ul class="card-list swiper-wrapper">
+                    <ul class="card-list swiper-wrapper" id="ofertasContainer">
                         <li class="card-item swiper-slide">
                             <a href="#" class="card-link">
                                 <img src="../../assets/imgs/landing_page/placeholder.png" alt="Card image"

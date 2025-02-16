@@ -5,7 +5,7 @@ body {
   font-size: 16px;
 }
 
-.container {
+.container-landingpage {
   width: 100%;
   height: 100vh;
   background: linear-gradient(136deg, #f8a728 29.4%, #f75e1b 64.4%);
@@ -30,7 +30,7 @@ header {
   align-items: center;
 
   width: 100%;
-  height: 70px;
+  height: fit-content;
   padding: 10px 30px;
   border-radius: 56px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -42,7 +42,7 @@ header {
   display: flex;
   flex-direction: column;
   line-height: 1;
-  font-size: 50px;
+  font-size: 2.25rem;
 }
 
 .text-logo span {
@@ -406,29 +406,39 @@ header {
   top: 0;
   left: 0;
   z-index: 1;
-  opacity: 0.6;
+  filter: blur(2px);
   /* Tornar a imagem semi-transparente */
 }
 
 .card a > p {
   z-index: 2;
+  position: absolute;
   font-size: 1.6rem;
   font-weight: bold;
-  color: #000000;
-  margin: 0;
-  text-shadow: 0 2px 4px rgb(0, 0, 0);
+  display: block;
+  padding: 1rem;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  background-color: #4b538b;
+  color: #f7a21b;
   pointer-events: none;
+  transition: all ease-in-out .3s;
+  border-radius: .5rem;
   /* Para evitar interações no texto */
 }
 
 .card:hover {
   transform: scale(1.05);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 .card:hover img {
   opacity: 0.8;
+  filter: blur(0);
   /* Tornar a imagem mais visível no hover */
+}
+
+.card:hover p {
+    opacity: 0.2;
 }
 
 #button_b4 {
@@ -758,7 +768,7 @@ footer {
 /* Rpz, eu n sei o quanto disso aqui ta dando conflito, mas ta funcionando" */
 
 @media (max-width: 882px) {
-  .container {
+  .container-landingpage {
     overflow-x: hidden;
   }
 

@@ -1549,8 +1549,8 @@ nav a#postarTrabalho {
 
 .nav-links div {
   position: absolute;
-  left: -100%;
-  bottom: -230%;
+  left: -50%;
+  bottom: -150%;
   background-color: white;
   border-radius: 1rem;
   padding: 1rem;
