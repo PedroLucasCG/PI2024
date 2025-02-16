@@ -2,6 +2,12 @@ import get_login_data from "../get_login_data.js";
 import get_freelancer from "../get_freelancer.js";
 
 const value = await get_login_data();
+function sendToSearch(field) {
+    const search = field.parentElement.querySelector("input").value;
+    localStorage.setItem("search", search);
+    window.location.replace('../search/search.html');
+}
+window.sendToSearch = sendToSearch;
 
 if (!value.error) {
     entrar.style.display = "none";

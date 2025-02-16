@@ -353,8 +353,10 @@ window.showPopUp = showPopUp;
 const value = await get_login_data();
 (async () => {
     const area = localStorage.getItem("area");
-    const ofertas = await get_paginated_ofertas({ area });
+    const searchFromLandingPage = localStorage.getItem("search");
+    const ofertas = await get_paginated_ofertas({ area, search: searchFromLandingPage });
     if (area) localStorage.removeItem("area");
+    if (searchFromLandingPage) localStorage.removeItem("search");
     ofertasContainer.innerHTML = '';
     await showJobs(ofertas, 0);
 })();

@@ -933,6 +933,24 @@ footer {
   align-items: center;
 }
 
+.searchBar {
+    display: flex;
+    border-radius: 1rem;
+    background-color: white;
+    width: fit-content;
+    padding: .5rem;
+    margin-top: 2rem;
+    & input {
+        width: 50ch;
+        padding: .5rem;
+        outline: none;
+    }
+
+    & i {
+        font-size: 1.2rem;
+    }
+}
+
 @media (max-width: 882px) {
   .nav-links {
     display: none;
