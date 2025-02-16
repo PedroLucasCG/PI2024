@@ -7,6 +7,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 $search = $data['search'] ?? '';
 $page = $data['page'] ?? 0;
 $size = $data['size'] ?? 20;
+$area = $data['area'] ?? '';
 
 session_start();
 $enderecoService = new EnderecoService($pdo);
@@ -14,5 +15,5 @@ $service = new OfertaService($pdo);
 if (isset($_SESSION['login']['Endereco'])) {
     $endereco = $enderecoService->get($_SESSION['login']['Endereco']);
 }
-$result = $service->getAll($search, $endereco['data']['cidade'] ?? null, $page, $size);
+$result = $service->getAll($search, $area, $endereco['data']['cidade'] ?? null, $page, $size);
 echo json_encode($result);

@@ -5,13 +5,9 @@ import get_oferta from '../get_oferta.js';
 import get_recent_avaliacoes from '../get_recent_avaliacoes.js';
 import set_oferta from '../set_oferta.js?v=1';
 
-// Teste
 (async () => {
     await CategoryCards();
     await OfertaCards();
-
-    const testes2 = await get_paginated_ofertas();
-    console.log(testes2.data)
 })();
 
 function closePopup() {
@@ -110,9 +106,10 @@ window.efetutarProposta = efetutarProposta;
 
 // Template Categorias
 const categoriaTemplate = `
-<div class="card">
-    <a href="../search/search.html">
-    <img src=":areaImg" alt="">
+<div class="card" onclick="searchByCategory(this)">
+    <a>
+    <img src=":areaImg" alt="imagem da categoria">
+    <input type="hidden" value=":idArea">
     <p>:areaNome</p>
     </a>
 </div>
@@ -274,6 +271,14 @@ function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+async function searchByCategory(area) {
+    const idArea = area.querySelector("input").value;
+    localStorage.setItem("area", idArea);
+    window.location.replace('../search/search.html');
+}
+
+window.searchByCategory = searchByCategory;
+
 async function OfertaCards() {
     const ofertas = await get_paginated_ofertas({ size: 5 });
     const areas = await get_areas();
@@ -298,6 +303,7 @@ async function CategoryCards() {
 
         const card = categoriaTemplate
             .replace(":areaImg", `../../assets/imgs/landing_page/areas/categoria-${area['idArea']}.jpg`)
+            .replace(":idArea", area.idArea)
             .replace(":areaNome", areaNome);
 
         categoriasContainer.innerHTML += card;

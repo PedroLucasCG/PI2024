@@ -213,7 +213,7 @@ class OfertaService
             return ["msg" => "A oferta não foi encontrada."];
         }
     }
-    public function getAll(?string $search = '', ?string $cidade, ?int $page = 0, ?int $size = 30): array
+    public function getAll(?string $search = '', ?string $area, ?string $cidade, ?int $page = 0, ?int $size = 30): array
     {
         $offset = $size * $page;
         $query = "SELECT * FROM pessoa
@@ -231,12 +231,20 @@ class OfertaService
             $countQuery .= " AND endereco.cidade = :cidade ";
         }
 
+        if ($area) {
+            $query .= " AND oferta.Area = :area ";
+            $countQuery .= " AND oferta.Area = :area ";
+        }
+
         $query .= " LIMIT :size OFFSET :offset ";
 
         $stmt = $this->pdo->prepare($query);
 
         if($cidade) {
             $stmt->bindParam(':cidade', $cidade, PDO::PARAM_STR);
+        }
+        if ($area) {
+            $stmt->bindParam(':area', $area, PDO::PARAM_STR);
         }
         $stmt->bindParam(':size', $size, PDO::PARAM_INT);
         $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
@@ -266,6 +274,9 @@ class OfertaService
             $stmt = $this->pdo->prepare($countQuery);
             if($cidade) {
                 $stmt->bindParam(':cidade', $cidade, PDO::PARAM_STR);
+            }
+            if ($area) {
+                $stmt->bindParam(':area', $area, PDO::PARAM_STR);
             }
 
             $searchParam = "%" . $search . "%";
@@ -304,6 +315,45 @@ class OfertaService
             return ["msg" => "Oferta deletada com sucesso."];
         } else {
             return ["msg" => "Ocorreu um erro ao deletar a oferta."];
+        }
+    }
+
+    public function getByArea($idArea) {
+        if (empty($idArea)) {
+            return ["msg" => "O id é necessário para recuperar oferta."];
+        }
+
+        $query = "SELECT
+        *
+        FROM pessoa
+        JOIN oferta ON Freelancer = idPessoa
+        WHERE Area = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':id', $idArea, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $result = [];
+        foreach ($data as $index => $row) {
+            $id = $row['idOferta'];
+            $queryPeriodos = "SELECT * FROM periodo WHERE Oferta = :id";
+            $stmtPeriodos = $this->pdo->prepare($queryPeriodos);
+            $stmtPeriodos->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmtPeriodos->execute();
+
+            $periodos = $stmtPeriodos->fetchAll(PDO::FETCH_ASSOC);
+
+            $result[$index] = array_merge($row, ['periodos' => $periodos]);
+        }
+
+        if ($data) {
+            return [
+                "msg" => "Oferta recuperada com sucesso",
+                "data" => $result,
+            ];
+        } else {
+            return ["msg" => "A oferta não foi encontrada."];
         }
     }
 }

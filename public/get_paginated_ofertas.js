@@ -1,11 +1,11 @@
-export default async function get_paginated_ofertas ({ search = null, page = null, size = null } = {}) {
+export default async function get_paginated_ofertas ({ search = null, area = null, page = null, size = null } = {}) {
     try {
         const response = await fetch('/../../controllers/search/ofertasWithPagination.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ search, page, size }),
+            body: JSON.stringify({ search, area, page, size }),
         })
 
         if (!response.ok) {

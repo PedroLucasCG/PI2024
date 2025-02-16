@@ -200,204 +200,203 @@ const reviewHTMLTemplate = `
 `;
 
 async function showJobs(ofertas, page = 1) {
-  const ofertasContainer = document.getElementById('ofertasContainer');
-  const paginationContainer = document.getElementById('pagination');
-  const areas = await get_areas();
-  for (const oferta of ofertas.data || []) {
-    const card = cardHTMLTemplate
-      .replace(
-        ':ofertaImg',
-        `../../uploads/${oferta.Freelancer}/${oferta.foto}`,
-      )
-      .replace(':nome', oferta.nome)
-      .replace(':bairro', oferta.bairro)
-      .replace(':cidade', oferta.cidade)
-      .replace(
-        ':area',
-        areas.data.find((items) => items.idArea == oferta.Area).nome,
-      )
-      .replace(':titulo', oferta.titulo)
-      .replace(':preco', oferta.preco)
-      .replace(':idOferta', oferta.idOferta);
+    const ofertasContainer = document.getElementById('ofertasContainer');
+    const paginationContainer = document.getElementById('pagination');
+    const areas = await get_areas();
+    for (const oferta of ofertas.data || []) {
+        const card = cardHTMLTemplate
+            .replace(
+                ':ofertaImg',
+                `../../uploads/${oferta.Freelancer}/${oferta.foto}`,
+            )
+            .replace(':nome', oferta.nome)
+            .replace(':bairro', oferta.bairro)
+            .replace(':cidade', oferta.cidade)
+            .replace(
+                ':area',
+                areas.data.find((items) => items.idArea == oferta.Area).nome,
+            )
+            .replace(':titulo', oferta.titulo)
+            .replace(':preco', oferta.preco)
+            .replace(':idOferta', oferta.idOferta);
 
-    ofertasContainer.innerHTML += card;
-  }
-  let paginationItems = `<button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300" onclick="getPage(${0})">&laquo;</button>`;
-  for (let c = 1; c <= ofertas.totalPages; c++) {
-    if (c === page + 1) {
-      paginationItems += `<button class="w-8 h-8 rounded-full bg-blue-500 text-white" onclick="getPage(${
-        c - 1
-      })">${c}</button>`;
-      continue;
+        ofertasContainer.innerHTML += card;
     }
-    paginationItems += `<button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300" onclick="getPage(${
-      c - 1
-    })">${c}</button>`;
-  }
-  paginationItems += `<button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300" onclick="getPage(${
-    ofertas.totalPages - 1
-  })">&raquo;</button>`;
-  if (ofertas.data) paginationContainer.innerHTML = paginationItems;
-  else paginationContainer.innerHTML = '<p>Nenhum há itens.</p>';
+    let paginationItems = `<button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300" onclick="getPage(${0})">&laquo;</button>`;
+    for (let c = 1; c <= ofertas.totalPages; c++) {
+        if (c === page + 1) {
+            paginationItems += `<button class="w-8 h-8 rounded-full bg-blue-500 text-white" onclick="getPage(${c - 1
+                })">${c}</button>`;
+            continue;
+        }
+        paginationItems += `<button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300" onclick="getPage(${c - 1
+            })">${c}</button>`;
+    }
+    paginationItems += `<button class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300" onclick="getPage(${ofertas.totalPages - 1
+        })">&raquo;</button>`;
+    if (ofertas.data) paginationContainer.innerHTML = paginationItems;
+    else paginationContainer.innerHTML = '<p>Nenhum há itens.</p>';
 }
 async function getPage(page) {
-  const ofertas = await get_paginated_ofertas({ page, search });
-  ofertasContainer.innerHTML = '';
-  await showJobs(ofertas, page);
+    const ofertas = await get_paginated_ofertas({ page, search });
+    ofertasContainer.innerHTML = '';
+    await showJobs(ofertas, page);
 }
 
 window.getPage = getPage;
 
 document
-  .getElementById('search')
-  .querySelector('button')
-  .addEventListener('click', async (event) => {
-    search =
-      event.target.parentElement.parentElement.querySelector('input').value;
-    const ofertas = await get_paginated_ofertas({ search });
-    ofertasContainer.innerHTML = '';
-    await showJobs(ofertas, 0);
-  });
+    .getElementById('search')
+    .querySelector('button')
+    .addEventListener('click', async (event) => {
+        search =
+            event.target.parentElement.parentElement.querySelector('input').value;
+        const ofertas = await get_paginated_ofertas({ search });
+        ofertasContainer.innerHTML = '';
+        await showJobs(ofertas, 0);
+    });
 
 async function efetutarProposta(oferta) {
-  const idOferta =
-    oferta.parentElement.querySelector('input#idOferta').attributes[2].value;
-  const valor = oferta.parentElement.querySelector('input#valor').value;
+    const idOferta =
+        oferta.parentElement.querySelector('input#idOferta').attributes[2].value;
+    const valor = oferta.parentElement.querySelector('input#valor').value;
 
-  const ofertaDetail = await get_oferta(idOferta);
-  const login = await get_login_data();
-  if (login.error) {
-    window.location.replace('../login/login.html');
-  }
-  await set_oferta(
-    valor || ofertaDetail.data.preco,
-    ofertaDetail.data.descricao,
-    'proposto',
-    'horista',
-    login.idPessoa,
-    idOferta,
-  );
-  localStorage.setItem('section', 'projetos');
-  window.location.replace('../profile/profile.html');
+    const ofertaDetail = await get_oferta(idOferta);
+    const login = await get_login_data();
+    if (login.error) {
+        window.location.replace('../login/login.html');
+    }
+    await set_oferta(
+        valor || ofertaDetail.data.preco,
+        ofertaDetail.data.descricao,
+        'proposto',
+        'horista',
+        login.idPessoa,
+        idOferta,
+    );
+    localStorage.setItem('section', 'projetos');
+    window.location.replace('../profile/profile.html');
 }
 
 window.efetutarProposta = efetutarProposta;
 
 function closePopup() {
-  const modal = document.getElementById('screen-popup');
-  modal.style.display = 'none';
+    const modal = document.getElementById('screen-popup');
+    modal.style.display = 'none';
 }
 
 window.closePopup = closePopup;
 
 async function showPopUp(oferta) {
-  const modal = document.getElementById('screen-popup');
-  const idOferta =
-    oferta.parentElement.querySelector('input').attributes[2].value;
-  const ofertaDetail = await get_oferta(idOferta);
-  const dataNascimento = new Date(
-    ofertaDetail.data.data_nasc.replace('-', '/'),
-  );
-  const reviews = await get_recent_avaliacoes(ofertaDetail.data.Freelancer);
+    const modal = document.getElementById('screen-popup');
+    const idOferta =
+        oferta.parentElement.querySelector('input').attributes[2].value;
+    const ofertaDetail = await get_oferta(idOferta);
+    const dataNascimento = new Date(
+        ofertaDetail.data.data_nasc.replace('-', '/'),
+    );
+    const reviews = await get_recent_avaliacoes(ofertaDetail.data.Freelancer);
 
-  let reviewCard = '';
-  for (const review of reviews.data || []) {
-    let estrelas = '';
-    for (let c = 0; c < parseInt(review.grau || 0); c++) {
-      estrelas += '<img src="../../assets/icons/star.svg" alt="estrela">';
+    let reviewCard = '';
+    for (const review of reviews.data || []) {
+        let estrelas = '';
+        for (let c = 0; c < parseInt(review.grau || 0); c++) {
+            estrelas += '<img src="../../assets/icons/star.svg" alt="estrela">';
+        }
+        reviewCard = reviewHTMLTemplate
+            .replace(
+                ':contratanteImage',
+                `../../uploads/${review.Freelancer}/${review.foto}`,
+            )
+            .replace(':nome', review.nome)
+            .replace(':comentario', review.comentario)
+            .replace(':estrelas', estrelas)
+            .replace(':nota', review.grau);
     }
-    reviewCard = reviewHTMLTemplate
-      .replace(
-        ':contratanteImage',
-        `../../uploads/${review.Freelancer}/${review.foto}`,
-      )
-      .replace(':nome', review.nome)
-      .replace(':comentario', review.comentario)
-      .replace(':estrelas', estrelas)
-      .replace(':nota', review.grau);
-  }
 
-  let periodos = '';
-  for (const periodo of ofertaDetail.data.periodos) {
-    periodos += `<span class='periodo'> ${periodo.dia}, ${periodo.hora_inicio} - ${periodo.hora_final} </span>`;
-  }
-  modal.innerHTML = popupHTMLTemplate
-    .replace(
-      ':freelancerImage',
-      `../../uploads/${ofertaDetail.data.Freelancer}/${ofertaDetail.data.pessoaFoto}`,
-    )
-    .replace(':nome', ofertaDetail.data.nomePessoa)
-    .replace(':dataNascimento', dataNascimento.toLocaleDateString('pt-br'))
-    .replace(':cidade', ofertaDetail.data.cidade)
-    .replace(':estado', ofertaDetail.data.estado)
-    .replace(':bairro', ofertaDetail.data.bairro)
-    .replace(':telefone', ofertaDetail.data.telefone)
-    .replace(':email', ofertaDetail.data.email)
-    .replace(
-      ':ofertaImg',
-      `../../uploads/${ofertaDetail.data.Freelancer}/${ofertaDetail.data.ofertaFoto}`,
-    )
-    .replace(':titulo', ofertaDetail.data.titulo)
-    .replace(
-      ':preco',
-      ofertaDetail.data.preco.toLocaleString('pt-BR', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }),
-    )
-    .replace(':descricao', ofertaDetail.data.descricao)
-    .replace(':idOferta', ofertaDetail.data.idOferta)
-    .replace(':periodos', periodos)
-    .replace(':reviews', reviewCard);
-  modal.style.display = 'block';
+    let periodos = '';
+    for (const periodo of ofertaDetail.data.periodos) {
+        periodos += `<span class='periodo'> ${periodo.dia}, ${periodo.hora_inicio} - ${periodo.hora_final} </span>`;
+    }
+    modal.innerHTML = popupHTMLTemplate
+        .replace(
+            ':freelancerImage',
+            `../../uploads/${ofertaDetail.data.Freelancer}/${ofertaDetail.data.pessoaFoto}`,
+        )
+        .replace(':nome', ofertaDetail.data.nomePessoa)
+        .replace(':dataNascimento', dataNascimento.toLocaleDateString('pt-br'))
+        .replace(':cidade', ofertaDetail.data.cidade)
+        .replace(':estado', ofertaDetail.data.estado)
+        .replace(':bairro', ofertaDetail.data.bairro)
+        .replace(':telefone', ofertaDetail.data.telefone)
+        .replace(':email', ofertaDetail.data.email)
+        .replace(
+            ':ofertaImg',
+            `../../uploads/${ofertaDetail.data.Freelancer}/${ofertaDetail.data.ofertaFoto}`,
+        )
+        .replace(':titulo', ofertaDetail.data.titulo)
+        .replace(
+            ':preco',
+            ofertaDetail.data.preco.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            }),
+        )
+        .replace(':descricao', ofertaDetail.data.descricao)
+        .replace(':idOferta', ofertaDetail.data.idOferta)
+        .replace(':periodos', periodos)
+        .replace(':reviews', reviewCard);
+    modal.style.display = 'block';
 }
 window.showPopUp = showPopUp;
 
 const value = await get_login_data();
 (async () => {
-  const ofertas = await get_paginated_ofertas();
-  ofertasContainer.innerHTML = '';
-  await showJobs(ofertas, 0);
+    const area = localStorage.getItem("area");
+    const ofertas = await get_paginated_ofertas({ area });
+    if (area) localStorage.removeItem("area");
+    ofertasContainer.innerHTML = '';
+    await showJobs(ofertas, 0);
 })();
 if (!value.error) {
-  entrar.style.display = 'none';
-  cadastrar.style.display = 'none';
-  const userData = await get_login_data();
-  const foto = await get_freelancer(userData.idPessoa).then(
-    (value) => value.data.foto,
-  );
-  profilePic.src = `../../uploads/${userData.idPessoa}/${foto}`;
-  profilePic.addEventListener('click', function () {
-    const profileDropdown =
-      this.parentElement.querySelector('#profileDropdown');
-    profileDropdown.style.display =
-      profileDropdown.style.display == 'block' ? 'none' : 'block';
-  });
-  dashboard.addEventListener('click', () => {
-    window.location.replace('../profile/profile.html');
-  });
+    entrar.style.display = 'none';
+    cadastrar.style.display = 'none';
+    const userData = await get_login_data();
+    const foto = await get_freelancer(userData.idPessoa).then(
+        (value) => value.data.foto,
+    );
+    profilePic.src = `../../uploads/${userData.idPessoa}/${foto}`;
+    profilePic.addEventListener('click', function () {
+        const profileDropdown =
+            this.parentElement.querySelector('#profileDropdown');
+        profileDropdown.style.display =
+            profileDropdown.style.display == 'block' ? 'none' : 'block';
+    });
+    dashboard.addEventListener('click', () => {
+        window.location.replace('../profile/profile.html');
+    });
 
-  sair.addEventListener('click', () => {
-    fetch('../../controllers/session/destroy.php')
-      .then((response) => response.text())
-      .then((data) => {
-        console.log(data.msg);
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  });
-  const navbarButton = document.getElementById('postarTrabalho');
-  navbarButton.addEventListener('click', () => {
-    localStorage.setItem('section', 'ofertas');
-    window.location.replace('../profile/profile.html');
-  });
+    sair.addEventListener('click', () => {
+        fetch('../../controllers/session/destroy.php')
+            .then((response) => response.text())
+            .then((data) => {
+                console.log(data.msg);
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    });
+    const navbarButton = document.getElementById('postarTrabalho');
+    navbarButton.addEventListener('click', () => {
+        localStorage.setItem('section', 'ofertas');
+        window.location.replace('../profile/profile.html');
+    });
 } else {
-  const navbarButton = document.getElementById('postarTrabalho');
-  navbarButton.addEventListener('click', () => {
-    window.location.replace('../login/login.html');
-  });
-  const profile = document.querySelector('li.profileContainer');
-  profile.style.display = 'none';
+    const navbarButton = document.getElementById('postarTrabalho');
+    navbarButton.addEventListener('click', () => {
+        window.location.replace('../login/login.html');
+    });
+    const profile = document.querySelector('li.profileContainer');
+    profile.style.display = 'none';
 }
