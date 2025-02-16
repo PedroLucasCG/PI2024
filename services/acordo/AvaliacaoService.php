@@ -7,12 +7,7 @@ class AvaliacaoService {
         $this->pdo = $pdo;
     }
 
-    public function upsert($id = null, $comentario = null, $grau, $Acordo) {
-
-        $acordo = new Acordo($this->pdo);
-        if(!isset($acordo->get($Acordo)['data'])) {
-            return ["msg" => "Acordo não consta no sistema."];
-        }
+    public function upsert($Acordo, $comentario, $grau, $id = null) {
 
         if ($id) {
             $query = "UPDATE Avaliacao SET

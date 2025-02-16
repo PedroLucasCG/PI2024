@@ -11,9 +11,9 @@ import get_endereco from "../get_endereco.js";
 import get_acordo from "../get_acordo.js";
 import get_telefone from "../get_telefone.js";
 import get_avaliacao from "../get_avaliacao.js";
+import set_avaliacao from "../set_avaliacao.js";
 
 function showHideSideBar () {
-    console.log("pedro");
     const aside = document.getElementsByTagName("aside")[0];
     const button = document.querySelector("main div.responsive");
     button.innerHTML = button.innerText === "<" ? ">" : "<";
@@ -79,6 +79,41 @@ function deleteHorario(element) {
     }
 }
 window.deleteHorario = deleteHorario;
+
+// fechar o modal de review
+function closeReviewModal(element) {
+    element.parentElement.parentElement.style.display = "none";
+}
+window.closeReviewModal = closeReviewModal;
+
+// inserir a avaliação
+async function setReview(element) {
+    const idAcordo = element.parentElement.querySelector("input").value;
+    const grau = element.parentElement.querySelector("select").value;
+    const comentario = element.parentElement.querySelector("textarea").value
+    await set_avaliacao(idAcordo, grau, comentario);
+    console.log(idAcordo, grau, comentario);
+    await set_estado_acordo(idAcordo, "finalizado");
+    window.location.reload();
+}
+window.setReview = setReview;
+
+// Template HTML para exibição do modal de avaliação
+const reviewModalTemplate = `
+<div class="close"><img onclick="closeReviewModal(this)" src="../../assets/icons/close.svg" alt="fechar modal"></div>
+<h2>Deixe sua avaliação</h2>
+<select name="grau" id="grau" required>
+    <option value="" selected hidden>Classifique o serviço</option>
+    <option value="1">Péssimo trabalho</option>
+    <option value="2">Trabalho mal feito</option>
+    <option value="3">Trabalho razoável</option>
+    <option value="4">Ótimo serviço</option>
+    <option value="5">Melhor serviço que já vi</option>
+</select>
+<input type="hidden" value=":idAcordo">
+<textarea name="comentario" id="comentario" required></textarea>
+<button onclick="setReview(this)">Enviar</button>
+`;
 
 // Template HTML para exibição dos horários
 const horarioTemplate = `
@@ -518,19 +553,24 @@ async function configureProjectsSection() {
     }
     let finalizarButtons = trabalhosClienteContainer.parentElement.querySelectorAll(".actions #finalizarServico");
     let cancelarButtons = trabalhosClienteContainer.parentElement.querySelectorAll(".actions #cancelarServico");
+    const reviewModalContainer = document.getElementById("reviewModal");
     for (const button of finalizarButtons) {
         button.addEventListener("click", async function () {
+            const reviewModalContainer = document.getElementById("reviewModal");
             const idAcordo = this.parentElement.querySelector("input").attributes[1].value;
-            await set_estado_acordo(idAcordo, "finalizado");
-            window.location.reload();
+            reviewModalContainer.innerHTML = reviewModalTemplate
+                .replace(":idAcordo", idAcordo);
+            reviewModalContainer.style.display = "flex";
         });
     }
 
     for (const button of cancelarButtons) {
         button.addEventListener("click", async function () {
+            const reviewModalContainer = document.getElementById("reviewModal");
             const idAcordo = this.parentElement.querySelector("input").attributes[1].value;
-            await set_estado_acordo(idAcordo, "quebrado");
-            window.location.reload();
+            reviewModalContainer.innerHTML = reviewModalTemplate
+                .replace(":idAcordo", idAcordo);
+            reviewModalContainer.style.display = "flex";
         });
     }
     for (const trabalho of trabalhosFreelancer?.data || []) {
