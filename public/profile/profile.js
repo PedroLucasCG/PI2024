@@ -232,11 +232,7 @@ const sectionsModal = {
     <p>Idade: :idade anos</p>
     <p>Email: :email</p>
     <p>Telefone: :telefone</p>
-    <div>
-        <strong><em id="servicosCancelados">:servicosCancelados</em> serviços cancelados</strong>
-        <strong><em id="servicosConcluidos">:servicosConcluidos</em> serviços concluídos</strong>
-        <strong>Avaliação Média <em id="servicosMedia">:mediaServicos</em></strong>
-    </div>
+    <div></div>
     `,
     oferta: `
     <h1>Acordo</h1>
