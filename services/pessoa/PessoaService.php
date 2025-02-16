@@ -20,7 +20,7 @@ class PessoaService
         );
         $endereco_id = $endereco->create();
 
-        if ($id) {
+        if (isset($id)) {
             $query = "UPDATE pessoa SET
                 email = :email,
                 data_nasc = :data_nasc,
@@ -48,12 +48,12 @@ class PessoaService
         $stmt->bindParam(':data_registro', $current_date);
         $stmt->bindParam(':endereco_id', $endereco_id);
 
-        if ($id) {
+        if (isset($id)) {
             $stmt->bindParam(':id', $id);
         }
 
         if ($stmt->execute()) {
-            if ($id) {
+            if (isset($id)) {
                 print_r($_FILES);
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (isset($_FILES['profileImg']) && $_FILES['profileImg']['error'] === UPLOAD_ERR_OK) {

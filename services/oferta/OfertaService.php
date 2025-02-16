@@ -12,7 +12,7 @@ class OfertaService
     public function upsert($oferta): array
 {
         extract($oferta);
-        if ($id) {
+        if (isset($id)) {
             $query = "UPDATE Oferta SET
                 Freelancer = :Freelancer,
                 Area = :Area,
@@ -33,13 +33,16 @@ class OfertaService
         $stmt->bindParam(':preco', $preco);
         $stmt->bindParam(':titulo', $titulo);
 
-        if ($id) {
+        if (isset($id)) {
             $stmt->bindParam(':id', $id);
         }
 
         if ($stmt->execute()) {
             $insertionId = isset($id) ? $id : $this->pdo->lastInsertId();
             $query = "insert into periodo (Oferta, dia, hora_inicio, hora_final) values (:Oferta, :dia, :hora_inicio, :hora_final)";
+            if (isset($periodos)) {
+                $periodos = [];
+            }
             foreach ($periodos as $key => $value) {
                 $diaHora = explode(',', $value);
                 $horas = explode('-', trim($diaHora[1]));
@@ -96,7 +99,7 @@ class OfertaService
                 echo "Solicitação inválida";
             }
 
-            if ($id) {
+            if (isset($id)) {
                 return ["msg" => "Oferta atualizada com sucesso."];
             } else {
                 return ["msg" => "Oferta criada com sucesso"];

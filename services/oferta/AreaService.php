@@ -32,7 +32,7 @@ class AreaService {
         }
 
         $query = "DELETE FROM Area WHERE idArea = :id";
-
+        $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':id', $id);
 
         if ($stmt->execute()) {

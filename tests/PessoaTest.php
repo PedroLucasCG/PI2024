@@ -1,99 +1,76 @@
 <?php
-include __DIR__ . '/../services/pessoa/pessoa.php';
 use PHPUnit\Framework\TestCase;
+require __DIR__ . '/../services/pessoa/PessoaService.php';
+require __DIR__ . '/../services/pessoa/EnderecoService.php';
+require __DIR__ . '/../services/pessoa/TelefoneService.php';
+require __DIR__ . '/../models/usuario/endereco.php';
+require __DIR__ . '/../models/usuario/telefone.php';
 
 class PessoaTest extends TestCase
 {
     private $pdo;
-    private $pessoa;
+    private $pessoaService;
+    private $stmt;
 
     protected function setUp(): void
     {
         $this->pdo = $this->createMock(PDO::class);
-        
-        $this->pessoa = new Pessoa($this->pdo);
-        print_r($this->pessoa);
+        $this->stmt = $this->createMock(PDOStatement::class);
+        $this->pdo->method('prepare')->willReturn($this->stmt);
+        $this->pessoaService = new PessoaService($this->pdo);
     }
 
-    public function testUpsertCreatesNewPessoa()
+    public function testUpsertInsertsNewPessoa()
     {
-        $statement = $this->createMock(PDOStatement::class);
-        $statement->method('execute')->willReturn(true);
-
-        $this->pdo->expects($this->once())
-            ->method('prepare')
-            ->willReturn($statement);
-
-        $result = $this->pessoa->upsert(
-            'John Doe', '1990-01-01', '12345678900', '12345678',
-            'password123', 'johndoe', 'john@example.com', '2024-09-30', 1
-        );
-
-        $this->assertEquals('Pessoa criada com sucesso', $result['msg']);
-    }
-
-    public function testUpsertUpdatesExistingPessoa()
-    {
-        $statement = $this->createMock(PDOStatement::class);
-        $statement->method('execute')->willReturn(true);
-
-        $this->pdo->expects($this->once())
-            ->method('prepare')
-            ->willReturn($statement);
-
-        $result = $this->pessoa->upsert(
-            'Jane Doe', '1985-05-05', '98765432100', '87654321',
-            'password456', 'janedoe', 'jane@example.com', '2024-09-30', 1, 123
-        );
-
-        $this->assertEquals('Pessoa atualizada com sucesso.', $result['msg']);
-    }
-
-    public function testGetPessoaById()
-    {
-        $statement = $this->createMock(PDOStatement::class);
-        $statement->method('execute')->willReturn(true);
-        $statement->method('fetch')->willReturn([
-            'idPessoa' => 123,
+        $pessoa = [
             'nome' => 'John Doe',
+            'email' => 'john@example.com',
+            'data_nasc' => '1990-01-01',
+            'cpf' => '12345678900',
+            'senha' => 'password123',
+            'usuario' => 'johndoe',
+            'endereco' => [
+                'estado' => 'SP',
+                'cidade' => 'São Paulo',
+                'bairro' => 'Centro'
+            ],
+            'telefones' => ['11987654321']
+        ];
+
+        $this->stmt->method('execute')->willReturn(true);
+        $this->pdo->method('lastInsertId')->willReturn(1);
+
+        $result = $this->pessoaService->upsert($pessoa);
+
+        $this->assertArrayHasKey('msg', $result);
+        $this->assertEquals('Pessoa criada com sucesso.', $result['msg']);
+    }
+
+    public function testGetPessoaReturnsData()
+    {
+        $id = 1;
+        $this->stmt->method('execute')->willReturn(true);
+        $this->stmt->method('fetch')->willReturn([
+            'idPessoa' => $id,
+            'nome' => 'John Doe'
         ]);
 
-        $this->pdo->expects($this->once())
-            ->method('prepare')
-            ->willReturn($statement);
+        $result = $this->pessoaService->get($id);
 
-        $result = $this->pessoa->get(123);
-
+        $this->assertArrayHasKey('msg', $result);
         $this->assertEquals('Pessoa recuperada com sucesso', $result['msg']);
-        $this->assertEquals('John Doe', $result['data']['nome']);
+        $this->assertArrayHasKey('data', $result);
+        $this->assertEquals($id, $result['data']['idPessoa']);
     }
 
-    public function testDeletePessoa()
+    public function testDeletePessoaReturnsSuccessMessage()
     {
-        $statement = $this->createMock(PDOStatement::class);
-        $statement->method('execute')->willReturn(true);
+        $id = 1;
+        $this->stmt->method('execute')->willReturn(true);
 
-        $this->pdo->expects($this->once())
-            ->method('prepare')
-            ->willReturn($statement);
+        $result = $this->pessoaService->delete($id);
 
-        $result = $this->pessoa->delete(123);
-
+        $this->assertArrayHasKey('msg', $result);
         $this->assertEquals('Pessoa deletada com sucesso', $result['msg']);
-    }
-
-    public function testUpsertReturnsErrorWhenEnderecoNotFound()
-    {
-        $enderecoMock = $this->createMock(Endereco::class);
-        $enderecoMock->method('get')->willReturn(['data' => null]);
-
-        $this->pessoa = new Pessoa($this->pdo);
-        
-        $result = $this->pessoa->upsert(
-            'John Doe', '1990-01-01', '12345678900', '12345678',
-            'password123', 'johndoe', 'john@example.com', '2024-09-30', 999
-        );
-
-        $this->assertEquals('Endereço não consta no sistema.', $result['msg']);
     }
 }

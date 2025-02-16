@@ -136,7 +136,7 @@ class AvaliacaoService {
         }
 
         $query = "DELETE FROM Avaliação WHERE idAvaliacao = :id";
-
+        $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':id', $id);
 
         if ($stmt->execute()) {

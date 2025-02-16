@@ -8,7 +8,7 @@ class TelefoneService {
 
     public function upsert($telefone): array {
         extract($telefone);
-        if ($id) {
+        if (isset($id)) {
             $query = "UPDATE Telefone SET
                 telefone = :telefone,
                 Pessoa = :Pessoa,
@@ -23,12 +23,12 @@ class TelefoneService {
         $stmt->bindParam(':telefone', $telefone);
         $stmt->bindParam(':Pessoa', $pessoa_id);
 
-        if ($id) {
+        if (isset($id)) {
             $stmt->bindParam(':id', $id);
         }
 
         if ($stmt->execute()) {
-            if ($id) {
+            if (isset($id)) {
                 return ["msg" => "Telefone atualizado com sucesso."];
             } else {
                 return ["msg" => "Telefone criado com sucesso"];
@@ -68,7 +68,7 @@ class TelefoneService {
         }
 
         $query = "DELETE FROM Telefone WHERE idTelefone = :id";
-
+        $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':id', $id);
 
         if ($stmt->execute()) {

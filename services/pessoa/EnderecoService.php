@@ -8,7 +8,7 @@ class EnderecoService {
 
     public function upsert(array $endereco): array {
         extract($endereco);
-        if ($id) {
+        if (isset($id)) {
             $query = "UPDATE Endereco SET
                 cep = :cep,
                 estado = :estado,
@@ -27,12 +27,12 @@ class EnderecoService {
         $stmt->bindParam(':cidade', $cidade);
         $stmt->bindParam(':bairro', $bairro);
 
-        if ($id) {
+        if (isset($id)) {
             $stmt->bindParam(':id', $id);
         }
 
         if ($stmt->execute()) {
-            if ($id) {
+            if (isset($id)) {
                 return ["msg" => "Endereço atualizado com sucesso."];
             } else {
                 return ["msg" => "Endereço criado com sucesso", "id" => $this->pdo->lastInsertId()];
@@ -73,6 +73,7 @@ class EnderecoService {
 
         $query = "DELETE FROM Endereco WHERE idEndereco = :id";
 
+        $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':id', $id);
 
         if ($stmt->execute()) {

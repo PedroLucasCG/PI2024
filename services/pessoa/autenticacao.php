@@ -1,4 +1,5 @@
 <?php
+session_start();
 class Autenticacao
 {
     private PDO $pdo;
@@ -26,7 +27,6 @@ class Autenticacao
         if (!$data) {
             return ['error' => 'O login do usuário não existe.'];
         } else {
-            session_start();
             $_SESSION['login'] = $data;
             return ['msg' => 'Login realizado com sucesso.', 'userId' => $data['idPessoa']];
         }
