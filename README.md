@@ -7,7 +7,8 @@
 
 ## Como usar
 - Coloque o repositório dentro da pasta do htdocs do xampp
-- npm install para dependências 
+- Instale PHP composer e NodeJS
+- npm install e composer install para dependências carregar as dependências
 - Inicie o servidor apache do xampp navegue até o endereço http://localhost/ para entrar na página inicial do projeto
 
 ## Links importantes
