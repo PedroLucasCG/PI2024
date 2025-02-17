@@ -10,7 +10,7 @@
 - Instale PHP composer e NodeJS
 - npm install e composer install para dependências carregar as dependências
 - Inicie o servidor apache do xampp navegue até o endereço http://localhost/ para entrar na página inicial do projeto
-- No Prompt de comando cd para a pasta do projeto e rode o comando `bash vendor/bin/phpunit tests/`
+- No Prompt de comando cd para a pasta do projeto e rode o comando `vendor/bin/phpunit tests/`
 
 ## Links importantes
 
