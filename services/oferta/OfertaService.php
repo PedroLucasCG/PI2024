@@ -40,7 +40,7 @@ class OfertaService
         if ($stmt->execute()) {
             $insertionId = isset($id) ? $id : $this->pdo->lastInsertId();
             $query = "insert into periodo (Oferta, dia, hora_inicio, hora_final) values (:Oferta, :dia, :hora_inicio, :hora_final)";
-            if (isset($periodos)) {
+            if (!isset($periodos)) {
                 $periodos = [];
             }
             foreach ($periodos as $key => $value) {
